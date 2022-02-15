@@ -1,1 +1,1 @@
-# 4IT576-exercise-files
+# 4IT576 - Exercise files for a Python course
