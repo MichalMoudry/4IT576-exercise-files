@@ -1,3 +1,12 @@
+"""
+Co se týče hlavního zdroje o doposud probíraných tématech,
+tak se jedno o materiály, jež jsem využíval při tom, kdy
+jsem se učil programovat v jiných jazycích.
+"""
+
+# Co se týče pasáží, které mi dělaly problém, tak zatím jsem
+# s žádným tématem neměl problém.
+
 def author_name() -> str:
     """Funkce, která vrátí jméno autora."""
     return "MOUDRÝ Michal"
@@ -30,6 +39,6 @@ tvorby pluginů pro Wordpress) a JS. Třetí a čtvrtý rok střední
 školy jsme se učili C# (včetně tvorby multiplatformních aplikací
 pomocí Xamarinu), a také čtvrtý rok jsme se učili základy jazyka
 Python. Pro svoji dlouhodobou maturitní práci jsem se naučil psát
-aplikace v C# pro UWP. Na vysoké škole jsem se učil programovat v Javě.
-Ve svém volné čase se učím C++ zapomoci language refrence a
+aplikace v C# pro UWP. Na vysoké škole jsem se učil programovat v
+Javě. Ve svém volné čase se učím C++ zapomoci language refrence a
 různých tutoriálů."""
