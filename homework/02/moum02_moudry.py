@@ -9,6 +9,7 @@ Co se týče pasáží, které mi dělaly problém, tak zatím jsem
 s žádným tématem neměl problém.
 """
 from cmath import pi
+from logging import exception
 import dbg; dbg.start_mod(1, __name__)
 from robotcz import *
 ###########################################################################q
@@ -38,6 +39,7 @@ a vrátí odkaz na svůj argument."""
     step(k)
     put(k)
     step_back(k)
+    turn_left(k)
     return k
 
 def my_function_2(k:Karel) -> Karel:
@@ -57,6 +59,8 @@ new_world("0123456789", " .:…∷…:. #")
 k = Karel()
 step(k)
 my_function_2(k)
+turn_left(k)
+step(k)
 input("Press Enter to exit...")
 """
 
