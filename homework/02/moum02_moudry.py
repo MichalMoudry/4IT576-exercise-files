@@ -28,6 +28,9 @@ def step_back(k:Karel) -> Karel:
     """
     Funkce, která realizuje se zadaným robotem
     krok vzad a vrátí odkaz na svůj argument.
+
+    Pokud je za robotem zeď či jiný robot, tak
+    je ohlášena chyba.
     """
     turn_left(k)
     turn_left(k)
@@ -39,6 +42,12 @@ def put_left(k:Karel) -> Karel:
     Funkce, která realizuje se zadaným robotem
     položení značky na políčko vlevo od zadaného robota
     a vrátí odkaz na svůj argument.
+
+    Pokud je vlevo od robota zeď nebo jiný robot, tak je
+    ohlášena chyba.
+    
+    Dále pokud celkový počet značek na daném políčku přesáhne
+    maximální povolený počet, tak je ohlášena chyba.
     """
     turn_left(k)
     step(k)
@@ -55,6 +64,15 @@ def my_function_2(k:Karel) -> Karel:
 
     Ve výsledku jde o vyjmutí značky, která je vlevo od robota a
     její vložení na původní pozici.
+
+    Pokud je vlevo od robota zeď nebo jiný robot, tak je
+    ohlášena chyba.
+
+    Dále pokud na políčku vlevo od robota není žádná značka, tak
+    je ohlášena chyba.
+
+    Také pokud je na původním políčku maximální počet značek, tak
+    je ohlášena chyba.
     """
     turn_left(k)
     step(k)
