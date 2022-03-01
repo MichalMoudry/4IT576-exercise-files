@@ -32,9 +32,13 @@ def step_back(k:Karel) -> Karel:
     Pokud je za robotem zeď či jiný robot, tak
     je ohlášena chyba.
     """
+    hide(k)
     turn_left(k)
     turn_left(k)
     step(k)
+    turn_left(k)
+    turn_left(k)
+    unhide(k)
     return k
 
 def put_left(k:Karel) -> Karel:
@@ -49,11 +53,15 @@ def put_left(k:Karel) -> Karel:
     Dále pokud celkový počet značek na daném políčku přesáhne
     maximální povolený počet, tak je ohlášena chyba.
     """
+    hide(k)
     turn_left(k)
     step(k)
     put(k)
     step_back(k)
     turn_left(k)
+    turn_left(k)
+    turn_left(k)
+    unhide(k)
     return k
 
 def my_function_2(k:Karel) -> Karel:
