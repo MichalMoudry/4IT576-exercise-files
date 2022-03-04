@@ -29,16 +29,59 @@ from robotcz import *
 
 ###########################################################################q
 
-def turn_right(k:Karel) -> None:
-    """Otočí zadaného robota rychle vpravo."""
+def turn_right(k: Karel) -> None:
+    """
+    Otočí zadaného robota rychle vpravo.
+    """
     if hide(k):
-        turn_left(k)
-        turn_left(k)
+        turn_left_180_degrees(k)
         turn_left(k)
     unhide(k)
 
-def go_up(k:Karel) -> None:
-    """Funkce pro posunutí robota na nový řádek."""
+def turn_left_180_degrees(k: Karel) -> None:
+    """
+    Funkce pro otočení robota o 180 stupňů vlevo.
+    """
+    turn_left(k)
+    turn_left(k)
+
+def handle_east_direction_check(k: Karel) -> bool:
+    """
+    Funkce pro zkontrolování, zda jde o poslední řádek, pokud
+    robot přišel z levé strany předchozího řádku.
+    """
+    turn_left(k)
+    res = k.is_wall()
+    turn_right(k)
+    return res
+
+def handle_west_direction_check(k: Karel) -> bool:
+    """
+    Funkce pro zkontrolování, zda jde o poslední řádek, pokud
+    robot přišel z pravé strany předchozího řádku.
+    """
+    turn_right(k)
+    res = k.is_wall()
+    turn_left(k)
+    return res
+
+def is_last_row(k: Karel) -> bool:
+    """
+    Funkce pro kontrolu, zda jde o poslední řádek.
+    """
+    hide(k)
+    result = False
+    if k.is_east():
+        result = handle_east_direction_check(k)
+    else:
+        result = handle_west_direction_check(k)
+    unhide(k)
+    return result
+
+def go_up(k: Karel) -> None:
+    """
+    Funkce pro posunutí robota na nový řádek.
+    """
     if k.is_east():
         turn_left(k)
         step(k)
@@ -48,12 +91,30 @@ def go_up(k:Karel) -> None:
         step(k)
         turn_right(k)
 
-def step_through_row(k:Karel) -> None:
+def go(k: Karel, sign_number: int) -> None:
     """
-    Funkce pro průchod řádkem.
+    Funkce pro posunutí robota na konec řádku či sloupce.
     """
     while not(is_wall(k)):
+        ensure_markers(k, sign_number)
         step(k)
+    else:
+        ensure_markers(k, sign_number)
+
+def step_through_rows(k: Karel, row_index: int = 0) -> None:
+    """
+    Funkce pro průchod řádky.
+
+    Pozn.: Index (resp. číslo řádku) je v základu počítáno od nuly,
+    což lze změnit v parametru row_index.
+    """
+    go(k, row_index)
+    go_up(k)
+    row_index = row_index + 1
+    if is_last_row(k):
+        go(k, row_index)
+    else:
+        step_through_rows(k, row_index)
 
 def author_name() -> str:
     """
@@ -68,7 +129,7 @@ def author_id() -> str:
     return "MOUM02"
 
 
-def ensure_markers(k:Karel, n:int) -> Karel:
+def ensure_markers(k: Karel, n: int) -> Karel:
     """
     Zabezpečí, že na políčku, na němž robot stojí, bude právě n značek.
 
@@ -81,7 +142,7 @@ def ensure_markers(k:Karel, n:int) -> Karel:
     return k
 
 
-def fill_in(k:Karel, row_num:bool=True) -> Karel:
+def fill_in(k: Karel, row_num: bool = True) -> Karel:
     """Zaplní aktuální svět značkami tak, že na každém jeho políčku bude
     tolik značek, kolik je při (row_num == True) index jeho řádku,
     a při (row_num == False) index jeho sloupce.
@@ -93,11 +154,11 @@ def fill_in(k:Karel, row_num:bool=True) -> Karel:
     V rámci testu nevytvářejte nový dvorek, ale použijte aktuální.
     """
     if row_num:
-        step_through_row(k)
+        step_through_rows(k)
     return k
 
 
-def my_function_3(k:Karel) -> Karel:
+def my_function_3(k: Karel) -> Karel:
     """Definice vaší vlastní funkce, která bude používat pouze doposud
     probrané konstrukce, tj. rozhodování, rekurzi a cykly s podmínkou.
     (Nemusí samozřejmě používat všechny najednou, ale nebude používat jiné.)
