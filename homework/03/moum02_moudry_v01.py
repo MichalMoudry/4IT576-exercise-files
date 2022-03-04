@@ -166,9 +166,6 @@ def author_id() -> str:
     return "MOUM02"
 
 
-
-###########################################################################q
-
 def ensure_markers(k: Karel, n: int) -> Karel:
     """
     Zabezpečí, že na políčku, na němž robot stojí, bude právě n značek.
@@ -184,19 +181,6 @@ def ensure_markers(k: Karel, n: int) -> Karel:
     return k
 
 
-def fill_the_board(k:Karel) -> Karel:
-    """Zaplní aktuální svět značkami tak, že na každém jeho políčku bude
-    po jedné značce.
-    Funkce předpokládá, že na dvorku nejsou žádné zdi ani jiní roboti.
-    Neví ale, kde se nachází robot zadaný jako argument a současně neví,
-    jestli již ně některých políčcích nejsou umístěny nějaké značky.
-    Na koncovou pozici robota nejsou kladeny žádné požadavky.
-    Musí jenom zůstat na dvorku.
-    """
-    return k
-
-
-# NEPOVINNÁ FUNKCE PRO TY ZKUŠENĚJŠÍ
 def fill_in(k: Karel, row_num: bool = True) -> Karel:
     """Zaplní aktuální svět značkami tak, že na každém jeho políčku bude
     tolik značek, kolik je při (row_num == True) index jeho řádku,
@@ -216,7 +200,7 @@ def fill_in(k: Karel, row_num: bool = True) -> Karel:
     return k
 
 
-def my_function_3(k:Karel) -> Karel:
+def my_function_3(k: Karel) -> Karel:
     """Definice vaší vlastní funkce, která bude používat pouze doposud
     probrané konstrukce, tj. rozhodování, rekurzi a cykly s podmínkou.
     (Nemusí samozřejmě používat všechny najednou, ale nebude používat jiné.)
@@ -232,24 +216,16 @@ def my_function_3(k:Karel) -> Karel:
 
 ###########################################################################q
 
+
 def test_ensure_markers() -> None:
     """Testovací funkce, která prověří správnost definice funkce
     ensure_markers().
     """
 
 
-def test_fill_the_board() -> None:
-    """Testovací funkce, která prověří správnost definice funkce
-    fill_in().
-    V rámci tohoto testu nevytvářejte nový dvorek, ale použijte aktuální.
-   """
-
-
-# NEPOVINNÁ FUNKCE PRO TY ZKUŠENĚJŠÍ
 def test_fill_in() -> None:
     """Testovací funkce, která prověří správnost definice funkce
     fill_in().
-    V rámci tohoto testu nevytvářejte nový dvorek, ale použijte aktuální.
     """
 
 
