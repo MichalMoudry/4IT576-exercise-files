@@ -261,17 +261,75 @@ def my_function_3(k:Karel, n: int = 1, increment: bool = False) -> Karel:
 
 ###########################################################################q
 
-def test_ensure_markers() -> None:
+def test_ensure_markers(k: Karel, signs: int = 1) -> bool:
     """Testovací funkce, která prověří správnost definice funkce
     ensure_markers().
     """
+    pickedUpSigns = 0
+    ensure_markers(k, signs)
+    while k.is_marker():
+        pick(k)
+        pickedUpSigns = pickedUpSigns + 1
+    if pickedUpSigns == signs:
+        return True
+    return False
 
+def is_first_row(k: Karel) -> bool:
+    """
+    Funkce, která zjistí, jestli je robot na prvním řádku.
+    """
+    hide(k)
+    res = False
+    if k.is_east():
+        res = handle_west_direction_check(k)
+    else:
+        res = handle_east_direction_check(k)
+    unhide(k)
+    return res
 
-def test_fill_the_board() -> None:
+def fill_board_test_reach_row_end(k: Karel) -> bool:
+    """
+    Funkce pro posunutí robota na konec řádku.
+    """
+    res = False
+    while not(k.is_wall()):
+        res = test_ensure_markers(k)
+        step(k)
+    return res
+
+def turn_left_180_degrees(k: Karel) -> None:
+    """
+    Funkce pro otočení robota o 180°.
+    """
+    turn_left(k)
+    turn_left(k)
+
+def fill_the_board_run_tests(k: Karel) -> bool:
+    """
+    Funkce pro spuštění testů pro test_fill_the_board.
+    """
+    while not(is_first_row(k)):
+        res = fill_board_test_reach_row_end(k)
+        res = test_ensure_markers(k)
+        crlf(k, not(k.is_east()))
+    else:
+        res = fill_board_test_reach_row_end(k)
+        res = test_ensure_markers(k)
+    return res
+
+def test_fill_the_board(k: Karel) -> None:
     """Testovací funkce, která prověří správnost definice funkce
     fill_in().
     V rámci tohoto testu nevytvářejte nový dvorek, ale použijte aktuální.
-   """
+    """
+    hide(k)
+    fill_the_board(k)
+    turn_left_180_degrees(k)
+    res = False
+    res = fill_the_board_run_tests(k)
+    turn_left_180_degrees(k)
+    unhide(k)
+    return res
 
 
 # NEPOVINNÁ FUNKCE PRO TY ZKUŠENĚJŠÍ
@@ -281,11 +339,38 @@ def test_fill_in() -> None:
     V rámci tohoto testu nevytvářejte nový dvorek, ale použijte aktuální.
     """
 
+def move_diagonally_backwards(k: Karel) -> None:
+    """
+    Funkce pro posunu robota po diagonále světa opačným směrem (tzn.
+    z pravého políčka na levé).
+    """
+    turn_right(k)
+    step(k)
+    turn_right(k)
+    step(k)
+    turn_right(k)
+    turn_right(k)
 
-def test_my_function_3() -> None:
+def test_my_funtion_3_move_back_cycle(k: Karel) -> None:
+    """
+    Metoda pro posunutí robota po diagonále na původní místo.
+    """
+    res = False
+    while k.is_wall() or not(is_last_column(k)):
+        res = test_ensure_markers(k)
+        move_diagonally_backwards(k)
+    res = test_ensure_markers(k)
+    return res
+
+def test_my_function_3(k: Karel) -> bool:
     """Testovací funkce, která prověří správnost definice funkce
     my_function_3().
     """
+    hide(k)
+    my_function_3(k)
+    res = test_my_funtion_3_move_back_cycle(k)
+    unhide(k)
+    return res
 
 
 

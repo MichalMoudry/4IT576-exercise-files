@@ -1,7 +1,9 @@
 from robotcz import *
 from moum02_moudry import *
 
-new_world(4, 4)
+#3, 3
+#4, 4
+new_world(3, 3)
 k = Karel()
 """
 ensure_markers(k, 5)
@@ -17,6 +19,9 @@ my_function_3(k, 1, True)
 turn_right(k)
 step(k)
 """
-fill_in(k)
+#print(test_ensure_markers(k))
+#print(test_my_function_3(k))
+#print(test_fill_the_board(k))
+fill_in(k, False)
 
 input("Press Enter to exit...")
