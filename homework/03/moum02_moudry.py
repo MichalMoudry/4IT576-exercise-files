@@ -39,6 +39,17 @@ def turn_right(k: Karel) -> None:
         turn_left(k)
     unhide(k)
 
+def move_diagonally(k: Karel) -> None:
+    """
+    Funkce pro posunu robota po diagonále světa.
+    """
+    hide(k)
+    step(k)
+    turn_left(k)
+    step(k)
+    turn_right(k)
+    unhide(k)
+
 def handle_east_direction_check(k: Karel) -> bool:
     """
     Funkce pro zkontrolování, zda jde o poslední řádek, pokud
@@ -126,24 +137,26 @@ def go(k: Karel, sign_number: int) -> None:
     else:
         ensure_markers(k, sign_number)
 
-def step_through_rows(k: Karel, row_index: int = 0) -> None:
+def step_through_rows(k: Karel, row_index: int = 1,
+increment: bool = True) -> None:
     """
     Funkce pro průchod řádky.
 
-    Pozn.: Index (resp. číslo řádku) je v základu počítáno od nuly,
+    Pozn.: Index (resp. číslo řádku) je v základu počítáno od jedné,
     což lze změnit v parametru row_index.
     """
     go(k, row_index)
     crlf(k, k.is_east())
-    row_index = row_index + 1
+    if increment:
+        row_index = row_index + 1
     if is_last_row(k):
         go(k, row_index)
     else:
-        step_through_rows(k, row_index)
+        step_through_rows(k, row_index, increment)
 
-def step_through_columns(k: Karel, column_index: int = 0) -> None:
+def step_through_columns(k: Karel, column_index: int = 1) -> None:
     """
-    Funkce pro průchod sloupci
+    Funkce pro průchod sloupci.
     """
     go(k, column_index)
     crlf(k, column_index % 2 == 0)
@@ -152,6 +165,17 @@ def step_through_columns(k: Karel, column_index: int = 0) -> None:
         go(k, column_index)
     else:
         step_through_columns(k, column_index)
+
+def orient_robot_for_column_crawl(k: Karel) -> None:
+    """
+    Funkce pro otočení robota do správného směru pro průchod sloupci.
+
+    Pozn.: Zatím je zde zachycena situace, kdy robot je v základu otočen
+    na východ, tedy v budoucnu je třeba zachytit situace, kdy v základu je
+    otočen na jiné směry (samozřejmě pokud taková informace bude dostupná).
+    """
+    if k.is_east():
+        k.turn_left()
 
 def author_name() -> str:
     """
@@ -193,6 +217,7 @@ def fill_the_board(k:Karel) -> Karel:
     Na koncovou pozici robota nejsou kladeny žádné požadavky.
     Musí jenom zůstat na dvorku.
     """
+    step_through_rows(k, increment=False)
     return k
 
 
@@ -209,23 +234,27 @@ def fill_in(k: Karel, row_num: bool = True) -> Karel:
     V rámci testu nevytvářejte nový dvorek, ale použijte aktuální.
     """
     if row_num:
-        step_through_rows(k, 1)
+        step_through_rows(k)
     elif not(row_num):
-        turn_left(k)
-        step_through_columns(k, 1)
+        orient_robot_for_column_crawl(k)
+        step_through_columns(k)
     return k
 
 
-def my_function_3(k:Karel) -> Karel:
-    """Definice vaší vlastní funkce, která bude používat pouze doposud
-    probrané konstrukce, tj. rozhodování, rekurzi a cykly s podmínkou.
-    (Nemusí samozřejmě používat všechny najednou, ale nebude používat jiné.)
-    Funkce by měla mít nejméně 5 příkazů.
-    Může definovat další parametry, ale všechny musejí mít přiřazenou
-    implicitní hodnotu.
-    V dokumentačním komentáři musí být popsána prováděná činnost
-    včetně všech předpokladů a okrajových podmínek.
+def my_function_3(k:Karel, n: int = 1, increment: bool = False) -> Karel:
     """
+    Tato funkce položí n značek na každé políčko diagonály světa, přičemž
+    existuje možnost na každém novém políčku přidat o jednu značku navíc.
+
+    Předpokladem této metody je, že robot se nachází v jeho základní pozici.
+    """
+    while not(k.is_wall()) and not(is_last_row(k)):
+        ensure_markers(k, n)
+        if increment:
+            n = n + 1
+        move_diagonally(k)
+    else:
+        ensure_markers(k, n)
     return k
 
 
