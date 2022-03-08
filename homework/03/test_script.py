@@ -22,6 +22,6 @@ step(k)
 #print(test_ensure_markers(k))
 #print(test_my_function_3(k))
 #print(test_fill_the_board(k))
-fill_in(k, False)
+fill_in(k, True)
 
 input("Press Enter to exit...")

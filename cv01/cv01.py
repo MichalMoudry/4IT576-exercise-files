@@ -1,6 +1,3 @@
-import numbers
-
-
 def printNumber(inputNumber: int) -> None:
     """Dokumentace metody"""
     print(f"Number: {inputNumber}")
