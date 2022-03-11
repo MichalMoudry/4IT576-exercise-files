@@ -32,6 +32,7 @@ COMMENTS = """\
 # Importy
 
 # from robotcz import *
+import random
 
 
 ###########################################################################q
@@ -72,7 +73,16 @@ def get_spock_weaknesses() -> str:
     """
     return "pt"
 
-def get_appropriate_element_weakness(element: str) -> str:
+def handle_user_input(user_input: str) -> bool:
+    """
+    Funkce pro zpracování uživatelského vstupu ve funkci roshambo().
+    """
+    res = True
+    if "6" in user_input or user_input == "":
+        res = False
+    return res
+
+def get_appropriate_weakness(element: str) -> str:
     """
     Funkce, která vrátí správné slabosti pro určený element.
     """
@@ -86,6 +96,15 @@ def get_appropriate_element_weakness(element: str) -> str:
         return get_tapir_weaknesses()
     elif element == "S":
         return get_spock_weaknesses()
+
+def get_random_number(big_bang: bool) -> int:
+    """
+    Funkce pro získání pseudonáhodného čísla podle parametrů hry.
+    """
+    if big_bang:
+        return random.randint(1, 5)
+    else:
+        return random.randint(1, 3)
 
 ###########################################################################q
 # Požadované funkce
@@ -102,16 +121,10 @@ def winner(player1:str, player2:str) -> int:
     """
     if player1 == player2:
         return 0
-    result = 0
-    options = "knptS"
-    for player1_option in enumerate(options):
-        for player2_option in enumerate(options):
-            print(player1_option[1], "x", player2_option[1], "-", get_appropriate_element_weakness(player1_option[1]))
-            if player2_option[1] in get_appropriate_element_weakness(player1_option[1]):
-                result = 1
-            else:
-                result = -1
-    return result
+    if player2 in get_appropriate_weakness(player1):
+        return 1
+    else:
+        return -1
 
 def roshambo(big_bang=False) -> None:
     """Spustí hru kámen-papír-nůžky, případně její big-bangovou verzi
@@ -127,7 +140,18 @@ def roshambo(big_bang=False) -> None:
     Zadá-li hráč špatný znak (případně nezadá nic), upozorní ho na to
     a zopakuje svoji otázku.
     """
-
+    isGame = True
+    decision = 0
+    while isGame:
+        decision = get_random_number(big_bang)
+        print("--------Vítejte ve hře kámen, nůžky, papír--------")
+        print("Vaše možnosti:\n1. kámen\n2. nůžky\n3. papír")
+        if big_bang:
+            print("4. tapír\n5. Spock")
+        print("6. Konec hry")
+        print("--- rozhodnutí", decision)
+        response = input("Zadejte akci: ")
+        isGame = handle_user_input(response)
 
 def my_function_4() -> None:
     """Popis požadované funkce.
