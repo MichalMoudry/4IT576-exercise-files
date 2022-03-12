@@ -78,7 +78,7 @@ def handle_user_input(user_input: str) -> bool:
     Funkce pro zpracování uživatelského vstupu ve funkci roshambo().
     """
     res = True
-    if "6" in user_input or user_input == "":
+    if "konec" in user_input or user_input == "":
         res = False
     return res
 
@@ -140,24 +140,48 @@ def roshambo(big_bang=False) -> None:
     Zadá-li hráč špatný znak (případně nezadá nic), upozorní ho na to
     a zopakuje svoji otázku.
     """
-    isGame = True
+    is_game = True
     decision = 0
-    while isGame:
+    while is_game:
         decision = get_random_number(big_bang)
         print("--------Vítejte ve hře kámen, nůžky, papír--------")
-        print("Vaše možnosti:\n1. kámen\n2. nůžky\n3. papír")
+        print("Vaše možnosti:\n- kámen\n- nůžky\n- papír")
         if big_bang:
-            print("4. tapír\n5. Spock")
-        print("6. Konec hry")
+            print("- tapír\n- Spock")
+        print("- konec")
         print("--- rozhodnutí", decision)
         response = input("Zadejte akci: ")
-        isGame = handle_user_input(response)
+        is_game = handle_user_input(response)
 
-def my_function_4() -> None:
-    """Popis požadované funkce.
+def my_function_4(costs: tuple, connections: tuple) -> int:
     """
+    Funkce pro výpočet účelové funkce v rámci přiřazovacího problému.
+    Tato funkce slouží pro ověření výsledku, tedy zde nejde o nalezení
+    optimálního řešení přiřazovacího problému.
 
+    Pozn.: data se musejí vkládat po sloupcích a ne řádcích.
 
+    𝑥𝑖𝑗 ∈ {0,1}
+
+    Proměnné 𝑥𝑖𝑗 určující, zda 𝑖−tá jednotka z 
+    první skupiny bude přiřazena 𝑗−té jednotce ze 
+    skupiny druhé.
+
+    𝑖 = 1, 2, …, 𝑛
+
+    𝑗 = 1, 2, …, 𝑛
+
+    𝑖 = 𝑗
+
+    n … počet jednotek ve skupinách
+    """
+    result = 0
+    for connection in enumerate(connections):
+        prefrence = 0
+        for cost in enumerate(costs[connection[0]]):
+            prefrence += cost[1] * connection[1][cost[0]]
+        result += prefrence
+    return result
 
 ###########################################################################q
 # Testy
@@ -192,8 +216,32 @@ def test_roshambo() -> None:
 
 
 def test_my_function_4() -> None:
-    """Prověrka definice funkce my_function_4()."""
+    """
+    Prověrka definice funkce my_function_4().
 
+    Pozn.: očekáváná hodnota funkce je 34, protože jsem použil data
+    z domácího úkolu, tedy vím, že výsledek je správně.
+    """
+    # Test špatných dat
+    result = my_function_4(
+        ((3, 6, 1, 0, 0), (6, 3, 1, 0, 0), (0, 1, 1, 7, 1),
+        (1, 0, 7, 1, 1), (0, 0, 0, 2, 8)),
+
+        ((0, 1, 0, 0, 0), (1, 0, 0, 0, 0), (0, 0, 0, 1, 0),
+        (0, 0, 1, 0, 0))
+    )
+    print(f"Výsledek účelové funkce: {result} "
+    + f'{"SPRÁVNĚ" if result==34 else "=CHYBA="} (očekáváná hodnota 34)')
+    # Test správných dat
+    result = my_function_4(
+        ((3, 6, 1, 0, 0), (6, 3, 1, 0, 0), (0, 1, 1, 7, 1),
+        (1, 0, 7, 1, 1), (0, 0, 0, 2, 8)),
+
+        ((0, 1, 0, 0, 0), (1, 0, 0, 0, 0), (0, 0, 0, 1, 0),
+        (0, 0, 1, 0, 0), (0, 0, 0, 0, 1))
+    )
+    print(f"Výsledek účelové funkce: {result} "
+    + f'{"SPRÁVNĚ" if result==34 else "=CHYBA="} (očekáváná hodnota 34)')
 
 
 ###########################################################################q
