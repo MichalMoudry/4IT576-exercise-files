@@ -37,6 +37,18 @@ import random
 
 ###########################################################################q
 # Abecedně seřazené pomocné funkce
+def get_paper_weaknesses() -> str:
+    """
+    Funkce, která vrátí elementy, jež porazí kámen (nůžky, tapír), přičemž
+    elementy jsou vráceny jako string.
+    """
+    return "nt"
+
+def get_possible_choices() -> tuple:
+    """
+    Funkce, která vrátí možné výběry ve hře.
+    """
+    return ("k", "n", "p", "t", "S")
 
 def get_stone_weaknesses() -> str:
     """
@@ -51,13 +63,6 @@ def get_scissor_weaknesses() -> str:
     elementy jsou vráceny jako string.
     """
     return "kS"
-
-def get_paper_weaknesses() -> str:
-    """
-    Funkce, která vrátí elementy, jež porazí kámen (nůžky, tapír), přičemž
-    elementy jsou vráceny jako string.
-    """
-    return "nt"
 
 def get_tapir_weaknesses() -> str:
     """
@@ -102,9 +107,28 @@ def get_random_number(big_bang: bool) -> int:
     Funkce pro získání pseudonáhodného čísla podle parametrů hry.
     """
     if big_bang:
-        return random.randint(1, 5)
+        return random.randint(0, 4)
     else:
-        return random.randint(1, 3)
+        return random.randint(0, 2)
+
+def print_game_options(big_bang) -> None:
+    """
+    Funkce pro vypsání základních možností hry ve funkci roshambo().
+    """
+    print("Vaše možnosti:\n- kámen (k)\n- nůžky (n)\n- papír (p)")
+    if big_bang:
+        print("- tapír (t)\n- Spock (S)")
+    print("- konec (prázdná odpověď)")
+
+def print_round_results(
+    decision1: str, decision2: str, player_score: int
+) -> None:
+    """
+    Funkce pro vypsání textu na konci kola hry ve funkci roshambo().
+    """
+    print(f"\nOdpověď počítače: {decision1}")
+    print(f"Vaše odpověď: {decision2}")
+    print(f"---Vaše skóre: {player_score} ---\n")
 
 ###########################################################################q
 # Požadované funkce
@@ -140,26 +164,32 @@ def roshambo(big_bang=False) -> None:
     Zadá-li hráč špatný znak (případně nezadá nic), upozorní ho na to
     a zopakuje svoji otázku.
     """
+    player_score = 0
     is_game = True
-    decision = 0
+    print("--------Vítejte ve hře kámen, nůžky, papír--------")
     while is_game:
+        print_game_options(big_bang)
         decision = get_random_number(big_bang)
-        print("--------Vítejte ve hře kámen, nůžky, papír--------")
-        print("Vaše možnosti:\n- kámen\n- nůžky\n- papír")
-        if big_bang:
-            print("- tapír\n- Spock")
-        print("- konec")
-        print("--- rozhodnutí", decision)
         response = input("Zadejte akci: ")
         is_game = handle_user_input(response)
+        computer_decision = get_possible_choices()[decision]
+        if response in get_possible_choices():
+            player_score += winner(computer_decision, response)
+            print_round_results(computer_decision, response, player_score)
+        elif not(response in get_possible_choices()) and is_game:
+            print("\n--- Chybný vstup! ---\n")
 
 def my_function_4(costs: tuple, connections: tuple) -> int:
     """
     Funkce pro výpočet účelové funkce v rámci přiřazovacího problému.
-    Tato funkce slouží pro ověření výsledku, tedy zde nejde o nalezení
-    optimálního řešení přiřazovacího problému.
+    Tato funkce slouží pro ověření výsledku s výsledky jiného programu
+    (např. LINGO), tedy zde nejde o nalezení optimálního řešení
+    přiřazovacího problému.
 
-    Pozn.: data se musejí vkládat po sloupcích a ne řádcích.
+    Pozn. 1: Data se musejí vkládat po sloupcích a ne řádcích.
+
+    Pozn. 2: Obě skupiny musí být stejného rozměru viz. pravidla níže,
+    tedy nejsou zde řešeny fiktivní jednotky.
 
     𝑥𝑖𝑗 ∈ {0,1}
 
@@ -178,6 +208,7 @@ def my_function_4(costs: tuple, connections: tuple) -> int:
     result = 0
     for connection in enumerate(connections):
         prefrence = 0
+        # Vynásobit každou cenu s výskyty/přiřazení.
         for cost in enumerate(costs[connection[0]]):
             prefrence += cost[1] * connection[1][cost[0]]
         result += prefrence
@@ -220,7 +251,7 @@ def test_my_function_4() -> None:
     Prověrka definice funkce my_function_4().
 
     Pozn.: očekáváná hodnota funkce je 34, protože jsem použil data
-    z domácího úkolu, tedy vím, že výsledek je správně.
+    z domácího úkolu, tedy vím, že výsledek je správně (ověřeno LINGem).
     """
     # Test špatných dat
     result = my_function_4(
