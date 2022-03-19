@@ -4,6 +4,7 @@ Zadání domácího úkolu, v němž má student(ka) demonstrovat zvládnutí
 doposud probrané látky prostřednictvím realizace hry Prší.
 """
 import dbg; dbg.start_mod(1, __name__)
+import random
 ###########################################################################q
 # Identifikační a informační konstanty
 
@@ -62,7 +63,43 @@ COMP:list[str] = []
 ###########################################################################q
 # Abecedně seřazené pomocné funkce
 
-def print_state(prolog:str='nezadáno', level:int=1):
+def draw_card(card: str, orig: list[str], destination: list[str]) -> None:
+    """
+    Funkce pro přesunutí karty z balíčku do libovolné destinace.
+    """
+    orig.remove(card)
+    destination.append(card)
+
+def get_random_card_from_deck(deck: list[str]) -> str:
+    """
+    Funkce, která vrátí náhodnou kartu z talónu.
+    """
+    card = deck[random.randint(0, len(deck) - 1)]
+    return card
+
+def initial_talon_deck_fill() -> None:
+    """
+    Funkce pro prvotní naplnění losovacího balíčku
+    """
+    deck:list[str] = []
+    for color in COLOR:
+        for number in VALUE:
+            deck.append(f"{number}{color}")
+    deck = shuffle_deck(deck)
+    for card in deck:
+        TALON.append(card)
+
+def shuffle_deck(deck: list[str]) -> list[str]:
+    """
+    Funkce pro zamýchání balíčku.
+    """
+    new_deck:list[str] = []
+    while len(deck) > 0:
+        random_card = get_random_card_from_deck(deck)
+        draw_card(random_card, deck, new_deck)
+    return new_deck
+
+def print_state(prolog:str='nezadáno', level:int=1) -> None:
     """Pomocná funkce pro ladění, která vytiskne zadanou úvodní hlášku
     s prologem charakterizujícím místo, odkud byla zavolána,
     a za ní vytiskne přehled o stavu hry, tj. jednotlivé sady karet.
@@ -74,7 +111,6 @@ def print_state(prolog:str='nezadáno', level:int=1):
        f'   Balík    {FACE_UP}\n'
        f'   Talón    {TALON}\n'
        f'{60*"-"}' )
-
 
 
 ###########################################################################q
@@ -98,6 +134,13 @@ def prepare() -> None:
        FACE_UP.
     4. Zbytkem seznamu naplní seznam TALON.
     """
+    initial_talon_deck_fill()
+    #first_card = TALON[random.randint(0, (VALUES * COLORS) - 1)]
+    #draw_card(first_card, FACE_UP)
+    #initial_hand_fill(USER)
+    #initial_hand_fill(COMP)
+    #first_card = TALON[random.randint(0, len(TALON) - 1)]
+    #draw_card(first_card, FACE_UP)
 
 
 def comp_turn() -> int:
