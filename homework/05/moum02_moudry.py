@@ -26,7 +26,13 @@ PROBLEMS = """\
 
 # Poznámky a připomínky k výkladu
 COMMENTS = """\
-Žádné
+Některé požadavky na funkce nedávají smysl (např. požadavek č. 4 u funkce
+prepare(), kdy nemá smysl pracovat s nějakým "mezibalíkem", když můžu od
+začátku pracovat se zamýchaným TALON, kdy v realitě potom co rozdám karty
+a jednu dám na vršek (do té FACE_UP), a pak jednou kartou za druhou
+nebudu plnit lízací balík na stole, ale prostě ho tam položím, tedy
+metoda prepare() vyžaduje práci s balíčkem, který v reálném světě
+neexistuje).
 """
 
 
@@ -77,17 +83,25 @@ def get_random_card_from_deck(deck: list[str]) -> str:
     card = deck[random.randint(0, len(deck) - 1)]
     return card
 
-def initial_talon_deck_fill() -> None:
+def initial_hand_fill(deck: list[str], to: list[str]) -> None:
+    """
+    Funkce pro rozdání karet určité straně.
+    """
+    card = ""
+    deck_length = len(deck)
+    for i in range(TO_DEAL):
+        card = deck[deck_length - (i + 1)]
+        draw_card(card, deck, to)
+
+def initial_deck_fill(deck: list[str]) -> list[str]:
     """
     Funkce pro prvotní naplnění losovacího balíčku
     """
-    deck:list[str] = []
     for color in COLOR:
         for number in VALUE:
             deck.append(f"{number}{color}")
     deck = shuffle_deck(deck)
-    for card in deck:
-        TALON.append(card)
+    return deck
 
 def shuffle_deck(deck: list[str]) -> list[str]:
     """
@@ -134,13 +148,14 @@ def prepare() -> None:
        FACE_UP.
     4. Zbytkem seznamu naplní seznam TALON.
     """
-    initial_talon_deck_fill()
-    #first_card = TALON[random.randint(0, (VALUES * COLORS) - 1)]
-    #draw_card(first_card, FACE_UP)
-    #initial_hand_fill(USER)
-    #initial_hand_fill(COMP)
-    #first_card = TALON[random.randint(0, len(TALON) - 1)]
-    #draw_card(first_card, FACE_UP)
+    deck:list[str] = []
+    deck = initial_deck_fill(deck)
+    initial_hand_fill(deck, USER)
+    initial_hand_fill(deck, COMP)
+    face_up_card = deck[len(deck) - 1]
+    draw_card(face_up_card, deck, FACE_UP)
+    for card in deck:
+        TALON.append(card)
 
 
 def comp_turn() -> int:
@@ -182,6 +197,7 @@ def play(colors:int=4, value:int=8, to_deal:int=4) -> None:
 
 def test_prepare() -> None:
     """Prověrka definice funkce prepare()."""
+    prepare()
 
 
 def test_turn() -> None:
