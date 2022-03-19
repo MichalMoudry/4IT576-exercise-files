@@ -198,6 +198,20 @@ def play(colors:int=4, value:int=8, to_deal:int=4) -> None:
 def test_prepare() -> None:
     """Prověrka definice funkce prepare()."""
     prepare()
+    print_state("test_prepare()")
+    face_up_res = True if len(FACE_UP) == 1 else False
+    print("FACE_UP test:", f"{face_up_res},",
+    f"FACE_UP length: {len(FACE_UP)} (expected: 1)")
+    user_hand_test = True if len(USER) == TO_DEAL else False
+    print("User hand test:", f"{user_hand_test},",
+    f"User hand length: {len(USER)} (expected: {TO_DEAL})")
+    computer_hand_test = True if len(COMP) == TO_DEAL else False
+    print("Computer hand test:", f"{computer_hand_test},",
+    f"Computer hand length: {len(COMP)} (expected: {TO_DEAL})")
+    deck_length = len(TALON) + len(FACE_UP)+ len(USER) + len(COMP)
+    talon_test = True if deck_length == (VALUES * COLORS) else False
+    print(f"Talon test: {talon_test},",
+    f"deck length: {deck_length} (expected: {VALUES * COLORS})")
 
 
 def test_turn() -> None:
