@@ -95,6 +95,26 @@ def fill_talon_deck(deck: list[str]) -> None:
     for card in deck:
         TALON.append(card)
 
+def get_available_colors(colors: int) -> list[str]:
+    """
+    Funkce pro získání povolených barev ve hře.
+    """
+    colors_list: list[str] = []
+    for index, color in enumerate(COLOR):
+        if index + 1 <= colors:
+            colors_list.append(color)
+    return colors_list
+
+def get_available_values(value: int) -> list[str]:
+    """
+    Funkce pro získání povolených hodnot ve hře.
+    """
+    values_list: list[str] = []
+    for index, val in enumerate(VALUE):
+        if index + 1 <= value:
+            values_list.append(val)
+    return values_list
+
 def get_face_up_last_card() -> str:
     """
     Funkce pro získání poslední karty z balíčku FACE_UP.
@@ -161,22 +181,24 @@ def handle_user_input(inpt: str) -> int:
     else:
         return -1
 
-def initial_hand_fill(deck: list[str], to: list[str]) -> None:
+def initial_hand_fill(deck: list[str], to: list[str],
+to_deal: int = TO_DEAL) -> None:
     """
     Funkce pro rozdání karet určité straně.
     """
     card = ""
     deck_length = len(deck)
-    for i in range(TO_DEAL):
+    for i in range(to_deal):
         card = deck[deck_length - (i + 1)]
         change_cards_deck(card, deck, to)
 
-def initial_deck_fill(deck: list[str]) -> list[str]:
+def initial_deck_fill(deck: list[str], colors: list[str] = COLOR,
+values: list[str] = VALUE) -> list[str]:
     """
     Funkce pro prvotní naplnění losovacího balíčku
     """
-    for color in COLOR:
-        for number in VALUE:
+    for color in colors:
+        for number in values:
             deck.append(f"{number}{color}")
     deck = shuffle_deck(deck)
     return deck
@@ -230,7 +252,8 @@ def print_game_result(result: int) -> None:
 ###########################################################################q
 # Požadované funkce
 
-def prepare() -> None:
+def prepare(colors:list[str] = COLOR, value:list[str] = VALUE,
+to_deal: int = TO_DEAL) -> None:
     """Připraví karty pro další hru, tj.
     1. Připraví zamíchanou sadu (seznam) karet se zadaným počtem barev
        a zadaným počtem hodnot. Karty budou reprezentovány dvouznakovými
@@ -249,9 +272,9 @@ def prepare() -> None:
     4. Zbytkem seznamu naplní seznam TALON.
     """
     deck:list[str] = []
-    deck = initial_deck_fill(deck)
-    initial_hand_fill(deck, USER)
-    initial_hand_fill(deck, COMP)
+    deck = initial_deck_fill(deck, colors, value)
+    initial_hand_fill(deck, USER, to_deal)
+    initial_hand_fill(deck, COMP, to_deal)
     face_up_card = deck[len(deck) - 1]
     change_cards_deck(face_up_card, deck, FACE_UP)
     fill_talon_deck(deck)
@@ -318,11 +341,15 @@ def play(colors:int=4, value:int=8, to_deal:int=4) -> None:
     se zadaným počtem karet, které se mají na počátku každému hráči
     rozdat.
     """
-    prepare()
-    game_progress = 0
-    while game_progress == 0:
-        game_progress = turn()
-    print_game_result(game_progress)
+    if (colors <= len(COLOR) and colors > 0
+    ) and value <= len(VALUE) and value > 0:
+        available_colors: list[str] = get_available_colors(colors)
+        available_values: list[str] = get_available_values(value)
+        prepare(available_colors, available_values, to_deal)
+        game_progress = 0
+        while game_progress == 0:
+            game_progress = turn()
+        print_game_result(game_progress)
 
 
 
@@ -334,18 +361,18 @@ def test_prepare() -> None:
     prepare()
     print_state("test_prepare()")
     face_up_res = True if len(FACE_UP) == 1 else False
-    print("Test odkládacího balíčku:", f"{face_up_res},",
-    f"Velikost odkládacího balíčku: {len(FACE_UP)} (očekáváno: 1)")
+    print("Test odkládacího balíčku:", f"{face_up_res}",
+    f"\n\tVelikost odkládacího balíčku: {len(FACE_UP)} (očekáváno: 1)")
     user_hand_test = True if len(USER) == TO_DEAL else False
-    print("Ruka uživatele test:", f"{user_hand_test},",
-    f"Délka balíčku uživatele: {len(USER)} (očekáváno: {TO_DEAL})")
+    print("Ruka uživatele test:", f"{user_hand_test}",
+    f"\n\tDélka balíčku uživatele: {len(USER)} (očekáváno: {TO_DEAL})")
     computer_hand_test = True if len(COMP) == TO_DEAL else False
-    print("Test ruky počítače:", f"{computer_hand_test},",
-    f"Délka balíčku počítače: {len(COMP)} (očekáváno: {TO_DEAL})")
+    print("Test ruky počítače:", f"{computer_hand_test}",
+    f"\n\tDélka balíčku počítače: {len(COMP)} (očekáváno: {TO_DEAL})")
     deck_length = len(TALON) + len(FACE_UP)+ len(USER) + len(COMP)
     talon_test = True if deck_length == (VALUES * COLORS) else False
-    print(f"Test lízacího balíčku: {talon_test},",
-    f"délka balíčku: {deck_length} (očekáváno: {VALUES * COLORS})")
+    print(f"Test lízacího balíčku: {talon_test}",
+    f"\n\tDélka balíčku: {deck_length} (očekáváno: {VALUES * COLORS})")
 
 
 def test_turn() -> None:
