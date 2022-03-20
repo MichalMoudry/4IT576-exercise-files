@@ -1,6 +1,12 @@
 from moum02_moudry import *
 
-#prepare()
-#print_state()
-#print(len(TALON))
-test_prepare()
+"""
+prepare()
+print_state()
+"""
+
+"""
+prepare()
+print_state()
+print(comp_turn())
+"""

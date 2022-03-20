@@ -164,6 +164,17 @@ def comp_turn() -> int:
     vrátí vrátí její index ve svém seznamu, aby ji bylo možné použít.
     Nemá-li takovou, vrátí -1, aby mu byla přidána karta z talónu.
     """
+    index = 0
+    face_up_last_card = FACE_UP[len(FACE_UP) - 1]
+    selected_index = -1
+    while index < len(COMP):
+        is_number = COMP[index][0] in face_up_last_card
+        is_color = COMP[index][1] in face_up_last_card
+        if is_number or is_color:
+            selected_index = index
+            break
+        index += 1
+    return selected_index
 
 
 def user_turn() -> int:
