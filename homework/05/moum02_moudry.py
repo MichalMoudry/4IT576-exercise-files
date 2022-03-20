@@ -77,6 +77,15 @@ destination: list[str]) -> None:
     orig.remove(card)
     destination.append(card)
 
+def comp_turn_response(card: str) -> None:
+    """
+    Funkce pro zachycení situace, kdy počítač položí kartu na stůl.
+    """
+    print(f"\nPočítač dal {card}"+ 
+    " na odkládací balíček")
+    handle_special_card(card, USER)
+    change_cards_deck(card, COMP, FACE_UP)
+
 def compare_cards(card1: str, card2: str) -> bool:
     """
     Funkce pro porovnání, zda jsou karty mezi sebou kompatibilní.
@@ -344,10 +353,7 @@ def turn() -> int:
     computer_turn = comp_turn()
     handle_card_draw(usr_turn, computer_turn)
     if computer_turn != -1:
-        print(f"\nPočítač dal {COMP[computer_turn]}"+ 
-        " na odkládací balíček")
-        handle_special_card(COMP[computer_turn], USER)
-        change_cards_deck(COMP[computer_turn], COMP, FACE_UP)
+        comp_turn_response(COMP[computer_turn])
     return get_turn_result()
 
 
