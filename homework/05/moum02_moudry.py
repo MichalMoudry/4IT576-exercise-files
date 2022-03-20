@@ -143,29 +143,41 @@ def handle_empty_talon() -> None:
     """
     Funkce pro vyřešení situace, kdy lízací balíček je prázdný
     """
-    last_card = get_face_up_last_card()
-    face_up_length = len(FACE_UP) - 1
-    for index, card in enumerate(FACE_UP):
-        if index != face_up_length:
-            TALON.append(card)
-    FACE_UP.clear()
-    FACE_UP.append(last_card)
-    deck = shuffle_deck(TALON)
-    TALON.clear()
-    fill_talon_deck(deck)
+    if len(TALON) == 0:
+        last_card = get_face_up_last_card()
+        face_up_length = len(FACE_UP) - 1
+        for index, card in enumerate(FACE_UP):
+            if index != face_up_length:
+                TALON.append(card)
+        FACE_UP.clear()
+        FACE_UP.append(last_card)
+        deck = shuffle_deck(TALON)
+        TALON.clear()
+        fill_talon_deck(deck)
+
+def handle_special_card(card: str, opponent: list[str]) -> None:
+    """
+    Funkce pro zajištění speciálních efektů u karet.
+    """
+    if "7" in card:
+        handle_empty_talon()
+        if len(TALON) > 0:
+            for draw in range(2):
+                card = get_random_card_from_deck(TALON)
+                change_cards_deck(card, TALON, opponent)
 
 def handle_card_draw(user_decision: int, computer_decision: int) -> None:
     """
     Funkce pro zachycení, zda si chce nějaká strana líznout kartu.
     """
-    if len(TALON) == 0:
-        handle_empty_talon()
+    handle_empty_talon()
     card = ""
     if user_decision == -1 and len(TALON) > 0:
         card = get_random_card_from_deck(TALON)
         change_cards_deck(card, TALON, USER)
     if computer_decision == -1 and len(TALON) > 0:
         card = get_random_card_from_deck(TALON)
+        print("\nPočítač si lízl kartu z balíčku")
         change_cards_deck(card, TALON, COMP)
 
 def handle_user_input(inpt: str) -> int:
@@ -231,7 +243,7 @@ def print_user_turn_info() -> None:
     Funkce pro vypsání začátečních informací na začátku uživatelova
     tahu.
     """
-    print(f"\nVaše karty: {USER}")
+    print(f"\n\nVaše karty: {USER}")
     print(60*"-")
     print(f"Počet karet počítače: {len(COMP)}")
     print(f"Odkládací balíček: ['{get_face_up_last_card()}']")
@@ -322,6 +334,7 @@ def turn() -> int:
         if usr_turn != -1:
             face_up_last_card = get_face_up_last_card()
             if compare_cards(USER[usr_turn], face_up_last_card):
+                handle_special_card(USER[usr_turn], COMP)
                 change_cards_deck(USER[usr_turn], USER, FACE_UP)
                 is_user_input_invalid = False
             else:
@@ -331,6 +344,9 @@ def turn() -> int:
     computer_turn = comp_turn()
     handle_card_draw(usr_turn, computer_turn)
     if computer_turn != -1:
+        print(f"\nPočítač dal {COMP[computer_turn]}"+ 
+        " na odkládací balíček")
+        handle_special_card(COMP[computer_turn], USER)
         change_cards_deck(COMP[computer_turn], COMP, FACE_UP)
     return get_turn_result()
 
