@@ -23,5 +23,8 @@ user_turn()
 prepare()
 turn()
 """
-prepare()
-print(turn())
+
+"""
+test_prepare()
+test_turn()
+"""

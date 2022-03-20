@@ -48,7 +48,7 @@ VALUE  = ('7', '8', '9', 'X', 'J', 'Q', 'K', 'A')
 VALUES = len(VALUE)     # Pro testování lze hodnotu nastavit od 2 do 8
 
 # Počet rozdávaných karel
-TO_DEAL = 1             # Pro testování lze hodnotu nastavit
+TO_DEAL = 4             # Pro testování lze hodnotu nastavit
 
 # Balíček karet určených k "lízání" seřazených tak, že karta,
 # která se má lízat, je vždy uvedena jako poslední (tj. je na konci seznamu).
@@ -294,23 +294,48 @@ def test_prepare() -> None:
     prepare()
     print_state("test_prepare()")
     face_up_res = True if len(FACE_UP) == 1 else False
-    print("FACE_UP test:", f"{face_up_res},",
-    f"FACE_UP length: {len(FACE_UP)} (expected: 1)")
+    print("Test odkládacího balíčku:", f"{face_up_res},",
+    f"Velikost odkládacího balíčku: {len(FACE_UP)} (očekáváno: 1)")
     user_hand_test = True if len(USER) == TO_DEAL else False
-    print("User hand test:", f"{user_hand_test},",
-    f"User hand length: {len(USER)} (expected: {TO_DEAL})")
+    print("Ruka uživatele test:", f"{user_hand_test},",
+    f"Délka balíčku uživatele: {len(USER)} (očekáváno: {TO_DEAL})")
     computer_hand_test = True if len(COMP) == TO_DEAL else False
-    print("Computer hand test:", f"{computer_hand_test},",
-    f"Computer hand length: {len(COMP)} (expected: {TO_DEAL})")
+    print("Test ruky počítače:", f"{computer_hand_test},",
+    f"Délka balíčku počítače: {len(COMP)} (očekáváno: {TO_DEAL})")
     deck_length = len(TALON) + len(FACE_UP)+ len(USER) + len(COMP)
     talon_test = True if deck_length == (VALUES * COLORS) else False
-    print(f"Talon test: {talon_test},",
-    f"deck length: {deck_length} (expected: {VALUES * COLORS})")
+    print(f"Test lízacího balíčku: {talon_test},",
+    f"délka balíčku: {deck_length} (očekáváno: {VALUES * COLORS})")
 
 
 def test_turn() -> None:
     """Prověrka kódu pro realizaci jednoho kola hry funkcí turn().
     """
+    import builtins as b
+    b_input = b.input
+    b.input = dbg.input
+    dbg.INPUTS = ('1', '0')
+    dbg.TST = 1
+    random.seed(42)
+    dbg.TST = 1
+    prepare()
+    print(f"Výsledek kola: {turn()} (očekáváno: 0)")
+    print_state("test_turn()")
+    print("Je J♥ v odkládacím balíčku?", True if "J♥" in FACE_UP else False,
+    "(očekáváno: True)")
+    print("Bylo J♥ odebráno z ruky hráče?",
+    True if not("J♥" in USER) else False, "(očekáváno: True)")
+    user_orig_length = len(USER)
+    talon_orig_length = len(TALON)
+    turn()
+    user_modified_length = len(USER)
+    talon_modified_length = len(TALON)
+    print("Přidána karta do balíčku uživatele?",
+    True if user_orig_length + 1 == user_modified_length else False)
+    print("Byla odebrána karta z odebíracího balíčku?",
+    True if talon_orig_length == talon_modified_length + 1 else False)
+    b.input = b_input
+    dbg.TST = 0
 
 
 def test_play() -> None:
