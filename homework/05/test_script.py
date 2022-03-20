@@ -24,9 +24,13 @@ prepare()
 turn()
 """
 
+"""
 play()
+"""
 
 """
 test_prepare()
 test_turn()
+test_play()
 """
+test_play()

@@ -141,10 +141,10 @@ def handle_card_draw(user_decision: int, computer_decision: int) -> None:
     if len(TALON) == 0:
         handle_empty_talon()
     card = ""
-    if user_decision == -1:
+    if user_decision == -1 and len(TALON) > 0:
         card = get_random_card_from_deck(TALON)
         change_cards_deck(card, TALON, USER)
-    if computer_decision == -1:
+    if computer_decision == -1 and len(TALON) > 0:
         card = get_random_card_from_deck(TALON)
         change_cards_deck(card, TALON, COMP)
 
@@ -212,7 +212,7 @@ def print_user_turn_info() -> None:
     print(f"\nVaše karty: {USER}")
     print(60*"-")
     print(f"Počet karet počítače: {len(COMP)}")
-    print(f"Odkládací balíček: {FACE_UP}")
+    print(f"Odkládací balíček: ['{get_face_up_last_card()}']")
     print(60*"-")
     print("Možnosti:")
     print(f"- Zahrát kartu (1 - {len(USER)})")
@@ -308,8 +308,6 @@ def turn() -> int:
     computer_turn = comp_turn()
     handle_card_draw(usr_turn, computer_turn)
     if computer_turn != -1:
-        print(f"\nPočítač dal {COMP[computer_turn]}"+ 
-        " na odkládací balíček")
         change_cards_deck(COMP[computer_turn], COMP, FACE_UP)
     return get_turn_result()
 
@@ -383,7 +381,20 @@ def test_turn() -> None:
 def test_play() -> None:
     """Prověrka funkce play() řešící odehrání hry.
     """
-
+    import builtins as b
+    b_input = b.input
+    b.input = dbg.input
+    dbg.INPUTS = ('1', '0', '2', '3', '1', '0', '2', '3', '1', '0',
+    '2', '3', '1', '0', '52', '3', '1', '0', '4', '3', '1', '0', '2',
+    '3', '4', '0', '2', '3', '1', '0', '2', '3', '1', '0', '2', '3',
+    '1', '0', '2', '3', '1', '0', '2', '3', '1', '0', '2', '3', '1',
+    '1', '1', '0', '')
+    dbg.TST = 1
+    random.seed(50)
+    dbg.TST = 1
+    play()
+    b.input = b_input
+    dbg.TST = 0
 
 
 ###########################################################################q
