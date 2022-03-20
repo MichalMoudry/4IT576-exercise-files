@@ -83,6 +83,17 @@ def get_random_card_from_deck(deck: list[str]) -> str:
     card = deck[random.randint(0, len(deck) - 1)]
     return card
 
+def handle_user_input(inpt: str) -> int:
+    """
+    Funkce pro zvládnutí vstupu uživatele.
+
+    Vstup musí být číslo.
+    """
+    if int(inpt) in range(1, len(USER) + 1):
+        return int(inpt)
+    else:
+        return -1
+
 def initial_hand_fill(deck: list[str], to: list[str]) -> None:
     """
     Funkce pro rozdání karet určité straně.
@@ -126,6 +137,16 @@ def print_state(prolog:str='nezadáno', level:int=1) -> None:
        f'   Talón    {TALON}\n'
        f'{60*"-"}' )
 
+def print_user_turn_info() -> None:
+    """
+    Funkce pro vypsání začátečních informací na začátku uživatelova
+    tahu.
+    """
+    print(f"Vaše karty: {USER}")
+    print(60*"-")
+    print("Možnosti:")
+    print(f"- Zahrát kartu (1 - {len(USER)})")
+    print("- Líznout si kartu (0)")
 
 ###########################################################################q
 # Požadované funkce
@@ -185,6 +206,9 @@ def user_turn() -> int:
     Při vybrání odkládané karty je třeba po návratu zkontrolovat,
     zda její hodnota či barva odpovídá kartě na balíčku.
     """
+    print_user_turn_info()
+    res = handle_user_input(input("Zadejte vaše rozhodnutí: "))
+    return res
 
 
 def turn() -> int:

@@ -10,3 +10,8 @@ prepare()
 print_state()
 print(comp_turn())
 """
+
+"""
+prepare()
+user_turn()
+"""
