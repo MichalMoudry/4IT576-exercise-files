@@ -48,7 +48,7 @@ VALUE  = ('7', '8', '9', 'X', 'J', 'Q', 'K', 'A')
 VALUES = len(VALUE)     # Pro testování lze hodnotu nastavit od 2 do 8
 
 # Počet rozdávaných karel
-TO_DEAL = 4             # Pro testování lze hodnotu nastavit
+TO_DEAL = 1             # Pro testování lze hodnotu nastavit
 
 # Balíček karet určených k "lízání" seřazených tak, že karta,
 # která se má lízat, je vždy uvedena jako poslední (tj. je na konci seznamu).
@@ -69,12 +69,30 @@ COMP:list[str] = []
 ###########################################################################q
 # Abecedně seřazené pomocné funkce
 
-def draw_card(card: str, orig: list[str], destination: list[str]) -> None:
+def change_cards_deck(card: str, orig: list[str],
+destination: list[str]) -> None:
     """
     Funkce pro přesunutí karty z balíčku do libovolné destinace.
     """
     orig.remove(card)
     destination.append(card)
+
+def compare_cards(card1: str, card2: str) -> bool:
+    """
+    Funkce pro porovnání, zda jsou karty mezi sebou kompatibilní.
+    """
+    if card1[0] in card2:
+        return True
+    elif card1[1] in card2:
+        return True
+    else:
+        return False
+
+def get_face_up_last_card() -> str:
+    """
+    Funkce pro získání poslední karty z balíčku FACE_UP.
+    """
+    return FACE_UP[len(FACE_UP) - 1]
 
 def get_random_card_from_deck(deck: list[str]) -> str:
     """
@@ -83,14 +101,39 @@ def get_random_card_from_deck(deck: list[str]) -> str:
     card = deck[random.randint(0, len(deck) - 1)]
     return card
 
+def get_turn_result() -> int:
+    """
+    Funkce pro získání výsledku kola hry Prší.
+    """
+    if len(USER) == 0:
+        return -1
+    elif len(COMP) == 0:
+        return 1
+    else:
+        return 0
+
+def handle_card_draw(user_decision: int, computer_decision: int) -> None:
+    """
+    Funkce pro zachycení, zda si chce nějaká strana líznout kartu.
+    """
+    card = ""
+    if user_decision == -1:
+        card = get_random_card_from_deck(TALON)
+        change_cards_deck(card, TALON, USER)
+    if computer_decision == -1:
+        card = get_random_card_from_deck(TALON)
+        change_cards_deck(card, TALON, COMP)
+
 def handle_user_input(inpt: str) -> int:
     """
     Funkce pro zvládnutí vstupu uživatele.
 
     Vstup musí být číslo.
     """
+    if inpt == "":
+        return -1
     if int(inpt) in range(1, len(USER) + 1):
-        return int(inpt)
+        return int(inpt) - 1
     else:
         return -1
 
@@ -102,7 +145,7 @@ def initial_hand_fill(deck: list[str], to: list[str]) -> None:
     deck_length = len(deck)
     for i in range(TO_DEAL):
         card = deck[deck_length - (i + 1)]
-        draw_card(card, deck, to)
+        change_cards_deck(card, deck, to)
 
 def initial_deck_fill(deck: list[str]) -> list[str]:
     """
@@ -121,7 +164,7 @@ def shuffle_deck(deck: list[str]) -> list[str]:
     new_deck:list[str] = []
     while len(deck) > 0:
         random_card = get_random_card_from_deck(deck)
-        draw_card(random_card, deck, new_deck)
+        change_cards_deck(random_card, deck, new_deck)
     return new_deck
 
 def print_state(prolog:str='nezadáno', level:int=1) -> None:
@@ -143,6 +186,8 @@ def print_user_turn_info() -> None:
     tahu.
     """
     print(f"Vaše karty: {USER}")
+    print(60*"-")
+    print(f"Odkládací balíček: {FACE_UP}")
     print(60*"-")
     print("Možnosti:")
     print(f"- Zahrát kartu (1 - {len(USER)})")
@@ -174,7 +219,7 @@ def prepare() -> None:
     initial_hand_fill(deck, USER)
     initial_hand_fill(deck, COMP)
     face_up_card = deck[len(deck) - 1]
-    draw_card(face_up_card, deck, FACE_UP)
+    change_cards_deck(face_up_card, deck, FACE_UP)
     for card in deck:
         TALON.append(card)
 
@@ -186,12 +231,10 @@ def comp_turn() -> int:
     Nemá-li takovou, vrátí -1, aby mu byla přidána karta z talónu.
     """
     index = 0
-    face_up_last_card = FACE_UP[len(FACE_UP) - 1]
+    face_up_last_card = get_face_up_last_card()
     selected_index = -1
     while index < len(COMP):
-        is_number = COMP[index][0] in face_up_last_card
-        is_color = COMP[index][1] in face_up_last_card
-        if is_number or is_color:
+        if compare_cards(COMP[index], face_up_last_card):
             selected_index = index
             break
         index += 1
@@ -217,12 +260,28 @@ def turn() -> int:
     Zůstanou-li hráčům v ruce karty, vrátí 0.
     Vyhraje-li uživatel, vrátí -1, vyhraje-li počítač, vrátí +1.
     """
+    is_user_input_invalid = True
+    while is_user_input_invalid:
+        usr_turn = user_turn()
+        if usr_turn != -1:
+            face_up_last_card = get_face_up_last_card()
+            if compare_cards(USER[usr_turn], face_up_last_card):
+                change_cards_deck(USER[usr_turn], USER, FACE_UP)
+                is_user_input_invalid = False
+        elif usr_turn == -1:
+            is_user_input_invalid = False
+    computer_turn = comp_turn()
+    handle_card_draw(usr_turn, computer_turn)
+    if computer_turn != -1:
+        change_cards_deck(COMP[computer_turn], COMP, FACE_UP)
+    return get_turn_result()
 
 
 def play(colors:int=4, value:int=8, to_deal:int=4) -> None:
-    """Realizuje zjednodušenou verzi hry Prší se zadaným okrajovými podmínkami,
-    tj. s kartami se zadaným počtem barev a hodnot a se zadaným počtem karet,
-    které se mají na počátku každému hráči rozdat.
+    """Realizuje zjednodušenou verzi hry Prší se zadaným okrajovými
+    podmínkami, tj. s kartami se zadaným počtem barev a hodnot a
+    se zadaným počtem karet, které se mají na počátku každému hráči
+    rozdat.
     """
 
 

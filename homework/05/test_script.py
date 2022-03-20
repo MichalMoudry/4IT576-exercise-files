@@ -8,10 +8,20 @@ print_state()
 """
 prepare()
 print_state()
-print(comp_turn())
+if comp_turn() != -1:
+    print(COMP[comp_turn()], comp_turn())
+else:
+    print("Draw a card", comp_turn())
 """
 
 """
 prepare()
 user_turn()
 """
+
+"""
+prepare()
+turn()
+"""
+prepare()
+print(turn())
