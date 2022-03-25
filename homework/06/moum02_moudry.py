@@ -33,6 +33,48 @@ COMMENTS = """\
 # ale mělo by být alespoň 10**6-1, tj. 999_999
 MAX_NUM:int = 2**64-1   # Zde největší číslo typu long z jiných jazyků
 
+###########################################################################q
+# Pomocné funkce
+
+def check_if_input_is_number(n: int) -> bool:
+  """
+  Funkce pro prověření, zda hodnota je číslo nebo ne.
+  """
+  try:
+    n = int(n)
+    return True
+  except:
+    return False
+
+def convert_single_digit_number(digit: int) -> str:
+  """
+  Funkce pro převod jednoho čísla. Podmínkou je,
+  že argument funkce je číslo.
+  """
+  strings = ("nula", "jedna", "dva", "tři", "čtyři", "pět", "šest", "sedm",
+  "osm", "devět")
+  return strings[digit]
+
+def conver_two_digit_number(number: int) -> str:
+  """
+  Funkce pro převod dvou místného čísla, které je v rozmezí 20 - 99.
+  Podmínkou je, že argument funkce je číslo.
+  """
+  strings = ("dvacet", "třicet", "čtyřicet", "padesát", "šedesát",
+  "sedmdesát", "osmdesát", "devadesát")
+  first_part = strings[int(str(number)[0]) - 2]
+  second_part = f" {convert_single_digit_number(int(str(number)[1]))}"
+  if second_part == " nula":
+    second_part = ""
+  return f"{first_part}{second_part}"
+
+def convert_three_digit_number(number: int) -> str:
+  """
+  Funkce pro převod tří místného čísla, které je v rozmezí 100 - 999.
+  Podmínkou je, že argument funkce je číslo.
+  """
+  strings = ("sto", "dvě stě", "tři sta", "čtyři sta", "pět set",
+  "šest set", "sedm set", "osm set", "devět set")
 
 ############################################################################
 # Testovací data
@@ -80,6 +122,20 @@ def number_in_words(n:int) -> str:
     """Převede zadané číslo na slovní vyjádření v češtině,
     přičemž největší převeditelné číslo definuje konstanta MAX_NUM
     """
+    if not(check_if_input_is_number(n)): print("Vstup není číslo"); return
+    if n > MAX_NUM: print("Vložené číslo je příliš velké"); return
+    result = ""
+    if n < 0: result += "minus "; n = -(n)
+    length = len(str(n))
+    if length == 1:
+      result += convert_single_digit_number(n)
+    elif n > 9 and n < 20:
+      ... # TODO: Přidat konverzi čísel v rozmezí 10 - 19
+    elif length == 2:
+      result += conver_two_digit_number(n)
+    elif length == 3:
+      result += convert_three_digit_number(n)
+    return result
 
 
 
@@ -88,6 +144,11 @@ def number_in_words(n:int) -> str:
 
 def test_number_in_words() -> None:
     """Prověrka definice funkce number_in_words()."""
+    import random
+    random.seed(66)
+    random_number = random.randint(0, 10**6-1)
+    for number in test_numbers:
+      print(number)
 
 
 
