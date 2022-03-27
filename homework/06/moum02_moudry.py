@@ -36,6 +36,16 @@ MAX_NUM:int = 2**64-1   # Zde největší číslo typu long z jiných jazyků
 ###########################################################################q
 # Pomocné funkce
 
+def add_padding_to_number(number: str) -> str:
+  """
+  Funkce pro přidání výplně (nuly před číslem) k číslu,
+  které je ve formě řetězce.
+  """
+  padding = ""
+  while (len(number) + len(padding)) % 3 != 0:
+    padding += "0"
+  return f"{padding}{number}"
+
 def convert(number: int) -> str:
   """
   Funkce pro převod čísla.
@@ -50,6 +60,8 @@ def convert(number: int) -> str:
     result += convert_two_digit_number(number)
   elif length == 3:
     result += convert_three_digit_number(number)
+  else:
+    result += convert_large_number(number)
   return result
 
 def conver_special_number(number: int) -> str:
@@ -90,16 +102,29 @@ def convert_three_digit_number(number: int) -> str:
   strings = ("jedno sto", "dvě stě", "tři sta", "čtyři sta", "pět set",
   "šest set", "sedm set", "osm set", "devět set")
   first_part = strings[int(str(number)[0]) - 1]
-  second_part = ""
+  second_part = " "
   if str(number)[1] == "0":
-    second_part = convert_single_digit_number(int(str(number)[2]))
+    second_part += convert_single_digit_number(int(str(number)[2]))
   elif str(number)[1] == "1":
-    second_part = conver_special_number(int(str(number)[1:3]))
+    second_part += conver_special_number(int(str(number)[1:3]))
   else:
-    second_part = convert_two_digit_number(int(str(number)[1:3]))
-  if second_part == "nula":
+    second_part += convert_two_digit_number(int(str(number)[1:3]))
+  if second_part == " nula":
     second_part = ""
-  return f"{first_part} {second_part}"
+  return f"{first_part}{second_part}"
+
+def convert_large_number(number: int) -> str:
+  """
+  Funkce pro konverzi více než tří místných čísel.
+  """
+  split_number = split_number_into_three_digits(number)
+  groups_number = len(split_number) - 1
+  for group in split_number:
+    if group != "":
+      print(f"{groups_number}.", group)
+      groups_number -= 1
+
+  return str(split_number)
 
 def check_if_input_is_number(n: int) -> bool:
   """
@@ -110,6 +135,26 @@ def check_if_input_is_number(n: int) -> bool:
     return True
   except:
     return False
+
+def split_number_into_three_digits(number: int) -> list[str]:
+  """
+  Funkce pro rozdělení čísla na tří místná čísla.
+  """
+  number_as_string = add_padding_to_number(str(number))
+  index = len(number_as_string)
+  digit_groups:list[str] = []
+  digit_group = ""
+  index = 1
+  for char in number_as_string:
+    if not(len(digit_group) == 0 and char == "0"):
+      digit_group += char
+    if index == 3:
+      digit_groups.append(digit_group)
+      digit_group = ""
+      index = 1
+    else:
+      index += 1
+  return digit_groups
 
 ############################################################################
 # Testovací data
@@ -175,8 +220,9 @@ def test_number_in_words() -> None:
     random.seed(66)
     random_number = random.randint(0, 10**6-1)
     for number in test_numbers:
-      print(number, number_in_words(number),
-      "=SPRÁVNĚ=" if number_in_words(number) == test_numbers[number] else "=ŠPATNĚ=")
+      print(number, test_numbers[number],
+      "=SPRÁVNĚ=" if number_in_words(number) == test_numbers[number]
+      else "=ŠPATNĚ=")
 
 
 
