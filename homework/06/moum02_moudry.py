@@ -36,15 +36,29 @@ MAX_NUM:int = 2**64-1   # Zde největší číslo typu long z jiných jazyků
 ###########################################################################q
 # Pomocné funkce
 
-def check_if_input_is_number(n: int) -> bool:
+def convert(number: int) -> str:
   """
-  Funkce pro prověření, zda hodnota je číslo nebo ne.
+  Funkce pro převod čísla.
   """
-  try:
-    n = int(n)
-    return True
-  except:
-    return False
+  result = ""
+  length = len(str(number))
+  if length == 1:
+    result += convert_single_digit_number(number)
+  elif number > 9 and number < 20:
+    result += conver_special_number(number)
+  elif length == 2:
+    result += convert_two_digit_number(number)
+  elif length == 3:
+    result += convert_three_digit_number(number)
+  return result
+
+def conver_special_number(number: int) -> str:
+  """
+  Funkce pro převod čísla v rozmezí 10 - 19.
+  """
+  strings = ("deset", "jedenáct", "dvanáct", "třináct", "čtrnáct",
+  "patnáct", "šestnáct", "sedmnáct", "osmnáct", "devatenáct")
+  return strings[int(str(number)[1])]
 
 def convert_single_digit_number(digit: int) -> str:
   """
@@ -55,7 +69,7 @@ def convert_single_digit_number(digit: int) -> str:
   "osm", "devět")
   return strings[digit]
 
-def conver_two_digit_number(number: int) -> str:
+def convert_two_digit_number(number: int) -> str:
   """
   Funkce pro převod dvou místného čísla, které je v rozmezí 20 - 99.
   Podmínkou je, že argument funkce je číslo.
@@ -75,6 +89,23 @@ def convert_three_digit_number(number: int) -> str:
   """
   strings = ("sto", "dvě stě", "tři sta", "čtyři sta", "pět set",
   "šest set", "sedm set", "osm set", "devět set")
+  first_part = strings[int(str(number)[0]) - 1]
+  second_part = ""
+  if str(number)[1] == "0":
+    second_part = convert_single_digit_number(int(str(number)[2]))
+  else:
+    second_part = convert_two_digit_number(int(str(number)[1:3]))
+  return f"{first_part} {second_part} (orig number: {number})"
+
+def check_if_input_is_number(n: int) -> bool:
+  """
+  Funkce pro prověření, zda hodnota je číslo nebo ne.
+  """
+  try:
+    n = int(n)
+    return True
+  except:
+    return False
 
 ############################################################################
 # Testovací data
@@ -126,15 +157,7 @@ def number_in_words(n:int) -> str:
     if n > MAX_NUM: print("Vložené číslo je příliš velké"); return
     result = ""
     if n < 0: result += "minus "; n = -(n)
-    length = len(str(n))
-    if length == 1:
-      result += convert_single_digit_number(n)
-    elif n > 9 and n < 20:
-      ... # TODO: Přidat konverzi čísel v rozmezí 10 - 19
-    elif length == 2:
-      result += conver_two_digit_number(n)
-    elif length == 3:
-      result += convert_three_digit_number(n)
+    result += convert(n)
     return result
 
 
