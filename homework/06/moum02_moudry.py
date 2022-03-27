@@ -87,15 +87,19 @@ def convert_three_digit_number(number: int) -> str:
   Funkce pro převod tří místného čísla, které je v rozmezí 100 - 999.
   Podmínkou je, že argument funkce je číslo.
   """
-  strings = ("sto", "dvě stě", "tři sta", "čtyři sta", "pět set",
+  strings = ("jedno sto", "dvě stě", "tři sta", "čtyři sta", "pět set",
   "šest set", "sedm set", "osm set", "devět set")
   first_part = strings[int(str(number)[0]) - 1]
   second_part = ""
   if str(number)[1] == "0":
     second_part = convert_single_digit_number(int(str(number)[2]))
+  elif str(number)[1] == "1":
+    second_part = conver_special_number(int(str(number)[1:3]))
   else:
     second_part = convert_two_digit_number(int(str(number)[1:3]))
-  return f"{first_part} {second_part} (orig number: {number})"
+  if second_part == "nula":
+    second_part = ""
+  return f"{first_part} {second_part}"
 
 def check_if_input_is_number(n: int) -> bool:
   """
@@ -171,7 +175,8 @@ def test_number_in_words() -> None:
     random.seed(66)
     random_number = random.randint(0, 10**6-1)
     for number in test_numbers:
-      print(number)
+      print(number, number_in_words(number),
+      "=SPRÁVNĚ=" if number_in_words(number) == test_numbers[number] else "=ŠPATNĚ=")
 
 
 
