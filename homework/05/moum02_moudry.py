@@ -168,12 +168,14 @@ def handle_special_card(card: str, opponent: list[str]) -> None:
     """
     Funkce pro zajištění speciálních efektů u karet.
     """
+    """
     if "7" in card:
         handle_empty_talon()
         if len(TALON) > 0:
             for draw in range(2):
                 card = get_random_card_from_deck(TALON)
                 change_cards_deck(card, TALON, opponent)
+    """
 
 def handle_card_draw(user_decision: int, computer_decision: int) -> None:
     """
@@ -197,7 +199,12 @@ def handle_user_input(inpt: str) -> int:
     """
     if inpt == "":
         return -1
-    if int(inpt) in range(1, len(USER) + 1):
+    if inpt == "k":
+        return -2
+    elif inpt == "?":
+        print_guide()
+        return 0
+    elif int(inpt) in range(1, len(USER) + 1):
         return int(inpt) - 1
     else:
         return -1
@@ -234,6 +241,28 @@ def shuffle_deck(deck: list[str]) -> list[str]:
         change_cards_deck(random_card, deck, new_deck)
     return new_deck
 
+def print_guide():
+    """
+    Funkce pro vypsání nápovědy uživateli.
+    """
+    print("")
+    print(50*"-", "Pravidla hry prší", 50*"-")
+    print(f"- Každý hráč dostane do ruky {TO_DEAL} karet")
+    print("- Kolo zahajuje vždy uživatel, a ne počítač")
+    print("- Na odhazovací balíček se smí odhodit karta" +
+    ", která má buď stejnou hodnotu anebo barvu, jako vrchní lícová karta")
+    print("- Vítězem se stává hráč, který se zbaví všech karet")
+    print("\n-- Speciální karty --")
+    print("- Pokud hráč zahraje sedmičku, následující hráč si" +
+    " musí líznout dvě karty")
+    print("\t- Sedmičku nelze přebíjet")
+    print("- Pokud hráč zahraje eso, následující hráč nehraje")
+    print("- Kartu svršek lze hrát na kartu libovolné barvy," +
+    " vyjma sedmy či esa odehraného předcházejícím hráčem.") 
+    print("\t- Pokud je tato karta odehrána, musí hráč, který" + 
+    " svrška odehraje, zvolit barvu.")
+    print(119*"-")
+
 def print_state(prolog:str='nezadáno', level:int=1) -> None:
     """Pomocná funkce pro ladění, která vytiskne zadanou úvodní hlášku
     s prologem charakterizujícím místo, odkud byla zavolána,
@@ -260,6 +289,8 @@ def print_user_turn_info() -> None:
     print("Možnosti:")
     print(f"- Zahrát kartu (1 - {len(USER)})")
     print("- Líznout si kartu (0)")
+    print("- Nápověda (?)")
+    print("- Konec (k)")
 
 def print_game_result(result: int) -> None:
     """
@@ -337,6 +368,7 @@ def turn() -> int:
     Zůstanou-li hráčům v ruce karty, vrátí 0.
     Vyhraje-li uživatel, vrátí -1, vyhraje-li počítač, vrátí +1.
     """
+    """
     is_user_input_invalid = True
     while is_user_input_invalid:
         usr_turn = user_turn()
@@ -354,7 +386,23 @@ def turn() -> int:
     handle_card_draw(usr_turn, computer_turn)
     if computer_turn != -1:
         comp_turn_response(COMP[computer_turn])
-    return get_turn_result()
+    """
+    is_user_input_valid = True
+    result = 1
+    while is_user_input_valid:
+        usr_turn = user_turn()
+        # Normal turn.
+        if usr_turn > 0:
+            face_up_last_card = get_face_up_last_card()
+            if compare_cards(USER[usr_turn], face_up_last_card):
+                handle_special_card(USER[usr_turn], COMP)
+            else:
+                print("--- Nehodná karta zvolena! ---")
+            result = get_turn_result()
+        # If user wants to end the game.
+        elif usr_turn == -2:
+            return 1
+    return result
 
 
 def play(colors:int=4, value:int=8, to_deal:int=4) -> None:
