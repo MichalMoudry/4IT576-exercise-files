@@ -16,7 +16,7 @@ AUTHOR_NAME = 'MOUDRÝ Michal'
 
 # Zdroje, z nichž autor(ka) čerpal(a) při řešení úkolu
 SOURCES = """\
-Prezentace
+Prezentace - Wikipedia (pro pravidla hry Prší)
 """
 
 # Problémy, které se vyskytly při zpracování probrané látky a řešení DU
@@ -65,17 +65,15 @@ USER:list[str] = []
 COMP:list[str] = []
 
 
+###########################################################################q
+# Abecedně seřazené pomocné proměnné
+
+required_color:str = ""
+
+###########################################################################q
 
 ###########################################################################q
 # Abecedně seřazené pomocné funkce
-
-def change_cards_deck(card: str, orig: list[str],
-destination: list[str]) -> None:
-    """
-    Funkce pro přesunutí karty z balíčku do libovolné destinace.
-    """
-    orig.remove(card)
-    destination.append(card)
 
 def comp_turn_response(card: str) -> None:
     """
@@ -83,8 +81,8 @@ def comp_turn_response(card: str) -> None:
     """
     print(f"\nPočítač dal {card}"+ 
     " na odkládací balíček")
-    handle_special_card(card, USER)
     change_cards_deck(card, COMP, FACE_UP)
+    handle_special_card(card, False, USER)
 
 def compare_cards(card1: str, card2: str) -> bool:
     """
@@ -92,7 +90,7 @@ def compare_cards(card1: str, card2: str) -> bool:
     """
     if card1[0] in card2:
         return True
-    elif card1[1] in card2:
+    elif card1[1] == required_color:
         return True
     else:
         return False
@@ -164,7 +162,8 @@ def handle_empty_talon() -> None:
         TALON.clear()
         fill_talon_deck(deck)
 
-def handle_special_card(card: str, opponent: list[str]) -> None:
+def handle_special_card(card: str, is_user: bool,
+opponent: list[str]) -> None:
     """
     Funkce pro zajištění speciálních efektů u karet.
     """
@@ -176,6 +175,13 @@ def handle_special_card(card: str, opponent: list[str]) -> None:
                 card = get_random_card_from_deck(TALON)
                 change_cards_deck(card, TALON, opponent)
     """
+    # Změna hrané barvy.
+    if "Q" in card:
+        if is_user:
+            change_color_by_user()
+        else:
+            change_color_by_comp()
+        print(f"\n\nZměna barvy na {required_color}")
 
 def handle_card_draw(user_decision: int, computer_decision: int) -> None:
     """
@@ -185,10 +191,11 @@ def handle_card_draw(user_decision: int, computer_decision: int) -> None:
     card = ""
     if user_decision == -1 and len(TALON) > 0:
         card = get_random_card_from_deck(TALON)
+        print(f"\n\nDostali jste {card} do vaší ruky")
         change_cards_deck(card, TALON, USER)
     if computer_decision == -1 and len(TALON) > 0:
         card = get_random_card_from_deck(TALON)
-        print("\nPočítač si lízl kartu z balíčku")
+        print("Počítač si lízl kartu z balíčku")
         change_cards_deck(card, TALON, COMP)
 
 def handle_user_input(inpt: str) -> int:
@@ -203,11 +210,44 @@ def handle_user_input(inpt: str) -> int:
         return -2
     elif inpt == "?":
         print_guide()
-        return 0
+        return -5
     elif int(inpt) in range(1, len(USER) + 1):
         return int(inpt) - 1
     else:
         return -1
+
+def change_cards_deck(card: str, orig: list[str],
+destination: list[str]) -> None:
+    """
+    Funkce pro přesunutí karty z balíčku do libovolné destinace.
+    """
+    orig.remove(card)
+    destination.append(card)
+    if destination == FACE_UP:
+        global required_color; required_color = card[1]
+
+def change_color_by_user():
+    """
+    Funkce pro změnu požadované barvy ze strany uživatele.
+    """
+    is_color_selection = True
+    while is_color_selection:
+        try:
+            print("Dostupné barvy:", COLOR)
+            color_index = input("Vyberte novou barvu (1 - 4): ")
+            color_index = int(color_index) - 1
+            global required_color; required_color = COLOR[color_index]
+            is_color_selection = False
+        except:
+            print("-- Zadejte správný vstup! --")
+
+def change_color_by_comp():
+    """
+    Funkce pro změnu barvy ze strany počítače.
+    """
+    # Získat náhodnou barvu.
+    color = COLOR[random.randint(0, len(COLOR) - 1)]
+    global required_color; required_color = color
 
 def initial_hand_fill(deck: list[str], to: list[str],
 to_deal: int = TO_DEAL) -> None:
@@ -246,13 +286,14 @@ def print_guide():
     Funkce pro vypsání nápovědy uživateli.
     """
     print("")
+    print("")
     print(50*"-", "Pravidla hry prší", 50*"-")
     print(f"- Každý hráč dostane do ruky {TO_DEAL} karet")
     print("- Kolo zahajuje vždy uživatel, a ne počítač")
     print("- Na odhazovací balíček se smí odhodit karta" +
     ", která má buď stejnou hodnotu anebo barvu, jako vrchní lícová karta")
     print("- Vítězem se stává hráč, který se zbaví všech karet")
-    print("\n-- Speciální karty --")
+    print("\n---- Speciální karty ----")
     print("- Pokud hráč zahraje sedmičku, následující hráč si" +
     " musí líznout dvě karty")
     print("\t- Sedmičku nelze přebíjet")
@@ -284,7 +325,8 @@ def print_user_turn_info() -> None:
     print(f"\n\nVaše karty: {USER}")
     print(60*"-")
     print(f"Počet karet počítače: {len(COMP)}")
-    print(f"Odkládací balíček: ['{get_face_up_last_card()}']")
+    print(f"Odkládací balíček: ['{get_face_up_last_card()}'] " +
+    f"(požadovaná barva: {required_color})")
     print(60*"-")
     print("Možnosti:")
     print(f"- Zahrát kartu (1 - {len(USER)})")
@@ -387,22 +429,30 @@ def turn() -> int:
     if computer_turn != -1:
         comp_turn_response(COMP[computer_turn])
     """
-    is_user_input_valid = True
-    result = 1
-    while is_user_input_valid:
+    is_user_turn = True
+    while is_user_turn:
         usr_turn = user_turn()
         # Normal turn.
-        if usr_turn > 0:
+        if usr_turn >= 0:
             face_up_last_card = get_face_up_last_card()
-            if compare_cards(USER[usr_turn], face_up_last_card):
-                handle_special_card(USER[usr_turn], COMP)
+            card = USER[usr_turn]
+            if compare_cards(card, face_up_last_card):
+                change_cards_deck(card, USER, FACE_UP)
+                print(f"\n\nZahráli jste {card}")
+                handle_special_card(card, True, COMP)
+                is_user_turn = False
             else:
-                print("--- Nehodná karta zvolena! ---")
-            result = get_turn_result()
+                print("\n\n--- Nehodná karta zvolena! ---")
         # If user wants to end the game.
+        elif usr_turn == -1:
+            is_user_turn = False
         elif usr_turn == -2:
             return 1
-    return result
+    computer_turn = comp_turn()
+    handle_card_draw(usr_turn, computer_turn)
+    if computer_turn != -1:
+        comp_turn_response(COMP[computer_turn])
+    return get_turn_result()
 
 
 def play(colors:int=4, value:int=8, to_deal:int=4) -> None:

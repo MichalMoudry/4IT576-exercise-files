@@ -1,5 +1,4 @@
 #Příliš žluťoučký kůň úpěl ďábelské ó - PŘÍLIŠ ŽLUŤOUČKÝ KŮŇ ÚPĚL ĎÁBELSKÉ Ó
-#O:/p4_DU_Assignment/DU_07_happy_scenario.py
 """
 Definice šťastného scénáře vlastní hry vyhovující
 požadavkům zadaným na stránce předmětu.
@@ -8,7 +7,7 @@ import dbg; dbg.start_mod(1, __name__)
 ###########################################################################q
 
 # Login autora/autorky programu zadaný VELKÝMI PÍSMENY
-AUTHOR_ID = 'L00'
+AUTHOR_ID = 'MOUM02'
 
 # Jméno autora/autorky programu ve formátu PŘÍJMENÍ Křestní
 AUTHOR_NAME = 'Moudrý Michal'
