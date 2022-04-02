@@ -146,6 +146,21 @@ def get_turn_result() -> int:
     else:
         return 0
 
+def handle_draw_two_action(card: str, is_user: bool,
+opponent: list[str]) -> None:
+    """
+    Funkce pro realizaci akce na základě hrané sedmičky.
+    """
+    handle_empty_talon()
+    if len(TALON) > 0:
+        for draw in range(2):
+            card = get_random_card_from_deck(TALON)
+            change_cards_deck(card, TALON, opponent)
+        if is_user:
+            print("\nPočítač si lízl 2 karty")
+        else:
+            print("\nDostali jste dvě karty")
+
 def handle_empty_talon() -> None:
     """
     Funkce pro vyřešení situace, kdy lízací balíček je prázdný
@@ -167,35 +182,35 @@ opponent: list[str]) -> None:
     """
     Funkce pro zajištění speciálních efektů u karet.
     """
-    """
     if "7" in card:
-        handle_empty_talon()
-        if len(TALON) > 0:
-            for draw in range(2):
-                card = get_random_card_from_deck(TALON)
-                change_cards_deck(card, TALON, opponent)
-    """
+        handle_draw_two_action(card, is_user, opponent)
+    elif "A" in card:
+        if is_user:
+            print("\nPočítač vynechává kolo")
+        else:
+            print("\nVynecháváte kolo")
     # Změna hrané barvy.
-    if "Q" in card:
+    elif "Q" in card:
         if is_user:
             change_color_by_user()
         else:
             change_color_by_comp()
-        print(f"\n\nZměna barvy na {required_color}")
+        print(f"\nZměna barvy na {required_color}")
 
-def handle_card_draw(user_decision: int, computer_decision: int) -> None:
+def handle_card_draw(user_decision: int, computer_decision: int,
+is_user_skipped: bool = False) -> None:
     """
     Funkce pro zachycení, zda si chce nějaká strana líznout kartu.
     """
     handle_empty_talon()
     card = ""
-    if user_decision == -1 and len(TALON) > 0:
+    if user_decision == -1 and len(TALON) > 0 and not(is_user_skipped):
         card = get_random_card_from_deck(TALON)
-        print(f"\n\nDostali jste {card} do vaší ruky")
+        print(f"\nDostali jste {card} do vaší ruky")
         change_cards_deck(card, TALON, USER)
     if computer_decision == -1 and len(TALON) > 0:
         card = get_random_card_from_deck(TALON)
-        print("Počítač si lízl kartu z balíčku")
+        print("\nPočítač si lízl kartu z balíčku")
         change_cards_deck(card, TALON, COMP)
 
 def handle_user_input(inpt: str) -> int:
@@ -343,6 +358,14 @@ def print_game_result(result: int) -> None:
     else:
         print("Bohužel jste prohráli hru.")
 
+def user_turn_response(card: str) -> None:
+    """
+    Funkce pro zachycení situace, kdy uživatel položil kartu na stůl.
+    """
+    change_cards_deck(card, USER, FACE_UP)
+    print(f"\nZahráli jste {card}")
+    handle_special_card(card, True, COMP)
+
 ###########################################################################q
 # Požadované funkce
 
@@ -401,6 +424,7 @@ def user_turn() -> int:
     """
     print_user_turn_info()
     res = handle_user_input(input("Zadejte vaše rozhodnutí: "))
+    print("")
     return res
 
 
@@ -410,48 +434,33 @@ def turn() -> int:
     Zůstanou-li hráčům v ruce karty, vrátí 0.
     Vyhraje-li uživatel, vrátí -1, vyhraje-li počítač, vrátí +1.
     """
-    """
-    is_user_input_invalid = True
-    while is_user_input_invalid:
-        usr_turn = user_turn()
-        if usr_turn != -1:
-            face_up_last_card = get_face_up_last_card()
-            if compare_cards(USER[usr_turn], face_up_last_card):
-                handle_special_card(USER[usr_turn], COMP)
-                change_cards_deck(USER[usr_turn], USER, FACE_UP)
-                is_user_input_invalid = False
-            else:
-                print("--- Nehodná karta zvolena! ---")
-        elif usr_turn == -1:
-            is_user_input_invalid = False
-    computer_turn = comp_turn()
-    handle_card_draw(usr_turn, computer_turn)
-    if computer_turn != -1:
-        comp_turn_response(COMP[computer_turn])
-    """
     is_user_turn = True
+    card = ""
     while is_user_turn:
         usr_turn = user_turn()
-        # Normal turn.
+        # Normální tah.
         if usr_turn >= 0:
             face_up_last_card = get_face_up_last_card()
             card = USER[usr_turn]
             if compare_cards(card, face_up_last_card):
-                change_cards_deck(card, USER, FACE_UP)
-                print(f"\n\nZahráli jste {card}")
-                handle_special_card(card, True, COMP)
+                user_turn_response(card)
+                if card[0] == "7":
+                    return get_turn_result()
+                elif card[0] == "A":
+                    return get_turn_result()
                 is_user_turn = False
             else:
-                print("\n\n--- Nehodná karta zvolena! ---")
-        # If user wants to end the game.
+                print("\n--- Nehodná karta zvolena! ---")
+        # Pokud uživatel chce ukončit hru.
         elif usr_turn == -1:
             is_user_turn = False
         elif usr_turn == -2:
             return 1
     computer_turn = comp_turn()
-    handle_card_draw(usr_turn, computer_turn)
+    card = COMP[computer_turn]
     if computer_turn != -1:
-        comp_turn_response(COMP[computer_turn])
+        comp_turn_response(card)
+    handle_card_draw(usr_turn, computer_turn, (card[0] == "7" or card[0] == "A"))
     return get_turn_result()
 
 
@@ -517,10 +526,10 @@ def test_turn() -> None:
     turn()
     user_modified_length = len(USER)
     talon_modified_length = len(TALON)
-    print("Přidána karta do balíčku uživatele?",
-    True if user_orig_length + 1 == user_modified_length else False)
-    print("Byla odebrána karta z odebíracího balíčku?",
-    True if talon_orig_length == talon_modified_length + 1 else False)
+    print(talon_orig_length, talon_modified_length)
+    print(user_orig_length, user_modified_length)
+    print("Nebyla přidána karta do balíčku uživatele?",
+    True if user_orig_length == user_modified_length else False)
     b.input = b_input
     dbg.TST = 0
 
