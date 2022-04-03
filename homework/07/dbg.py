@@ -65,6 +65,7 @@ def input(prompt: str) -> str:
         input_index += 1
         return result
     else:
+        prDB(2, 'Spuštěn dbg.input()')
         import builtins
         return builtins.input(prompt)
 
@@ -174,7 +175,19 @@ def nsan(lst:list[str]) -> list[str]:
     return l
 
 
-def prDB(level, *args, sep=' ', end='\n', file=None) -> None:
+def prArgs(*args, **vargs):
+    """Vrátí string se seznamem hodnota argumentů dané funkce
+    standardně uzavřeným v kulatých závorkách.
+    """
+    pos = ', '.join([str(v) for v in args])
+    nam = ', '.join([f'{k}={v}' for k, v in vargs.items()])
+    msg =('(' + pos + (', ' if (len(pos) + len(nam) > 0)
+                            else '')
+              + nam + ')')
+    return msg
+
+
+def prDB(level:int, *args, sep=' ', end='\n', file=None) -> None:
     """Realizuje pomocné tisky při ladění pouze v případě,
     když je počáteční argument větší nebo rovna hodnotě DBG.
     Ostatní argumenty odpovídají standardní funkci print()"""
@@ -208,6 +221,8 @@ prSE.indent= ''     # Aktuální text odsazení pro znázornění hladiny volán
 prSE.inc   = '|   ' # Přírůstek odsazení pro zvětšení hloubky vnoření
 prSE.start = '==> ' # Indikace volání funkce
 prSE.end   = '<== ' # Indikace návratu z funkce
+def init(): prSE.level = 0; prSE.indent= ''
+prSE.init = init;   del init
 
 
 def prIN(level:int, msg:str='', q:bool=False) -> None:
@@ -336,7 +351,7 @@ def prSeq(seq, prn=True) -> str:
 
 def prMatI(msg:str, mat:[[int]], pos:int=3, nl:bool=False):
     """Vytiskne zadaný titulek následovaný položkami zadané celočíselné
-    matice přičemž pro tisk čísla vyhradí zadaný počet pozic.
+    matice přičemž pro tisk čísla vyhradí zadaný instancí pozic.
     Argument nl definuje, zda se má za nadpisem odřádkovat.
     Odřádkuje-li se, budou se všechny následující řádky odsazovat o 3 mezery.
     """
@@ -357,7 +372,7 @@ def prMatI(msg:str, mat:[[int]], pos:int=3, nl:bool=False):
 
 def prMatO(msg:str, mat:[[object]]):
     """Vytiskne zadaný titulek následovaný položkami zadané celočíselné
-    matice přičemž pro tisk čísla vyhradí zadaný počet pozic.
+    matice přičemž pro tisk čísla vyhradí zadaný instancí pozic.
     Argument nl definuje, zda se má za nadpisem odřádkovat.
     Odřádkuje-li se, budou se všechny následující řádky odsazovat o 3 mezery.
     """
