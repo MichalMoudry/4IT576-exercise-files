@@ -1,5 +1,4 @@
 #Příliš žluťoučký kůň úpěl ďábelské ó - PŘÍLIŠ ŽLUŤOUČKÝ KŮŇ ÚPĚL ĎÁBELSKÉ Ó
-#O:/p4_INP/game/a1b_all/__init__.py
 """
 Balíček s modulem scenarios definujícím všechny čtyři povinné scénáře.¤
 
@@ -69,7 +68,6 @@ def self_test():
 
 # Test spustíte zadáním příkazů
 # import game.a1b_all as at; at.self_test()
-
 
 
 ############################################################################
