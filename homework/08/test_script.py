@@ -1,3 +1,2 @@
-from game.moum02_moudry import *
-
-self_test()
+import game.moum02_moudry as moum
+moum.self_test()
