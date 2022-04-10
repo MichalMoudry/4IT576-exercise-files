@@ -19,6 +19,7 @@ USE = "použij"
 HELP = "?"
 TALK = "oslov"
 END_TALK = "ukončit_rozhovor"
+END = "konec"
 
 ############################################################################
 
@@ -246,12 +247,55 @@ MISTAKE = Scenario('', stMISTAKES, (
         ("Assault_Rifle", "Jacob_Keyes", ),
         ("Pistole", "generátor_štítu", ),
     ),
-    ScenarioStep(tsPUT_DOWN_WA, PUT_DOWN, "Příkazu chybí požadované parametry",
+    ScenarioStep(tsPUT_DOWN_WA, PUT_DOWN,
+        "Příkazu chybí požadované parametry",
         "The_Pillar_of_Autumn",
         ("Halo",),
         ("Assault_Rifle", "Jacob_Keyes", ),
         ("Pistole", "generátor_štítu", ),
     ),
+    ScenarioStep(tsTAKE_WA, PICK_UP, "Příkazu chybí požadované parametry",
+        "The_Pillar_of_Autumn",
+        ("Halo",),
+        ("Assault_Rifle", "Jacob_Keyes", ),
+        ("Pistole", "generátor_štítu", ),
+    ),
+    ScenarioStep(tsNOT_IN_BAG, f"{PUT_DOWN} Index", "Předmět není v batohu",
+        "The_Pillar_of_Autumn",
+        ("Halo",),
+        ("Assault_Rifle", "Jacob_Keyes", ),
+        ("Pistole", "generátor_štítu", ),
+    ),
+    ScenarioStep(tsGOTO, f"{MOVE} Halo",
+        "Proběhl přesun na: Halo\nSousedící místnosti:\n"
+        "Kontrolní_místnost_prstence; Kartograf; The_Pillar_of_Autumn",
+        "Halo",
+        ("kontrolní_místnost_prstence", "Kartograf",
+        "The_Pillar_of_Autumn"),
+        ("Needler", "Plasma_Pistol", "[Grunt]"),
+        ("Pistole", "generátor_štítu",)
+    ),
+    ScenarioStep(tsTAKE, f"{PICK_UP} Needler", "Předmět byl zvednut",
+        "Halo",
+        ("kontrolní_místnost_prstence", "Kartograf",
+        "The_Pillar_of_Autumn"),
+        ("Plasma_Pistol", "[Grunt]"),
+        ("Pistole", "generátor_štítu", "Needler")
+    ),
+    ScenarioStep(tsBAG_FULL, f"{PICK_UP} Plasma_Pistol", "Váš batoh je plný",
+        "Halo",
+        ("kontrolní_místnost_prstence", "Kartograf",
+        "The_Pillar_of_Autumn"),
+        ("Plasma_Pistol", "[Grunt]"),
+        ("Pistole", "generátor_štítu", "Needler")
+    ),
+    ScenarioStep(tsEND, END, "Hra byla ukončena",
+        "Halo",
+        ("kontrolní_místnost_prstence", "Kartograf",
+        "The_Pillar_of_Autumn"),
+        ("Plasma_Pistol", "[Grunt]"),
+        ("Pistole", "generátor_štítu", "Needler")
+    )
 ),)
 
 
