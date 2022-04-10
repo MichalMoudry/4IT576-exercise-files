@@ -101,7 +101,7 @@ HAPPY = Scenario('', stHAPPY, (
         "The_Pillar_of_Autumn"),
         ("Needler", "Plasma_Pistol", "[Grunt]"),
         ("Pistole", "generátor_štítu", "Klíč_ke_knihovně")
-        ),
+    ),
     ScenarioStep(tsNS_0, OVERVIEW,
         "---------- Přehled ----------\n"
         "- Obsah batohu: ('Pistole', 'Klíč_ke_knihovně')\n"
@@ -313,6 +313,84 @@ MISTAKE_NS = Scenario('', stMISTAKES_NS, (
         HAPPY.steps[5],
         HAPPY.steps[6],
         HAPPY.steps[7],
+        ScenarioStep(tsNS1_WRONG_ARG, f"{OPEN} R39OWTJR",
+            "Špatný argument parametru", "kontrolní_místnost_prstence",
+            ("Halo", "Laboratoř"),
+            ("Needler", "[Flood]"),
+            ("Pistole", "generátor_štítu", "Klíč_ke_knihovně")
+        ),
+        ScenarioStep(tsNS0_WrongCond, OVERVIEW,
+            "V tuto chvíli nelze zobrazit přehled",
+            "kontrolní_místnost_prstence",
+            ("Halo", "Laboratoř"),
+            ("Needler", "[Flood]"),
+            ("Pistole", "generátor_štítu", "Klíč_ke_knihovně")
+        ),
+        ScenarioStep(tsNS0_WrongCond, END_TALK,
+            "V tuto chvíli neprobíhá rozhovor",
+            "kontrolní_místnost_prstence",
+            ("Halo", "Laboratoř"),
+            ("Needler", "[Flood]"),
+            ("Pistole", "generátor_štítu", "Klíč_ke_knihovně")
+        ),
+        ScenarioStep(tsNS1_WRONG_ARG, f"{TALK} R39OWTJR",
+            "Špatný argument parametru", "kontrolní_místnost_prstence",
+            ("Halo", "Laboratoř"),
+            ("Needler", "[Flood]"),
+            ("Pistole", "generátor_štítu", "Klíč_ke_knihovně")
+        ),
+        ScenarioStep(tsNS1_WrongCond, f"{TALK} [Flood]",
+            "Tuto věc/postavu nelze oslovit",
+            "kontrolní_místnost_prstence",
+            ("Halo", "Laboratoř"),
+            ("Needler", "[Flood]"),
+            ("Pistole", "generátor_štítu", "Klíč_ke_knihovně")
+        ),
+        ScenarioStep(tsNS1_0Args, TALK, "Nebyl zadán argument příkazu",
+            "kontrolní_místnost_prstence",
+            ("Halo", "Laboratoř"),
+            ("Needler", "[Flood]"),
+            ("Pistole", "generátor_štítu", "Klíč_ke_knihovně")
+        ),
+        ScenarioStep(tsNS1_WrongCond, f"{OPEN} Halo",
+            "kontrolní_místnost_prstence", "Tato místnost není zavřená",
+            ("Halo", "Laboratoř"),
+            ("Needler", "[Flood]"),
+            ("Pistole", "generátor_štítu", "Klíč_ke_knihovně")
+        ),
+        ScenarioStep(tsNS1_0Args, OPEN, "Nebyl zadán argument příkazu",
+            "kontrolní_místnost_prstence",
+            ("Halo", "Laboratoř"),
+            ("Needler", "[Flood]"),
+            ("Pistole", "generátor_štítu", "Klíč_ke_knihovně")
+        ),
+        ScenarioStep(tsNS2_WrongCond, f"{USE} generátor_štítu Needler",
+            "Špatný cíl použití věci", "kontrolní_místnost_prstence",
+            ("Halo", "Laboratoř"),
+            ("Needler", "[Flood]"),
+            ("Pistole", "generátor_štítu", "Klíč_ke_knihovně")
+        ),
+        ScenarioStep(tsNS2_1Args, f"{USE} generátor_štítu",
+            "Je třeba určit cíl použití věci",
+            "kontrolní_místnost_prstence",
+            ("Halo", "Laboratoř"),
+            ("Needler", "[Flood]"),
+            ("Pistole", "generátor_štítu", "Klíč_ke_knihovně")
+        ),
+        ScenarioStep(tsNS2_WRONG_2ndARG, f"{USE} generátor_štítu [Flood]",
+            "Na tuto věc/osobu nelze věc použít",
+            "kontrolní_místnost_prstence",
+            ("Halo", "Laboratoř"),
+            ("Needler", "[Flood]"),
+            ("Pistole", "generátor_štítu", "Klíč_ke_knihovně")
+        ),
+        ScenarioStep(tsNS2_WRONG_1stARG, f"{USE} [Flood] já",
+            "Tuto věc nelze použít",
+            "kontrolní_místnost_prstence",
+            ("Halo", "Laboratoř"),
+            ("Needler", "[Flood]"),
+            ("Pistole", "generátor_štítu", "Klíč_ke_knihovně")
+        ),
     ),
 )
 

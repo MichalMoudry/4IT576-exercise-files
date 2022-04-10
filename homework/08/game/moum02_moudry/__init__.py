@@ -28,7 +28,8 @@ Prezentace
 
 # Problémy, které se vyskytly při zpracování probrané látky a řešení DU
 PROBLEMS = """\
-Žádné
+Není mi kompletně zřejmé, jak funguje importovací systém Pythonu. 
+Respektive nevím, jak fungují relativní importy.
 """
 
 # Poznámky a připomínky k výkladu
