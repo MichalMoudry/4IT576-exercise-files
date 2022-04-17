@@ -1,8 +1,19 @@
 #Příliš žluťoučký kůň úpěl ďábelské ó - PŘÍLIŠ ŽLUŤOUČKÝ KŮŇ ÚPĚL ĎÁBELSKÉ Ó
-#O:/p4_DU_Assignment/DU_09_test.py
 """
-Zadání domácího úkolu, v němž má student(ka) zadat několik testových otázek
-k doposud probrané látce. Převzatý komentář - já na dokumentaci kašlu.
+Modul s řešením domácího úkolu č. 9.
+
+Zadání domácího úkolu:
+  V souboru upravte definici n-tice questions tak, aby obsahovala vámi
+  navržené otázky, přičemž jednotlivé otázky budou definovány
+  jako instance třídy question_test.Question,
+  na níž odkazuje importovaná proměnná Q.
+
+  Ke každé otázce budou nabídnuty nejméně čtyři odpovědi, přičemž
+  jednotlivé odpovědibudou definovány jako instance třídy
+  question_test.Answer,na níž odkazuje importovaná proměnná A.
+  Vše demonstruje definice n-tice questions, jejíž prvky nahradíte
+  vlastními. Její funkci si můžete vyzkoušet spuštěním funkce
+  self_test() umístěné na konci modulu.
 """
 import dbg; dbg.start_mod(1, __name__)
 ###########################################################################q
@@ -15,7 +26,7 @@ AUTHOR_NAME = 'MOUDRÝ Michal'
 
 # Zdroje, z nichž autor(ka) čerpal(a) při řešení úkolu
 SOURCES = """\
-Žádné
+Prezentace
 """
 
 # Problémy, které se vyskytly při zpracování probrané látky a řešení DU
@@ -40,9 +51,16 @@ from question_test import * # A, Q, test_seq
 # Řešení
 
 questions = (
-    Q('Je string možným zdrojem hodnot?',
-      (A(1, 'Ano'),
-       A(0, 'Ne'),
+    Q('Kolik je povinně pojmenovaných argumentů v následující metodě?'
+      """
+      def test_method(arg1, arg2, /, arg3, *, arg4):
+        print("Hodnoty:")
+        print((arg1, arg2, arg3, arg4))
+      """,
+      (A(0, '2'),
+       A(1, '1'),
+       A(0, '3'),
+       A(0, 'Definice metody obsahuje syntaktickou chybu')
     )),
     Q('Co bude vypsáno do konzole pomocí tohoto kódu?\n'
       """
@@ -57,10 +75,10 @@ questions = (
        A(0, '12345'),
     )),
     Q('Která z těchto metod neslouží pro práci s prvky slovníku?',
-      (A(1, 'get(key, default=None)'),
-       A(1, 'popitem()'),
-       A(1, 'pop(key, default=None)'),
-       A(0, 'containskey(key)'),
+      (A(0, 'get(key, default=None)'),
+       A(0, 'popitem()'),
+       A(0, 'pop(key, default=None)'),
+       A(1, 'containskey(key)'),
     )),
     Q('Co je výsledkem tohoto kódu?\n'
       """
@@ -73,15 +91,15 @@ questions = (
       (A(0, 'Výpis prvočísel z intervalu <0, 100>'),
        A(0, 'Výpis sudých čísel od nuly nahoru, přičemž vypsaná '
             'čísla jsou v intervalu (0, 100)'),
-       A(0, 'Kód skončí chybou'),
        A(1, 'Výpis sudých čísel od stovky dolu, přičemž vypsaná čísla '
             'jsou v intervalu (0, 100>'),
+       A(0, 'Kód skončí chybou'),
     )),
-    Q('Pátá otázka',
-      (A(1, 'ANO - První'),
-       A(1, 'ANO - Druhá'),
-       A(0, 'NE  - Třetí'),
-       A(1, 'ANO - Čtvrtá'),
+    Q('Jak se mažou objekty v jazyce Python?',
+      (A(1, 'del nazev_objektu'),
+       A(0, 'delete nazev_objektu'),
+       A(0, '_ = nazev_objetu'),
+       A(0, 'drop(nazev_objektu)'),
     )),
 )
 

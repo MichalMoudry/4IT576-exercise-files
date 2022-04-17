@@ -12,4 +12,4 @@ Otázky mohou být jako teoretické (syntaxe, pravidla používání, ...), tak 
 """
 from moum02_moudry import *
 
-#self_test()
+self_test()
