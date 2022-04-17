@@ -44,11 +44,17 @@ questions = (
       (A(1, 'Ano'),
        A(0, 'Ne'),
     )),
-    Q('Druhá otázka',
-      (A(0, 'Nepravdivá odpověď'),
-       A(1, 'Pravdivá odpověď'),
-       A(0, 'Jiná nepravdivá odpověď'),
-       A(1, 'Odpověď, která je také pravdivá'),
+    Q('Co bude vypsáno do konzole pomocí tohoto kódu?\n'
+      """
+      for src in range(1, 5), range(5, 8), (9, 10):
+      for x in src:
+          if x < 5:
+              print(x, end="")
+      """,
+      (A(0, '1\n2\n3\n4'),
+       A(0, '1234'),
+       A(1, 'Program vyhodí chybu'),
+       A(0, '12345'),
     )),
     Q('Která z těchto metod neslouží pro práci s prvky slovníku?',
       (A(1, 'get(key, default=None)'),
@@ -56,11 +62,20 @@ questions = (
        A(1, 'pop(key, default=None)'),
        A(0, 'containskey(key)'),
     )),
-    Q('Čtvrtá otázka',
-      (A(0, 'Nepravdivá odpověď'),
-       A(1, 'Pravdivá odpověď'),
-       A(0, 'Jiná nepravdivá odpověď'),
-       A(1, 'Odpověď, která je také pravdivá'),
+    Q('Co je výsledkem tohoto kódu?\n'
+      """
+      number = 100
+      while number > 0:
+          if number % 2 == 0:
+              print(number)
+          number -= 1
+      """,
+      (A(0, 'Výpis prvočísel z intervalu <0, 100>'),
+       A(0, 'Výpis sudých čísel od nuly nahoru, přičemž vypsaná '
+            'čísla jsou v intervalu (0, 100)'),
+       A(0, 'Kód skončí chybou'),
+       A(1, 'Výpis sudých čísel od stovky dolu, přičemž vypsaná čísla '
+            'jsou v intervalu (0, 100>'),
     )),
     Q('Pátá otázka',
       (A(1, 'ANO - První'),
