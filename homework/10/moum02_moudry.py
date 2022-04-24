@@ -83,23 +83,28 @@ questions = (
     A(0, "'test' 15 23.17"),
     A(0, "Program vyhodí chybu")
   )),
-  Q("",
-    (A(0, ""),
-    A(0, ""),
-    A(0, ""),
-    A(0, "")
+  Q("Co vše platí o jazyku Python?",
+    (A(1, "Všechno je objekt"),
+    A(0, "Je staticky typovaný"),
+    A(1, "Program je tvořen posloupností příkazů"),
+    A(0, "Zdrojové soubory mají příponu .pyz")
   )),
-  Q("",
-    (A(0, ""),
-    A(0, ""),
-    A(0, ""),
-    A(0, "")
+  Q("Jaké soubory mají příponu .pyc?",
+    (A(0, "Přeložené soubory určené pro spuštěné v okenním režimu"),
+    A(1, "Přeložené soubory"),
+    A(0, "Zdrojové soubory"),
+    A(0, "Spustitelná komplexní aplikace")
   )),
-  Q("",
-    (A(0, ""),
-    A(0, ""),
-    A(0, ""),
-    A(0, "")
+  Q("Co bude vypsáno do konzole pomocí tohoto kódu?\n"
+    """
+    is_even = lambda number : number % 2 == 0
+
+    print(is_even(3))
+    """,
+    (A(0, "True"),
+    A(0, "Program vyhodí chybu"),
+    A(0, "false"),
+    A(1, "False")
   )),
   Q("",
     (A(0, ""),
