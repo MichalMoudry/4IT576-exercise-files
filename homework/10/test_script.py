@@ -10,6 +10,6 @@ Zadejte po jedné kontrolní otázce z následujících oblastí:
 Otázky mohou být jako teoretické (syntaxe, pravidla používání, ...), tak praktické
 (ukázka programu s dotazem na jeho výsledek včetně možnosti zhroucení či syntaktické chyby).
 """
-from moum02_moudry import *
+import moum02_moudry as moum
 
-self_test()
+moum.self_test()

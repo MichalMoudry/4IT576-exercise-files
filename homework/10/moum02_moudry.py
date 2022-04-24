@@ -1,6 +1,6 @@
 #Příliš žluťoučký kůň úpěl ďábelské ó - PŘÍLIŠ ŽLUŤOUČKÝ KŮŇ ÚPĚL ĎÁBELSKÉ Ó
 """
-Modul s řešením domácího úkolu č. 9.
+Modul s řešením domácího úkolu č. 10.
 
 Zadání domácího úkolu:
   V souboru upravte definici n-tice questions tak, aby obsahovala vámi
@@ -51,56 +51,74 @@ from question_test import * # A, Q, test_seq
 # Řešení
 
 questions = (
-    Q('Kolik je povinně pojmenovaných argumentů v následující metodě?'
-      """
-      def test_method(arg1, arg2, /, arg3, *, arg4):
-        print("Hodnoty:")
-        print((arg1, arg2, arg3, arg4))
-      """,
-      (A(0, '2'),
-       A(1, '1'),
-       A(0, '3'),
-       A(0, 'Definice metody obsahuje syntaktickou chybu')
-    )),
-    Q('Co bude vypsáno do konzole pomocí tohoto kódu?\n'
-      """
-      for src in range(1, 5), range(5, 8), (9, 10):
-      for x in src:
-          if x < 5:
-              print(x, end="")
-      """,
-      (A(0, '1\n2\n3\n4'),
-       A(0, '1234'),
-       A(1, 'Program vyhodí chybu'),
-       A(0, '12345'),
-    )),
-    Q('Která z těchto metod neslouží pro práci s prvky slovníku?',
-      (A(0, 'get(key, default=None)'),
-       A(0, 'popitem()'),
-       A(0, 'pop(key, default=None)'),
-       A(1, 'containskey(key)'),
-    )),
-    Q('Co je výsledkem tohoto kódu?\n'
-      """
-      number = 100
-      while number > 0:
-          if number % 2 == 0:
-              print(number)
-          number -= 1
-      """,
-      (A(0, 'Výpis prvočísel z intervalu <0, 100>'),
-       A(0, 'Výpis sudých čísel od nuly nahoru, přičemž vypsaná '
-            'čísla jsou v intervalu (0, 100)'),
-       A(1, 'Výpis sudých čísel od stovky dolu, přičemž vypsaná čísla '
-            'jsou v intervalu (0, 100>'),
-       A(0, 'Kód skončí chybou'),
-    )),
-    Q('Jak se mažou objekty v jazyce Python?',
-      (A(1, 'del nazev_objektu'),
-       A(0, 'delete nazev_objektu'),
-       A(0, '_ = nazev_objetu'),
-       A(0, 'drop(nazev_objektu)'),
-    )),
+  Q("Jaký systémový atribut odkazuje na na string reprezentující"
+    " název modulu?",
+    (A(0, "__file__"),
+    A(1, "__name__"),
+    A(0, "__doc__"),
+    A(0, "__package__")
+  )),
+  Q("Co lze považovat za výraz?",
+    (A(0, "Přiřazení hodnoty do proměnné"),
+    A(1, "Volání funkce"),
+    A(1, "Zadání hodnoty (literál nebo název proměnné)"),
+    A(1, "Operace s hodnotami, které samy mohou být výsledkem výrazů")
+  )),
+  Q("Jaký je správný syntax formátovacích stringů v jazyce Python?",
+    (A(0, '$"{nazev_promenne}"'),
+    A(0, 'format!("test value: {}", 6 + 10)'),
+    A(1, "F'{6 + 4}'"),
+    A(1, "f'{30 ** 10}'")
+  )),
+  Q("Co bude vypsáno do konzole pomocí tohoto kódu?\n"
+    """
+    x, y, z = "test", 15, 23.17
+
+    y, z, x = x, 17.83, z
+
+    print(x, repr(y), z)
+    """,
+    (A(1, "23.17 'test' 17.83"),
+    A(0, "test 15 23.17"),
+    A(0, "'test' 15 23.17"),
+    A(0, "Program vyhodí chybu")
+  )),
+  Q("",
+    (A(0, ""),
+    A(0, ""),
+    A(0, ""),
+    A(0, "")
+  )),
+  Q("",
+    (A(0, ""),
+    A(0, ""),
+    A(0, ""),
+    A(0, "")
+  )),
+  Q("",
+    (A(0, ""),
+    A(0, ""),
+    A(0, ""),
+    A(0, "")
+  )),
+  Q("",
+    (A(0, ""),
+    A(0, ""),
+    A(0, ""),
+    A(0, "")
+  )),
+  Q("",
+    (A(0, ""),
+    A(0, ""),
+    A(0, ""),
+    A(0, "")
+  )),
+  Q("",
+    (A(0, ""),
+    A(0, ""),
+    A(0, ""),
+    A(0, "")
+  )),
 )
 
 
