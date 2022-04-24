@@ -106,23 +106,63 @@ questions = (
     A(0, "false"),
     A(1, "False")
   )),
-  Q("",
-    (A(0, ""),
-    A(0, ""),
-    A(0, ""),
-    A(0, "")
+  Q("Jakými operátory lze porovnávat hodnoty v Pythonu?",
+    (A(0, "<>"),
+    A(1, "is"),
+    A(1, "=="),
+    A(0, "===")
   )),
-  Q("",
-    (A(0, ""),
-    A(0, ""),
-    A(0, ""),
-    A(0, "")
+  Q("Jaký je správný syntax přepínače v Pythonu?",
+    (A(0,
+    """
+    match hodnota {
+        true => print("Hodnota je true"),
+        false => print("Hodnota je false"),
+        _ => print("Hodnota je špatně zadaná"),
+    }
+    """),
+    A(0,
+    """
+    switch(hodnota) 
+    {
+        case true:
+            print("Hodnota je true")
+            break
+        case false:
+            print("Hodnota je false")
+            break
+        default:
+            print("Hodnota je špatně zadaná")
+            break
+    }
+    """),
+    A(1,
+    """
+    match hodnota:
+        case True:
+            print("Hodnota je true")
+        case False:
+            print("Hodnota je false")
+        case _:
+            print("Hodnota je špatně zadaná")
+    """),
+    A(0,
+    """
+    switch hodnota {
+        case true:
+            print("Hodnota je true")
+        case false:
+            print("Hodnota je false")
+        default:
+            print("Hodnota je špatně zadaná")
+    }
+    """)
   )),
-  Q("",
-    (A(0, ""),
-    A(0, ""),
-    A(0, ""),
-    A(0, "")
+  Q("Která z metod není pro přidávání prvků do listu v jazyce Python?",
+    (A(0, "insert(index, object, /)"),
+    A(0, "extend(x)"),
+    A(0, "append(x)"),
+    A(1, "add(x)")
   )),
 )
 

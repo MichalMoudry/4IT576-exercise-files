@@ -12,8 +12,4 @@ Otázky mohou být jako teoretické (syntaxe, pravidla používání, ...), tak 
 """
 import moum02_moudry as moum
 
-#moum.self_test()
-
-is_even = lambda number : number % 2 == 0
-
-print(is_even(3))
+moum.self_test()
