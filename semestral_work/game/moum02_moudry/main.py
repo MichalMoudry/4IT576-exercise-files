@@ -54,7 +54,8 @@ def basic_actions() -> BasicActions:
 def bag() -> Bag:
     """Vrátí odkaz na batoh, do nějž bude hráč ukládat sebrané objekty.
     """
-    raise Exception(f'Ještě není plně implementováno')
+    from . import world as w
+    return w.BAG
 
 
 def world() -> 'IWorld':

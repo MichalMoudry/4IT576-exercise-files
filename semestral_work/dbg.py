@@ -339,8 +339,8 @@ def prDict(d=None, dict=False, syst=False, msg='', mod=False, prn=True):
 
 def prSeq(seq, prn=True) -> str:
     """Vyrobí string s indexovanými položkami zadané posloupnosti
-    na jednotlivých řádcích;
-    je-li prn=True, tak string vytiskne, poté string vrátí.
+    na jednotlivých řádcích.
+    Je-li prn=True, tak string vytiskne, je-li False, tak string vrátí.
     """
     if seq: result = '\n'.join([f'{i}: {item}'
                                for i, item in enumerate(seq)])

@@ -35,6 +35,12 @@ class ANamed():
         """Vrátí uživatelský textový podpis jako název dané instance.
         """
         return self._name
+    
+    # TODO: Asi smazat?
+    def __repr__(self) -> str:
+        """Vrátí uživatelský textový podpis jako název dané instance.
+        """
+        return self._name
 
 
 
@@ -44,17 +50,27 @@ class Item(ANamed):
     """Instance představují h-objekty v prostorech či batohu.
     """
 
-    def __init__(self, name:str, **args):
+    def __init__(self, name:str, is_heavy:bool = False, **args):
         """Vytvoří h-objekt se zadaným názvem.
         """
-        raise Exception(f'Ještě není plně implementováno')
+        if not name:
+            raise Exception("Nepovolená hodnota názvu objektu")
+        super().__init__(name, **args)
+        self._is_heavy = is_heavy
 
 
     @property
     def weight(self) -> int:
         """Vrátí váhu daného objektu.
         """
-        raise Exception(f'Ještě není plně implementováno')
+        return self._weight
+    
+    @property
+    def is_heavy(self) -> bool:
+        """
+        Vrátí informaci, zda je předmět těžký.
+        """
+        return self._is_heavy
 
 
 
@@ -129,21 +145,22 @@ class Bag(AItemContainer):
     def __init__(self, initial_item_names:tuple[str]):
         """Definuje batoh jako kontejner h-objektů s omezenou kapacitou.
         """
-        raise Exception(f'Ještě není plně implementováno')
+        super().__init__(initial_item_names=initial_item_names)
 
 
     def initialize(self) -> None:
         """Inicializuje batoh na počátku hry. Vedle inicializace obsahu
         inicializuje i informaci o zbývající kapacitě.
         """
-        raise Exception(f'Ještě není plně implementováno')
+        super().initialize()
 
 
     @property
     def capacity(self) -> int:
         """Vrátí kapacitu batohu.
         """
-        raise Exception(f'Ještě není plně implementováno')
+        # TODO: Změnit kapacitu batohu na konstantu
+        return 10
 
 
 
@@ -166,7 +183,8 @@ class Place(ANamed, AItemContainer):
         ):
         super().__init__(name=name, initial_item_names=initial_item_names)
         self._description = description
-        self.initial_neighbor_names = initial_neighbor_names
+        self.initial_neighbor_names = tuple(name.lower() for name
+                                    in initial_neighbor_names)
 
 
     def initialize(self) -> None:
@@ -174,8 +192,9 @@ class Place(ANamed, AItemContainer):
         tj. nastaví počáteční sadu sousedů a objektů v prostoru.
         """
         super().initialize()
+        BAG.initialize()
         self.name2neighbor = { name: _NAME_2_PLACE[name]
-                            for name in self.initial_neighbor_name }
+                            for name in self.initial_neighbor_names }
 
 
     @property
@@ -191,7 +210,7 @@ class Place(ANamed, AItemContainer):
         tj. prostorů, do nichž je možno se z tohoto prostoru přesunout
         příkazem typu TypeOfStep.GOTO.
         """
-        raise Exception(f'Ještě není plně implementováno')
+        return tuple(self.name2neighbor.values())
 
 
 
@@ -205,7 +224,7 @@ def initialize() -> None:
     for place in _NAME_2_PLACE.values():
         place.initialize()
     global _current_place
-    _current_place = _NAME_2_PLACE["The_Pillar_of_Autumn"]
+    _current_place = _NAME_2_PLACE["the_pillar_of_autumn"]
     
 
 
@@ -235,16 +254,16 @@ def place(name:str) -> Place:
 
 # Jediná instance batohu
 # V této hře neobsahuje žádnou výchozí sadu h-objektů
-BAG:Bag
+BAG:Bag = Bag(("Pistole", "generátor_štítu"))
 
 # Slovník všech dostupných prostorů
 _NAME_2_PLACE = {
-    "The_Pillar_of_Autumn" : Place("The_Pillar_of_Autumn",
+    "the_pillar_of_autumn" : Place("The_Pillar_of_Autumn",
         "Popis místa",
         ("Halo",),
         ("Assault_Rifle", "Jacob_Keyes", )
     ),
-    "Halo" : Place("Halo",
+    "halo" : Place("Halo",
         "Popis místa",
         ("kontrolní_místnost_prstence", "Kartograf",
         "The_Pillar_of_Autumn"),
@@ -255,22 +274,22 @@ _NAME_2_PLACE = {
         ("Halo", "Laboratoř"),
         ("Needler", "[Flood]")
     ),
-    "Laboratoř" : Place("Laboratoř",
+    "laboratoř" : Place("Laboratoř",
         "Popis místa",
         ("kontrolní_místnost_prstence",),
         ("Plasma_pistol", "Klíč_ke_knihovně", "[Elite]")
     ),
-    "Kartograf" : Place("Kartograf",
+    "kartograf" : Place("Kartograf",
         "Popis místa",
         ("Knihovna", "Halo"),
         ("Carbine", "[Forerunner]")
     ),
-    "Knihovna" : Place("Knihovna",
+    "knihovna" : Place("Knihovna",
         "Popis místa",
         ("TRC", "Kartograf"),
         ("Pistole", "Index")
     ),
-    "TRC" : Place("TRC",
+    "trc" : Place("TRC",
         "Popis místa",
         ("the_maw", "Knihovna"),
         ("[Grunt]", "[Covenant]")

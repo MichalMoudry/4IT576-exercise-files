@@ -12,7 +12,7 @@ import dbg; dbg.start_pkg(0, __name__, __doc__)
 
 # Následující moduly je třeba importovat až při spuštění kontroly typů
 # from ..api.scenario import Scenario
-# from ..api.game_types import IGame
+# from ..api.interfaces import IGame
 
 
 ############################################################################
