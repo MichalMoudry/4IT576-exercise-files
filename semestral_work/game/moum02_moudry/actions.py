@@ -5,7 +5,6 @@ v závislosti na tom, je-li hra právě aktivní a rozhoduje,
 která akce dostane na starost zpracování aktuálního příkazu.
 Současně obsahuje definice všech akcí.
 """
-from typing import Callable
 
 import dbg
 dbg.start_mod(0, __name__)
@@ -13,7 +12,9 @@ dbg.start_mod(0, __name__)
 
 from abc import ABC, abstractmethod
 
-from .world import ANamed, current_place, BAG
+from .world import current_place
+from .classes.bag import BAG
+from .classes.action import Action
 
 from .constants.actions_constants import *
 from .constants.text_constants import *
@@ -77,45 +78,6 @@ def _initialize():
     """V rámci startu hry inicializuje všechny potřebné objekty.
     """
     raise Exception(f'Ještě není plně implementováno')
-
-
-
-############################################################################
-
-class Action(ANamed):
-    """Společná rodičovská třída všech akcí.
-    """
-
-    def __init__(self, name:str, description:str,
-                       execute:Callable[[list[str]], str]):
-        """Vytvoří rodičovský podobjekt dané akce, který si zapamatuje
-        název dané akce a její popis.
-        """
-        super().__init__(name)
-        self._description = description
-        self._execute = execute
-
-
-    @property
-    def description(self) -> str:
-        """Vrátí popis příkazu s vysvětlením jeho funkce,
-        významu jednotlivých parametrů a možností (resp. účelu) použití
-        daného příkazu. Tento popis tak může sloužit jako nápověda
-        k použití daného příkazu.
-        """
-        return self._description
-
-
-    @property
-    def execute(self, arguments:tuple[str]) -> str:
-        """Metoda realizující reakci hry na zadání daného příkazu.
-        Předávané pole je vždy neprázdné, protože jeho nultý prvek
-        je zadaný název vyvolaného příkazu. Počet argumentů je závislý
-        na konkrétním akci, ale pro každou akci je konstantní.
-        """
-        return self._execute(arguments)
-
-
 
 ############################################################################
 
