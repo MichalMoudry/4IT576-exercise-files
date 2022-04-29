@@ -19,6 +19,7 @@ WELCOME_MESSAGE = "Vítejte ve hře Halo, kdy vaším cílem je se dostat "
 END_TALK_TEXT = "Rozhovor byl úspěšně ukončen."
 ITEM_TAKE_TEXT = "Předmět byl zvednut"
 GAME_END = "Hra byla ukončena"
+ROOM_MOVE = "Proběhl přesun na:"
 
 ## Errors
 EMPTY_COMMAND = "Prázdný příkaz"

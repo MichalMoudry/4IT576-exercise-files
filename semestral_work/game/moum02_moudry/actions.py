@@ -10,7 +10,7 @@ import dbg
 dbg.start_mod(0, __name__)
 ############################################################################
 
-from abc import ABC, abstractmethod
+#from abc import ABC, abstractmethod
 
 from .world import current_place
 from .classes.bag import BAG
@@ -46,14 +46,7 @@ def execute_command(command:str) -> str:
             return EMPTY_COMMAND
         else:
             _start_game()
-            return (
-            'Vítejte ve hře Halo, kdy vaším cílem je se dostat do místnosti'
-            ' "The Maw",\npřičemž pro úspěšné dokončení hry je třeba donést'
-            ' tzv. Index a použít ho\n na postavu Arbiter, který se nachází'
-            ' v zamčené knihovně, tedy je třeba\nknihovnu odemknouta sebrat'
-            ' Index do batohu.\n\nPro zobrazení'
-            ' nápovědy je třeba zadat příkaz: ?.'
-            )
+            return WELCOME_MESSAGE
 
 def _start_game() -> None:
     """
@@ -89,7 +82,10 @@ def goto(arguments:tuple[str]) -> str:
     dest_place = w._current_place.name2neighbor.get(dest_name.lower())
     if dest_place:
         w._current_place = dest_place
-        return ""
+        return (
+            f"{ROOM_MOVE} {dest_place}\n\n"
+            f"Sousední místnosti:\n{w._current_place.neighbors}"
+        )
     else:
         return WRONG_NEIGHBOUR
 

@@ -389,8 +389,9 @@ REQUIRED = Scenario('REQUIRED', stREQUIRED, (
         ("Pistole", "generátor_štítu", ),
     ),
     ScenarioStep(tsGOTO, f"{MOVE} Halo",
-        "Proběhl přesun na: Halo\nSousedící místnosti:\n"
-        "Kontrolní_místnost_prstence; Kartograf; The_Pillar_of_Autumn",
+        f"{ROOM_MOVE} Halo\n\n"
+        "Sousední místnosti:\n"
+        "(kontrolní_místnost_prstence, Kartograf, The_Pillar_of_Autumn)",
         "Halo",
         ("kontrolní_místnost_prstence", "Kartograf",
         "The_Pillar_of_Autumn"),
