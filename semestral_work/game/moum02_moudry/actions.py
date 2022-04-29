@@ -118,9 +118,11 @@ def help(arguments:tuple[str]) -> str:
     """Vrátí text jednoduché nápovědy popisující
     všechny dostupné příkazy.
     """
-    result = ""
+    result = "Příkazy, které lze zadat:\n"
     for action in _NAME_2_ACTION:
-        ...
+        result += f"- {action}{_ACTION_ARGUMENTS[action]}\n"
+    result = result.strip()
+    return result
 
 def end(arguments:tuple[str]) -> str:
     """Ukončí hru a poděkuje hráči za htu.
@@ -168,6 +170,19 @@ _NAME_2_ACTION = {
     TALK : Action(TALK, "", None),
     END_TALK : Action(END_TALK, "", None),
     END : Action(END, "", end),
+}
+
+_ACTION_ARGUMENTS = {
+    MOVE : " [místo]",
+    PICK_UP : " [věc]",
+    OVERVIEW : "",
+    OPEN : " [místnost]",
+    PUT_DOWN : " [věc]",
+    USE : " [věc] [cíl]",
+    HELP : "",
+    TALK : " [osoba]",
+    END_TALK : "",
+    END : "",
 }
 
 

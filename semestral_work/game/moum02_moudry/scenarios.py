@@ -18,12 +18,7 @@ from .constants.text_constants import *
 # nezadává žádné chybné příkazy a dosáhne zadaného cíle.
 HAPPY = Scenario('', stHAPPY, (
     START_STEP := ScenarioStep(tsSTART, '', # Zadaný příkaz
-        'Vítejte ve hře Halo, kdy vaším cílem je se dostat do místnosti'
-        ' "The Maw",\npřičemž pro úspěšné dokončení hry je třeba donést'
-        ' tzv. Index a použít ho\n na postavu Arbiter, který se nachází'
-        ' v zamčené knihovně, tedy je třeba\nknihovnu odemknouta sebrat'
-        ' Index do batohu.\n\nPro zobrazení'
-        ' nápovědy je třeba zadat příkaz: ?.',
+        WELCOME_MESSAGE,
         'The_Pillar_of_Autumn', # Aktuální prostor
         ('Halo',), # Aktuální sousedé
         ('Assault_Rifle', 'Jacob_Keyes', ), # H-objekty v prostoru
@@ -36,8 +31,7 @@ HAPPY = Scenario('', stHAPPY, (
         ('Assault_Rifle', 'Jacob_Keyes',),
         ('Pistole', 'generátor_štítu',),
     ),
-    ScenarioStep(tsNS_0, END_TALK,
-        "Rozhovor byl úspěšně ukončen.",
+    ScenarioStep(tsNS_0, END_TALK, END_TALK_TEXT,
         "The_Pillar_of_Autumn",
         ('Halo',),
         ('Assault_Rifle', 'Jacob_Keyes',),
@@ -69,7 +63,7 @@ HAPPY = Scenario('', stHAPPY, (
         ("Pistole", "generátor_štítu",)
     ),
     ScenarioStep(tsTAKE, f"{PICK_UP} Klíč_ke_knihovně",
-        "Předmět byl zvednut",
+        ITEM_TAKE_TEXT,
         "Laboratoř",
         ("kontrolní_místnost_prstence",),
         ("Plasma_pistol", "[Elite]"),
@@ -177,8 +171,7 @@ HAPPY = Scenario('', stHAPPY, (
 ScenarioStep.next_index = -1  # Index kroku před korektním startem
 
 WRONG_START = ScenarioStep(tsNOT_START, 'start', # Zadaný příkaz
-    'Prvním příkazem není startovací příkaz.\n' 
-    'Hru, která neběží, lze spustit pouze startovacím příkazem.\n',
+    WRONG_START_TEXT,
     '',                                         # Aktuální prostor
     (),                                         # Aktuální sousedé
     (),                                         # H-objekty v prostoru
@@ -228,26 +221,26 @@ MISTAKE = Scenario('', stMISTAKES, (
         ("Assault_Rifle", "Jacob_Keyes", ),
         ("Pistole", "generátor_štítu", ),
     ),
-    ScenarioStep(tsMOVE_WA, MOVE, "Příkazu chybí požadované parametry",
+    ScenarioStep(tsMOVE_WA, MOVE, COMMAND_MISSING_PARAMS,
         "The_Pillar_of_Autumn",
         ("Halo",),
         ("Assault_Rifle", "Jacob_Keyes", ),
         ("Pistole", "generátor_štítu", ),
     ),
     ScenarioStep(tsPUT_DOWN_WA, PUT_DOWN,
-        "Příkazu chybí požadované parametry",
+        COMMAND_MISSING_PARAMS,
         "The_Pillar_of_Autumn",
         ("Halo",),
         ("Assault_Rifle", "Jacob_Keyes", ),
         ("Pistole", "generátor_štítu", ),
     ),
-    ScenarioStep(tsTAKE_WA, PICK_UP, "Příkazu chybí požadované parametry",
+    ScenarioStep(tsTAKE_WA, PICK_UP, COMMAND_MISSING_PARAMS,
         "The_Pillar_of_Autumn",
         ("Halo",),
         ("Assault_Rifle", "Jacob_Keyes", ),
         ("Pistole", "generátor_štítu", ),
     ),
-    ScenarioStep(tsNOT_IN_BAG, f"{PUT_DOWN} Index", "Předmět není v batohu",
+    ScenarioStep(tsNOT_IN_BAG, f"{PUT_DOWN} Index", ITEM_NOT_IN_BAG,
         "The_Pillar_of_Autumn",
         ("Halo",),
         ("Assault_Rifle", "Jacob_Keyes", ),
@@ -262,21 +255,21 @@ MISTAKE = Scenario('', stMISTAKES, (
         ("Needler", "Plasma_Pistol", "[Grunt]"),
         ("Pistole", "generátor_štítu",)
     ),
-    ScenarioStep(tsTAKE, f"{PICK_UP} Needler", "Předmět byl zvednut",
+    ScenarioStep(tsTAKE, f"{PICK_UP} Needler", ITEM_TAKE_TEXT,
         "Halo",
         ("kontrolní_místnost_prstence", "Kartograf",
         "The_Pillar_of_Autumn"),
         ("Plasma_Pistol", "[Grunt]"),
         ("Pistole", "generátor_štítu", "Needler")
     ),
-    ScenarioStep(tsBAG_FULL, f"{PICK_UP} Plasma_Pistol", "Váš batoh je plný",
+    ScenarioStep(tsBAG_FULL, f"{PICK_UP} Plasma_Pistol", BAG_FULL,
         "Halo",
         ("kontrolní_místnost_prstence", "Kartograf",
         "The_Pillar_of_Autumn"),
         ("Plasma_Pistol", "[Grunt]"),
         ("Pistole", "generátor_štítu", "Needler")
     ),
-    ScenarioStep(tsEND, END, "Hra byla ukončena",
+    ScenarioStep(tsEND, END, GAME_END,
         "Halo",
         ("kontrolní_místnost_prstence", "Kartograf",
         "The_Pillar_of_Autumn"),
@@ -321,7 +314,7 @@ MISTAKE_NS = Scenario('', stMISTAKES_NS, (
             ("Pistole", "generátor_štítu", "Klíč_ke_knihovně")
         ),
         ScenarioStep(tsNS1_WRONG_ARG, f"{TALK} R39OWTJR",
-            "Špatný argument parametru", "kontrolní_místnost_prstence",
+            WRONG_ARGUMENT, "kontrolní_místnost_prstence",
             ("Halo", "Laboratoř"),
             ("Needler", "[Flood]"),
             ("Pistole", "generátor_štítu", "Klíč_ke_knihovně")
@@ -333,7 +326,7 @@ MISTAKE_NS = Scenario('', stMISTAKES_NS, (
             ("Needler", "[Flood]"),
             ("Pistole", "generátor_štítu", "Klíč_ke_knihovně")
         ),
-        ScenarioStep(tsNS1_0Args, TALK, "Nebyl zadán argument příkazu",
+        ScenarioStep(tsNS1_0Args, TALK, MISSING_ARGUMENT,
             "kontrolní_místnost_prstence",
             ("Halo", "Laboratoř"),
             ("Needler", "[Flood]"),
@@ -345,20 +338,20 @@ MISTAKE_NS = Scenario('', stMISTAKES_NS, (
             ("Needler", "[Flood]"),
             ("Pistole", "generátor_štítu", "Klíč_ke_knihovně")
         ),
-        ScenarioStep(tsNS1_0Args, OPEN, "Nebyl zadán argument příkazu",
+        ScenarioStep(tsNS1_0Args, OPEN, MISSING_ARGUMENT,
             "kontrolní_místnost_prstence",
             ("Halo", "Laboratoř"),
             ("Needler", "[Flood]"),
             ("Pistole", "generátor_štítu", "Klíč_ke_knihovně")
         ),
         ScenarioStep(tsNS2_WrongCond, f"{USE} generátor_štítu Needler",
-            "Špatný cíl použití věci", "kontrolní_místnost_prstence",
+            WRONG_ITEM_TARGET, "kontrolní_místnost_prstence",
             ("Halo", "Laboratoř"),
             ("Needler", "[Flood]"),
             ("Pistole", "generátor_štítu", "Klíč_ke_knihovně")
         ),
         ScenarioStep(tsNS2_1Args, f"{USE} generátor_štítu",
-            "Je třeba určit cíl použití věci",
+            MISSING_ARGUMENT,
             "kontrolní_místnost_prstence",
             ("Halo", "Laboratoř"),
             ("Needler", "[Flood]"),
@@ -372,7 +365,7 @@ MISTAKE_NS = Scenario('', stMISTAKES_NS, (
             ("Pistole", "generátor_štítu", "Klíč_ke_knihovně")
         ),
         ScenarioStep(tsNS2_WRONG_1stARG, f"{USE} [Flood] já",
-            "Tuto věc nelze použít",
+            UNUSEABLE_ITEM,
             "kontrolní_místnost_prstence",
             ("Halo", "Laboratoř"),
             ("Needler", "[Flood]"),
@@ -421,7 +414,7 @@ REQUIRED = Scenario('REQUIRED', stREQUIRED, (
         ("Pistole", "generátor_štítu",)
     ),
     ScenarioStep(tsTAKE, f"{PICK_UP} Klíč_ke_knihovně",
-        "Předmět byl zvednut",
+        ITEM_TAKE_TEXT,
         "Laboratoř",
         ("kontrolní_místnost_prstence",),
         ("Plasma_pistol", "[Elite]"),
@@ -468,7 +461,7 @@ REQUIRED = Scenario('REQUIRED', stREQUIRED, (
         ("Pistole", "generátor_štítu", "Klíč_ke_knihovně")
     ),
     ScenarioStep(tsTAKE, f"{PICK_UP} Index",
-        "Předmět (Index) byl zvednut",
+        f"{ITEM_TAKE_TEXT} (Index)",
         "Knihovna",
         ("TRC", "Kartograf"),
         ("Pistole",),
