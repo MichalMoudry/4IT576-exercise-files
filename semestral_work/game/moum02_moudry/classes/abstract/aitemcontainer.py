@@ -45,11 +45,17 @@ class AItemContainer():
         """Přidá zadaný objekt do kontejneru a vrátí informaci o tom,
         jestli se to podařilo.
         """
-        raise Exception(f'Ještě není plně implementováno')
+        self._items.append(item)
+        return True
 
 
     def remove_item(self, item_name:str) -> Item:
         """Pokusí se odebrat objekt se zadaným názvem z kontejneru.
         Vrátí odkaz na zadaný objekt nebo None.
         """
-        raise Exception(f'Ještě není plně implementováno')
+        temp_item = self.item(item_name)
+        if temp_item:
+            self._items.remove(temp_item)
+            return temp_item
+        else:
+            return None

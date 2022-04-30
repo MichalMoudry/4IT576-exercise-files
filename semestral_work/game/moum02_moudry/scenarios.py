@@ -38,8 +38,9 @@ HAPPY = Scenario('', stHAPPY, (
         ('Pistole', 'generátor_štítu',),
     ),
     ScenarioStep(tsGOTO, f"{MOVE} Halo",
-        "Proběhl přesun na: Halo\nSousedící místnosti:\n"
-        "Kontrolní_místnost_prstence; Kartograf; The_Pillar_of_Autumn",
+        f"{ROOM_MOVE} Halo\n\n"
+        f"{NEIGHBOURING_ROOMS_TEXT}\n"
+        "(kontrolní_místnost_prstence, Kartograf, The_Pillar_of_Autumn)",
         "Halo",
         ("kontrolní_místnost_prstence", "Kartograf",
         "The_Pillar_of_Autumn"),
@@ -47,16 +48,18 @@ HAPPY = Scenario('', stHAPPY, (
         ("Pistole", "generátor_štítu",)
     ),
     ScenarioStep(tsGOTO, f"{MOVE} kontrolní_místnost_prstence",
-        "Proběhl přesun na: kontrolní_místnost_prstence\n"
-        "Sousedící místnosti: Halo; Laboratoř",
+        f"{ROOM_MOVE} kontrolní_místnost_prstence\n\n"
+        f"{NEIGHBOURING_ROOMS_TEXT}\n"
+        "(Halo, Laboratoř)",
         "kontrolní_místnost_prstence",
         ("Halo", "Laboratoř"),
         ("Needler", "[Flood]"),
         ("Pistole", "generátor_štítu",)
     ),
     ScenarioStep(tsGOTO, f"{MOVE} Laboratoř",
-        "Proběhl přesun na: Laboratoř\n"
-        "Sousedící místnosti: kontrolní_místnost_prstence",
+        f"{ROOM_MOVE} Laboratoř\n\n"
+        f"{NEIGHBOURING_ROOMS_TEXT}\n"
+        "(kontrolní_místnost_prstence,)",
         "Laboratoř",
         ("kontrolní_místnost_prstence",),
         ("Plasma_pistol", "Klíč_ke_knihovně", "[Elite]"),
@@ -70,16 +73,18 @@ HAPPY = Scenario('', stHAPPY, (
         ("Pistole", "generátor_štítu", "Klíč_ke_knihovně")
     ),
     ScenarioStep(tsGOTO, f"{MOVE} kontrolní_místnost_prstence",
-        "Proběhl přesun na: kontrolní_místnost_prstence\n"
-        "Sousedící místnosti: Halo; Laboratoř",
+        f"{ROOM_MOVE} kontrolní_místnost_prstence\n\n"
+        f"{NEIGHBOURING_ROOMS_TEXT}\n"
+        "(Halo, Laboratoř)",
         "kontrolní_místnost_prstence",
         ("Halo", "Laboratoř"),
         ("Needler", "[Flood]"),
         ("Pistole", "generátor_štítu", "Klíč_ke_knihovně")
-        ),
+    ),
     ScenarioStep(tsGOTO, f"{MOVE} Halo",
-        "Proběhl přesun na: Halo\nSousedící místnosti:\n"
-        "Kontrolní_místnost_prstence; Kartograf; The_Pillar_of_Autumn",
+        f"{ROOM_MOVE}: Halo\n\n"
+        f"{NEIGHBOURING_ROOMS_TEXT}\n"
+        "(kontrolní_místnost_prstence, Kartograf, The_Pillar_of_Autumn)",
         "Halo",
         ("kontrolní_místnost_prstence", "Kartograf",
         "The_Pillar_of_Autumn"),
@@ -101,8 +106,9 @@ HAPPY = Scenario('', stHAPPY, (
         ("Pistole", "generátor_štítu", "Klíč_ke_knihovně")
     ),
     ScenarioStep(tsGOTO, f"{MOVE} Kartograf",
-        "Proběhl přesun na: Kartograf\nSousedící místnosti:\n"
-        "Knihovna; Halo",
+        f"{ROOM_MOVE} Kartograf\n\n"
+        f"{NEIGHBOURING_ROOMS_TEXT}\n"
+        "(Knihovna, Halo)",
         "Kartograf",
         ("Knihovna", "Halo"),
         ("Carbine", "[Forerunner]"),
@@ -123,8 +129,9 @@ HAPPY = Scenario('', stHAPPY, (
         ("Pistole", "generátor_štítu")
     ),
     ScenarioStep(tsGOTO, f"{MOVE} Knihovna",
-        "Proběhl přesun na: Knihovna\nSousedící místnosti:\n"
-        "TRC; Kartograf",
+        f"{ROOM_MOVE} Knihovna\n\n"
+        f"{NEIGHBOURING_ROOMS_TEXT}\n"
+        "(TRC, Kartograf)",
         "Knihovna",
         ("TRC", "Kartograf"),
         ("Pistole", "Index"),
@@ -138,17 +145,20 @@ HAPPY = Scenario('', stHAPPY, (
         ("Pistole", "generátor_štítu", "Index")
     ),
     ScenarioStep(tsGOTO, f"{MOVE} TRC",
-        "Proběhl přesun na: TRC\nSousedící místnosti:\n"
-        "The_Maw; Knihovna",
+        f"{ROOM_MOVE} TRC\n\n"
+        f"{NEIGHBOURING_ROOMS_TEXT}\n"
+        "(the_maw, Knihovna)",
         "TRC",
         ("the_maw", "Knihovna"),
         ("[Grunt]", "[Covenant]"),
         ("Pistole", "generátor_štítu", "Index")
     ),
     ScenarioStep(tsGOTO, f"{MOVE} the_maw",
-        "Proběhl přesun na: The Maw\nSousedící místnosti:\nTRC",
+        f"{ROOM_MOVE} The Maw\n\n"
+        f"{NEIGHBOURING_ROOMS_TEXT}\n"
+        "(TRC,)",
         "the_maw",
-        ("TRC", "Kartograf"),
+        ("TRC",),
         ("[Arbiter]",),
         ("Pistole", "generátor_štítu", "Index")
     ),
@@ -247,8 +257,9 @@ MISTAKE = Scenario('', stMISTAKES, (
         ("Pistole", "generátor_štítu", ),
     ),
     ScenarioStep(tsGOTO, f"{MOVE} Halo",
-        "Proběhl přesun na: Halo\nSousedící místnosti:\n"
-        "Kontrolní_místnost_prstence; Kartograf; The_Pillar_of_Autumn",
+        f"{ROOM_MOVE} Halo\n\n"
+        f"{NEIGHBOURING_ROOMS_TEXT}\n"
+        "(kontrolní_místnost_prstence, Kartograf, The_Pillar_of_Autumn)",
         "Halo",
         ("kontrolní_místnost_prstence", "Kartograf",
         "The_Pillar_of_Autumn"),
@@ -390,7 +401,7 @@ REQUIRED = Scenario('REQUIRED', stREQUIRED, (
     ),
     ScenarioStep(tsGOTO, f"{MOVE} Halo",
         f"{ROOM_MOVE} Halo\n\n"
-        "Sousední místnosti:\n"
+        f"{NEIGHBOURING_ROOMS_TEXT}\n"
         "(kontrolní_místnost_prstence, Kartograf, The_Pillar_of_Autumn)",
         "Halo",
         ("kontrolní_místnost_prstence", "Kartograf",
@@ -399,16 +410,18 @@ REQUIRED = Scenario('REQUIRED', stREQUIRED, (
         ("Pistole", "generátor_štítu",)
     ),
     ScenarioStep(tsGOTO, f"{MOVE} kontrolní_místnost_prstence",
-        "Proběhl přesun na: kontrolní_místnost_prstence\n"
-        "Sousedící místnosti: Halo; Laboratoř",
+        f"{ROOM_MOVE} kontrolní_místnost_prstence\n\n"
+        f"{NEIGHBOURING_ROOMS_TEXT}\n"
+        "(Halo, Laboratoř)",
         "kontrolní_místnost_prstence",
         ("Halo", "Laboratoř"),
         ("Needler", "[Flood]"),
         ("Pistole", "generátor_štítu",)
     ),
     ScenarioStep(tsGOTO, f"{MOVE} Laboratoř",
-        "Proběhl přesun na: Laboratoř\n"
-        "Sousedící místnosti: kontrolní_místnost_prstence",
+        f"{ROOM_MOVE} Laboratoř\n\n"
+        f"{NEIGHBOURING_ROOMS_TEXT}\n"
+        "(kontrolní_místnost_prstence,)",
         "Laboratoř",
         ("kontrolní_místnost_prstence",),
         ("Plasma_pistol", "Klíč_ke_knihovně", "[Elite]"),
@@ -422,25 +435,28 @@ REQUIRED = Scenario('REQUIRED', stREQUIRED, (
         ("Pistole", "generátor_štítu", "Klíč_ke_knihovně")
     ),
     ScenarioStep(tsGOTO, f"{MOVE} kontrolní_místnost_prstence",
-        "Proběhl přesun na: kontrolní_místnost_prstence\n"
-        "Sousedící místnosti: Halo; Laboratoř",
+        f"{ROOM_MOVE} kontrolní_místnost_prstence\n\n"
+        f"{NEIGHBOURING_ROOMS_TEXT}\n"
+        "(Halo, Laboratoř)",
         "kontrolní_místnost_prstence",
         ("Halo", "Laboratoř"),
         ("Needler", "[Flood]"),
         ("Pistole", "generátor_štítu", "Klíč_ke_knihovně")
-        ),
+    ),
     ScenarioStep(tsGOTO, f"{MOVE} Halo",
-        "Proběhl přesun na: Halo\nSousedící místnosti:\n"
-        "Kontrolní_místnost_prstence; Kartograf; The_Pillar_of_Autumn",
+        f"{ROOM_MOVE} Halo\n\n"
+        f"{NEIGHBOURING_ROOMS_TEXT}\n"
+        "(kontrolní_místnost_prstence, Kartograf, The_Pillar_of_Autumn)",
         "Halo",
         ("kontrolní_místnost_prstence", "Kartograf",
         "The_Pillar_of_Autumn"),
         ("Needler", "Plasma_Pistol", "[Grunt]"),
         ("Pistole", "generátor_štítu", "Klíč_ke_knihovně")
-        ),
+    ),
     ScenarioStep(tsGOTO, f"{MOVE} Kartograf",
-        "Proběhl přesun na: Kartograf\nSousedící místnosti:\n"
-        "Knihovna; Halo",
+        f"{ROOM_MOVE} Kartograf\n\n"
+        f"{NEIGHBOURING_ROOMS_TEXT}\n"
+        "(Knihovna, Halo)",
         "Kartograf",
         ("Knihovna", "Halo"),
         ("Carbine", "[Forerunner]"),
@@ -454,8 +470,9 @@ REQUIRED = Scenario('REQUIRED', stREQUIRED, (
         ("Pistole", "generátor_štítu", "Klíč_ke_knihovně")
     ),
     ScenarioStep(tsGOTO, f"{MOVE} Knihovna",
-        "Proběhl přesun na: Knihovna\nSousedící místnosti:\n"
-        "TRC; Kartograf",
+        f"{ROOM_MOVE} Knihovna\n\n"
+        f"{NEIGHBOURING_ROOMS_TEXT}\n"
+        "(TRC, Kartograf)",
         "Knihovna",
         ("TRC", "Kartograf"),
         ("Pistole", "Index"),
@@ -469,24 +486,27 @@ REQUIRED = Scenario('REQUIRED', stREQUIRED, (
         ("Pistole", "generátor_štítu", "Index", "Klíč_ke_knihovně")
     ),
     ScenarioStep(tsGOTO, f"{MOVE} TRC",
-        "Proběhl přesun na: TRC\nSousedící místnosti:\n"
-        "The_Maw; Knihovna",
+        f"{ROOM_MOVE} TRC\n\n"
+        f"{NEIGHBOURING_ROOMS_TEXT}\n"
+        "(the_maw, Knihovna)",
         "TRC",
         ("the_maw", "Knihovna"),
         ("[Grunt]", "[Covenant]"),
         ("Pistole", "generátor_štítu", "Index", "Klíč_ke_knihovně")
     ),
     ScenarioStep(tsGOTO, f"{MOVE} the_maw",
-        "Proběhl přesun na: The Maw\nSousedící místnosti:\nTRC",
+        f"{ROOM_MOVE} The Maw\n\n"
+        f"{NEIGHBOURING_ROOMS_TEXT}\n"
+        "(TRC,)",
         "the_maw",
-        ("TRC", "Kartograf"),
+        ("TRC",),
         ("[Arbiter]",),
         ("Pistole", "generátor_štítu", "Index", "Klíč_ke_knihovně")
     ),
     ScenarioStep(tsNS_2, f"{USE} Index [Arbiter]",
         "Předmět (Index) byl použit na [Arbiter]",
         "the_maw",
-        ("TRC", "Kartograf"),
+        ("TRC",),
         (),
         ("Pistole", "generátor_štítu", "Klíč_ke_knihovně")
     ),

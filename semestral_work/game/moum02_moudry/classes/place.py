@@ -15,12 +15,14 @@ class Place(ANamed, AItemContainer):
 
     def __init__(self, name:str, description:str,
                  initial_neighbor_names:tuple[str],
-                 initial_item_names    :tuple[str]
+                 initial_item_names    :tuple[str],
+                 is_locked:bool = False
         ):
         super().__init__(name=name, initial_item_names=initial_item_names)
         self._description = description
         self.initial_neighbor_names = tuple(name.lower() for name
                                     in initial_neighbor_names)
+        self._is_locked = is_locked
 
 
     def initialize(self) -> None:
@@ -47,6 +49,12 @@ class Place(ANamed, AItemContainer):
         příkazem typu TypeOfStep.GOTO.
         """
         return tuple(self.name2neighbor.values())
+    
+
+    @property
+    def is_locked(self) -> bool:
+        """Vrátí informaci, jestli je prostor zamčený."""
+        return self._is_locked
 
 # Slovník všech dostupných prostorů
 _NAME_2_PLACE = {
@@ -79,7 +87,8 @@ _NAME_2_PLACE = {
     "knihovna" : Place("Knihovna",
         "Popis místa",
         ("TRC", "Kartograf"),
-        ("Pistole", "Index")
+        ("Pistole", "Index"),
+        True
     ),
     "trc" : Place("TRC",
         "Popis místa",

@@ -4,6 +4,7 @@ objekty sebrané v jednotlivých prostorech.
 """
 
 from .abstract.aitemcontainer import AItemContainer
+from .item import Item
 
 class Bag(AItemContainer):
     """Instance představuje úložiště,
@@ -32,6 +33,15 @@ class Bag(AItemContainer):
         """
         # TODO: Změnit kapacitu batohu na konstantu
         return 10
+    
+
+    def add_item(self, item:Item) -> bool:
+        """Přidá zadaný objekt do kontejneru a vrátí informaci o tom,
+        jestli se to podařilo.
+        """
+        # TODO: Přidat kontrolu kapacity
+        self._items.append(item)
+        return True
 
 # Jediná instance batohu
 # V této hře neobsahuje žádnou výchozí sadu h-objektů

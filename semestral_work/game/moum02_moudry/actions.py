@@ -84,7 +84,7 @@ def goto(arguments:tuple[str]) -> str:
         w._current_place = dest_place
         return (
             f"{ROOM_MOVE} {dest_place}\n\n"
-            f"Sousední místnosti:\n{w._current_place.neighbors}"
+            f"{NEIGHBOURING_ROOMS_TEXT}\n{w._current_place.neighbors}"
         )
     else:
         return WRONG_NEIGHBOUR
@@ -99,7 +99,7 @@ def take(arguments:tuple[str]) -> str:
     if item:
         curr_place.remove_item(item_name)
         BAG.add_item(item)
-        return ""
+        return f"{ITEM_TAKE_TEXT} ({item_name})"
     else:
         return OBJECT_NOT_PRESENT
 
@@ -127,6 +127,12 @@ def end(arguments:tuple[str]) -> str:
 
 
 ############################################################################
+
+def ns0(arguments:tuple[str]) -> str:
+    """
+    Nestandardní akce č. 0.
+    """
+    raise Exception(f'Ještě není plně implementováno')
 
 def ns1(arguments:tuple[str]) -> str:
     """Nestandardní akce číslo 1.
@@ -158,13 +164,13 @@ _is_alive = False
 _NAME_2_ACTION = {
     MOVE : Action(MOVE, "", goto),
     PICK_UP : Action(PICK_UP, "", take),
-    OVERVIEW : Action(OVERVIEW, "", put),
-    OPEN : Action(OPEN, "", None),
-    PUT_DOWN : Action(PUT_DOWN, "", None),
-    USE : Action(USE, "", None),
+    OVERVIEW : Action(OVERVIEW, "", ns0),
+    OPEN : Action(OPEN, "", ns1),
+    PUT_DOWN : Action(PUT_DOWN, "", put),
+    USE : Action(USE, "", ns2),
     HELP : Action(HELP, "", help),
-    TALK : Action(TALK, "", None),
-    END_TALK : Action(END_TALK, "", None),
+    TALK : Action(TALK, "", ns3),
+    END_TALK : Action(END_TALK, "", ns4),
     END : Action(END, "", end),
 }
 

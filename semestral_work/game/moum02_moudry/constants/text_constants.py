@@ -11,22 +11,25 @@ AVAILABLE_COMMANDS = ("Příkazy, které lze zadat:\n"
 "- oslov [osoba]\n"
 "- ukončit_rozhovor\n"
 "- konec")
-WELCOME_MESSAGE = "Vítejte ve hře Halo, kdy vaším cílem je se dostat "
-"do místnosti 'The Maw', přičemž pro úspěšné dokončení hry je "
-"třeba donést tzv. Index a použít ho na postavu Arbiter, který se "
-"nachází v zamčené knihovně, tedy je třeba\nknihovnu odemknouta sebrat"
+WELCOME_MESSAGE = (
+"Vítejte ve hře Halo, kdy vaším cílem je se dostat "
+"do místnosti 'The Maw',\npřičemž pro úspěšné dokončení hry je "
+"třeba donést tzv. Index a\npoužít ho na postavu Arbiter, který se "
+"nachází v zamčené knihovně,\ntedy je třeba knihovnu odemknouta sebrat"
 "Index do batohu.\n\nPro zobrazení nápovědy je třeba zadat příkaz: ?."
+)
 END_TALK_TEXT = "Rozhovor byl úspěšně ukončen."
 ITEM_TAKE_TEXT = "Předmět byl zvednut"
 GAME_END = "Hra byla ukončena"
 ROOM_MOVE = "Proběhl přesun na:"
+NEIGHBOURING_ROOMS_TEXT = "Sousední místnosti:"
 
 ## Errors
 EMPTY_COMMAND = "Prázdný příkaz"
 WRONG_NEIGHBOUR = "Zadané místo není sousedem"
 OBJECT_NOT_PRESENT = "Objekt není v této místnosti"
-WRONG_START_TEXT = "Prvním příkazem není startovací příkaz.\n"
-"Hru, která neběží, lze spustit pouze startovacím příkazem.\n"
+WRONG_START_TEXT = ("Prvním příkazem není startovací příkaz.\n"
+"Hru, která neběží, lze spustit pouze startovacím příkazem.\n")
 COMMAND_MISSING_PARAMS = "Příkazu chybí požadované parametry"
 WRONG_ARGUMENT = "Špatný argument parametru"
 MISSING_ARGUMENT = "Nebyl zadán argument příkazu"
