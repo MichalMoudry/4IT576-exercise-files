@@ -14,6 +14,7 @@ dbg.start_mod(0, __name__)
 
 from .world import current_place
 from .classes.bag import BAG
+from . import world
 from .classes.action import Action
 
 from .constants.actions_constants import *
@@ -77,14 +78,15 @@ def _initialize():
 def goto(arguments:tuple[str]) -> str:
     """Přesune hráče do zadaného sousedního prostoru.
     """
-    from . import world as w
     dest_name = arguments[1].lower()
-    dest_place = w._current_place.name2neighbor.get(dest_name.lower())
+    dest_place = world._current_place.name2neighbor.get(dest_name.lower())
     if dest_place:
-        w._current_place = dest_place
+        if dest_place.is_locked:
+            return ROOM_IS_LOCKED
+        world._current_place = dest_place
         return (
             f"{ROOM_MOVE} {dest_place}\n\n"
-            f"{NEIGHBOURING_ROOMS_TEXT}\n{w._current_place.neighbors}"
+            f"{NEIGHBOURING_ROOMS_TEXT}\n{world._current_place.neighbors}"
         )
     else:
         return WRONG_NEIGHBOUR
@@ -137,7 +139,26 @@ def ns0(arguments:tuple[str]) -> str:
 def ns1(arguments:tuple[str]) -> str:
     """Nestandardní akce číslo 1.
     """
-    raise Exception(f'Ještě není plně implementováno')
+    # Chyba, když uživ nezadal druhý parametr
+    if len(arguments) != 2:
+        return COMMAND_MISSING_PARAMS
+    place_name = arguments[1]
+    place_name = place_name.lower()
+    # Kontrola, jestli je potřebný klíč v batohu
+    required_key_name = _ROOM_KEY_PAIRING[place_name]
+    required_key = BAG.item(required_key_name)
+    print(required_key_name, required_key, BAG.items, sep=",")
+    if required_key == None:
+        return MISSING_KEY
+    # Získání prostoru a pokus o jeho otevření
+    place = world.place(place_name)
+    if place == None:
+        return OPEN_WRONG_COND
+    if place.is_locked:
+        place.is_locked = False
+        return f"Místnost ({place_name}) byla otevřena"
+    else:
+        return OPEN_WRONG_COND
 
 
 def ns2(arguments:tuple[str]) -> str:
@@ -185,6 +206,10 @@ _ACTION_ARGUMENTS = {
     TALK : " [osoba]",
     END_TALK : "",
     END : "",
+}
+
+_ROOM_KEY_PAIRING = {
+    "knihovna" : "Klíč_ke_knihovně"
 }
 
 

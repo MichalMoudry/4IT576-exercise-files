@@ -55,49 +55,57 @@ class Place(ANamed, AItemContainer):
     def is_locked(self) -> bool:
         """Vrátí informaci, jestli je prostor zamčený."""
         return self._is_locked
+    
+    @is_locked.setter
+    def is_locked(self, value) -> None:
+        """
+        Setter pro atribut is_locked.
+        """
+        self._is_locked = value
+
 
 # Slovník všech dostupných prostorů
 _NAME_2_PLACE = {
     "the_pillar_of_autumn" : Place("The_Pillar_of_Autumn",
         "Popis místa",
         ("Halo",),
-        ("Assault_Rifle", "Jacob_Keyes", )
+        ("assault_Rifle", "jacob_Keyes")
     ),
     "halo" : Place("Halo",
         "Popis místa",
         ("kontrolní_místnost_prstence", "Kartograf",
         "The_Pillar_of_Autumn"),
-        ("Needler", "Plasma_Pistol", "[Grunt]")
+        ("needler", "plasma_Pistol", "[Grunt]")
     ),
     "kontrolní_místnost_prstence" : Place("kontrolní_místnost_prstence",
         "Popis místa",
         ("Halo", "Laboratoř"),
-        ("Needler", "[Flood]")
+        ("needler", "[flood]")
     ),
     "laboratoř" : Place("Laboratoř",
         "Popis místa",
         ("kontrolní_místnost_prstence",),
-        ("Plasma_pistol", "Klíč_ke_knihovně", "[Elite]")
+        ("plasma_pistol", "klíč_ke_knihovně", "[elite]")
     ),
     "kartograf" : Place("Kartograf",
         "Popis místa",
         ("Knihovna", "Halo"),
-        ("Carbine", "[Forerunner]")
+        ("carbine", "[forerunner]")
     ),
     "knihovna" : Place("Knihovna",
         "Popis místa",
         ("TRC", "Kartograf"),
-        ("Pistole", "Index"),
+        ("pistole", "index"),
         True
     ),
     "trc" : Place("TRC",
         "Popis místa",
         ("the_maw", "Knihovna"),
-        ("[Grunt]", "[Covenant]")
+        ("[grunt]", "[covenant]")
     ),
     "the_maw" : Place("the_maw",
         "Popis místa",
         ("TRC", "Kartograf"),
-        ("[Arbiter]",)
+        ("[arbiter]",)
     ),
 }

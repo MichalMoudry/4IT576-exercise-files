@@ -1,4 +1,8 @@
-# Konstanty pro textové části aplikace
+"""
+Konstanty pro textové výstupy aplikace.
+"""
+
+# Konstanty pro textové výstupy aplikace
 UNKNOWN_COMMAND = "Neznámý příkaz"
 AVAILABLE_COMMANDS = ("Příkazy, které lze zadat:\n"
 "- jdi [místo]\n"
@@ -37,3 +41,6 @@ ITEM_NOT_IN_BAG = "Předmět není v batohu"
 BAG_FULL = "Váš batoh je plný"
 WRONG_ITEM_TARGET = "Špatný cíl použití věci"
 UNUSEABLE_ITEM = "Tuto věc nelze použít"
+OPEN_WRONG_COND = "Tato místnost není zavřená nebo ani neexistuje"
+ROOM_IS_LOCKED = "Místnost je zamčená"
+MISSING_KEY = "Nemáte potřebný klíč v batohu"

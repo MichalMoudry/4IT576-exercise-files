@@ -45,7 +45,7 @@ def place(name:str) -> Place:
     """Vrátí prostor se zadaným názvem.
     Pokud ve hře takový není, vrátí None.
     """
-    raise Exception(f'Ještě není plně implementováno')
+    return _NAME_2_PLACE.get(name)
 
 
 

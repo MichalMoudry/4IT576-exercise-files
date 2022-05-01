@@ -10,6 +10,7 @@ from ..api.scenario   import ScenarioStep, Scenario
 from ..api.scen_types import *  # Především typu kroků
 from .constants.actions_constants import *
 from .constants.text_constants import *
+from .constants.item_constants import *
 
 ############################################################################
 
@@ -21,8 +22,8 @@ HAPPY = Scenario('', stHAPPY, (
         WELCOME_MESSAGE,
         'The_Pillar_of_Autumn', # Aktuální prostor
         ('Halo',), # Aktuální sousedé
-        ('Assault_Rifle', 'Jacob_Keyes', ), # H-objekty v prostoru
-        ('Pistole', 'generátor_štítu', ), # H-Objekty v batohu
+        (AR, JACOB_KEYES, ), # H-objekty v prostoru
+        (PISTOL, 'generátor_štítu', ), # H-Objekty v batohu
     ),
     ScenarioStep(tsNS_1, f"{TALK} jacob_keyes",
         "Pokoušíte se zeptat objektu Jacob_Keyes. Jaký je váš dotaz?",
@@ -114,7 +115,7 @@ HAPPY = Scenario('', stHAPPY, (
         ("Carbine", "[Forerunner]"),
         ("Pistole", "generátor_štítu", "Klíč_ke_knihovně")
     ),
-    ScenarioStep(tsNS_1, f"{OPEN} knihovnu",
+    ScenarioStep(tsNS_1, f"{OPEN} knihovna",
         "Místnost (knihovna) byla otevřena",
         "Kartograf",
         ("Knihovna", "Halo"),
@@ -344,7 +345,7 @@ MISTAKE_NS = Scenario('', stMISTAKES_NS, (
             ("Pistole", "generátor_štítu", "Klíč_ke_knihovně")
         ),
         ScenarioStep(tsNS1_WrongCond, f"{OPEN} Halo",
-            "kontrolní_místnost_prstence", "Tato místnost není zavřená",
+            "kontrolní_místnost_prstence", OPEN_WRONG_COND,
             ("Halo", "Laboratoř"),
             ("Needler", "[Flood]"),
             ("Pistole", "generátor_štítu", "Klíč_ke_knihovně")
@@ -462,7 +463,7 @@ REQUIRED = Scenario('REQUIRED', stREQUIRED, (
         ("Carbine", "[Forerunner]"),
         ("Pistole", "generátor_štítu", "Klíč_ke_knihovně")
     ),
-    ScenarioStep(tsNS_1, f"{OPEN} knihovnu",
+    ScenarioStep(tsNS_1, f"{OPEN} knihovna",
         "Místnost (knihovna) byla otevřena",
         "Kartograf",
         ("Knihovna", "Halo"),
