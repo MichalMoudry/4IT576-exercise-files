@@ -76,7 +76,7 @@ def self_test():
     me = import_module(__package__)
     from ..tests    import test
     from ..tests    import Level
-    test(me, Level.START)    # Testuje korespondenci s návrhem
+    test(me, Level.MISTAKES)    # Testuje korespondenci s návrhem
         # architektury, tj. deklaraci navržených modulů a jejich atributů
 
 # Test spustíte zadáním příkazů

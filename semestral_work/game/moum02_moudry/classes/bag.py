@@ -6,7 +6,7 @@ objekty sebrané v jednotlivých prostorech.
 from .abstract.aitemcontainer import AItemContainer
 from .item import Item
 
-BAG_MAX_CAPACITY = 10
+BAG_MAX_CAPACITY = 3
 BAG_INITAL_CAPACITY = 2
 
 class Bag(AItemContainer):
@@ -21,7 +21,6 @@ class Bag(AItemContainer):
         """Definuje batoh jako kontejner h-objektů s omezenou kapacitou.
         """
         super().__init__(initial_item_names=initial_item_names)
-        self._capacity = BAG_INITAL_CAPACITY
 
 
     def initialize(self) -> None:
@@ -29,24 +28,24 @@ class Bag(AItemContainer):
         inicializuje i informaci o zbývající kapacitě.
         """
         super().initialize()
+        self.content = BAG_INITAL_CAPACITY
 
 
     @property
     def capacity(self) -> int:
         """Vrátí kapacitu batohu.
         """
-        return self._capacity
+        return BAG_MAX_CAPACITY
     
 
     def add_item(self, item:Item) -> bool:
         """Přidá zadaný objekt do kontejneru a vrátí informaci o tom,
         jestli se to podařilo.
         """
-        if item.weight >= BAG_MAX_CAPACITY:
+        if (new_content := item.weight + self.content) > BAG_MAX_CAPACITY:
             return False
-        self._items.append(item)
-        self._capacity += item.weight
-        return True
+        self.content = new_content
+        return super().add_item(item)
 
 # Jediná instance batohu
 # V této hře neobsahuje žádnou výchozí sadu h-objektů

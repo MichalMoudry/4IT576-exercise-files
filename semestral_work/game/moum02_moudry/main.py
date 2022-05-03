@@ -22,7 +22,7 @@ def is_alive() -> bool:
     Spuštěnou hru není možno pustit znovu.
     Chceme-li hru spustit znovu, musíme ji nejprve ukončit.
     """
-    raise Exception(f'Ještě není plně implementováno')
+    return actions.is_alive()
 
 
 def execute_command(command:str) -> str:

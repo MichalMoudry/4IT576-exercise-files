@@ -69,43 +69,43 @@ _NAME_2_PLACE = {
     "the_pillar_of_autumn" : Place("The_Pillar_of_Autumn",
         "Popis místa",
         ("Halo",),
-        ("assault_Rifle", "jacob_Keyes")
+        ("_assault_Rifle", "#jacob_keyes")
     ),
     "halo" : Place("Halo",
         "Popis místa",
         ("kontrolní_místnost_prstence", "Kartograf",
         "The_Pillar_of_Autumn"),
-        ("needler", "plasma_Pistol", "[Grunt]")
+        ("_needler", "_plasma_Pistol", "#[Grunt]")
     ),
     "kontrolní_místnost_prstence" : Place("kontrolní_místnost_prstence",
         "Popis místa",
         ("Halo", "Laboratoř"),
-        ("needler", "[flood]")
+        ("_needler", "#[flood]")
     ),
     "laboratoř" : Place("Laboratoř",
         "Popis místa",
         ("kontrolní_místnost_prstence",),
-        ("plasma_pistol", "klíč_ke_knihovně", "[elite]")
+        ("_plasma_pistol", "_klíč_ke_knihovně", "#[elite]")
     ),
     "kartograf" : Place("Kartograf",
         "Popis místa",
         ("Knihovna", "Halo"),
-        ("carbine", "[forerunner]")
+        ("_carbine", "#[forerunner]")
     ),
     "knihovna" : Place("Knihovna",
         "Popis místa",
         ("TRC", "Kartograf"),
-        ("pistole", "index"),
+        ("_pistole", "_index"),
         True
     ),
     "trc" : Place("TRC",
         "Popis místa",
         ("the_maw", "Knihovna"),
-        ("[grunt]", "[covenant]")
+        ("#[grunt]", "#[covenant]")
     ),
     "the_maw" : Place("the_maw",
         "Popis místa",
-        ("TRC", "Kartograf"),
-        ("[arbiter]",)
+        ("TRC",),
+        ("#[arbiter]",)
     ),
 }

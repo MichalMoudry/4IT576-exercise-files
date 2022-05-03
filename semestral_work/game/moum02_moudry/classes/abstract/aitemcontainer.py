@@ -27,7 +27,7 @@ class AItemContainer():
     def items(self) -> list[Item]:
         """Vrátí n-tici objektů v daném kontejneru.
         """
-        return self._items
+        return self._items[:]
 
 
     def item(self, name:str) -> Item:
@@ -46,6 +46,7 @@ class AItemContainer():
         jestli se to podařilo.
         """
         self._items.append(item)
+        self.item_names.append(item.name.lower())
         return True
 
 
@@ -53,9 +54,11 @@ class AItemContainer():
         """Pokusí se odebrat objekt se zadaným názvem z kontejneru.
         Vrátí odkaz na zadaný objekt nebo None.
         """
-        temp_item = self.item(item_name)
-        if temp_item:
-            self._items.remove(temp_item)
-            return temp_item
+        name = item_name.lower()
+        if name in self.item_names:
+            index = self.item_names.index(name)
+            result = self.items.pop(index)
+            self.item_names.pop(index)
+            return result
         else:
             return None
