@@ -14,7 +14,7 @@ class Item(ANamed):
         if not name:
             raise Exception("Nepovolená hodnota názvu objektu")
         super().__init__(name, **args)
-        self._is_heavy = is_heavy
+        self._weight = 3000 if is_heavy else 1
 
 
     @property
@@ -22,10 +22,3 @@ class Item(ANamed):
         """Vrátí váhu daného objektu.
         """
         return self._weight
-    
-    @property
-    def is_heavy(self) -> bool:
-        """
-        Vrátí informaci, zda je předmět těžký.
-        """
-        return self._is_heavy
