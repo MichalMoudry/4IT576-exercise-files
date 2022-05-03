@@ -49,4 +49,4 @@ class Bag(AItemContainer):
 
 # Jediná instance batohu
 # V této hře neobsahuje žádnou výchozí sadu h-objektů
-BAG:Bag = Bag(("Pistole", "generátor_štítu"))
+BAG:Bag = Bag(("_pistole", "_generátor_štítu"))

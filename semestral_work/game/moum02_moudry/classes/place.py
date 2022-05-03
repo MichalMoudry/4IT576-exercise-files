@@ -75,14 +75,14 @@ _NAME_2_PLACE = {
         "Popis místa",
         ("kontrolní_místnost_prstence", "kartograf",
         "the_pillar_of_autumn"),
-        ("_needler", "_plasma_Pistol", "#[Grunt]")
+        ("_needler", "_plasma_pistole", "#[grunt]")
     ),
     "kontrolní_místnost_prstence" : Place("kontrolní_místnost_prstence",
         "Popis místa",
         ("halo", "laboratoř"),
         ("_needler", "#[flood]")
     ),
-    "laboratoř" : Place("Laboratoř",
+    "laboratoř" : Place("laboratoř",
         "Popis místa",
         ("kontrolní_místnost_prstence",),
         ("_plasma_pistol", "_klíč_ke_knihovně", "#[elite]")
@@ -98,14 +98,14 @@ _NAME_2_PLACE = {
         ("_pistole", "_index"),
         True
     ),
-    "trc" : Place("TRC",
+    "trc" : Place("trc",
         "Popis místa",
         ("the_maw", "knihovna"),
         ("#[grunt]", "#[covenant]")
     ),
     "the_maw" : Place("the_maw",
         "Popis místa",
-        ("TRC",),
+        ("trc",),
         ("#[arbiter]",)
     ),
 }

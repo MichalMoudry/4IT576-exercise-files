@@ -6,9 +6,9 @@ import unittest
 
 from classes.action import Action
 
-class ActionTestMethods(unittest.TestCase):
+class ActionTests(unittest.TestCase):
     """
-    Třída obsahující metody pro testování trídy Action.
+    Třída obsahující metody pro testování třídy Action.
     """
 
     def setUp(self) -> None:

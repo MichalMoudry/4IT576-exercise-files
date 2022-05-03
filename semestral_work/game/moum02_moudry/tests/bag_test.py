@@ -6,9 +6,9 @@ import unittest
 from classes.bag import Bag
 from classes.item import Item
 
-class BagTestMethods(unittest.TestCase):
+class BagTests(unittest.TestCase):
     """
-    Třída obsahující metody pro testování trídy Bag.
+    Třída obsahující metody pro testování třídy Bag.
     """
 
     def setUp(self) -> None:

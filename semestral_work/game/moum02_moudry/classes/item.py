@@ -6,6 +6,8 @@ from .abstract.anamed import ANamed
 
 HEAVY_PREFIX = '#'
 
+UNMOVABLE_ITEM_WEIGHT = 3000
+
 class Item(ANamed):
     """Instance představují h-objekty v prostorech či batohu.
     """
@@ -16,7 +18,9 @@ class Item(ANamed):
         if not name:
             raise Exception("Nepovolená hodnota názvu objektu")
         super().__init__(name[1:], **args)
-        self._weight = 3000 if name[0] == HEAVY_PREFIX else 1
+        self._weight = (
+            UNMOVABLE_ITEM_WEIGHT if name[0] == HEAVY_PREFIX else 1
+        )
 
 
     @property

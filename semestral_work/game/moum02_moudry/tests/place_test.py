@@ -6,9 +6,9 @@ import unittest
 
 from classes.place import Place
 
-class PlaceTestMethods(unittest.TestCase):
+class PlaceTests(unittest.TestCase):
     """
-    Třída obsahující metody pro testování trídy Place.
+    Třída obsahující metody pro testování třídy Place.
     """
 
     def setUp(self) -> None:
