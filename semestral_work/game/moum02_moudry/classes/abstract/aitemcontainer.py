@@ -56,9 +56,9 @@ class AItemContainer():
         """
         name = item_name.lower()
         if name in self.item_names:
-            index = self.item_names.index(name)
-            result = self.items.pop(index)
-            self.item_names.pop(index)
-            return result
+            item = self.item(item_name)
+            self.item_names.remove(name)
+            self._items.remove(item)
+            return item
         else:
             return None

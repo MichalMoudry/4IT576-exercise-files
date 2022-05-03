@@ -15,7 +15,7 @@ class BagTestMethods(unittest.TestCase):
         """
         Metoda pro nastavení test fixture.
         """
-        self.test_bag = Bag(("test item 1", "test item 2"))
+        self.test_bag = Bag(("_test item 1", "_test item 2"))
         self.test_bag.initialize()
         return super().setUp()
     
@@ -44,7 +44,7 @@ class BagTestMethods(unittest.TestCase):
         Metoda pro otestování metody add_item.
         """
         bag_items_before_add = self.test_bag.items.copy()
-        self.test_bag.add_item(Item("test item 3"))
+        self.test_bag.add_item(Item("_test item 3"))
         bag_items_after = self.test_bag.items
         self.assertNotEqual(bag_items_before_add, bag_items_after)
 
