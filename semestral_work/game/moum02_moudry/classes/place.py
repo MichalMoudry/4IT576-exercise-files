@@ -66,20 +66,20 @@ class Place(ANamed, AItemContainer):
 
 # Slovník všech dostupných prostorů
 _NAME_2_PLACE = {
-    "the_pillar_of_autumn" : Place("The_Pillar_of_Autumn",
+    "the_pillar_of_autumn" : Place("the_pillar_of_autumn",
         "Popis místa",
-        ("Halo",),
+        ("halo",),
         ("_assault_Rifle", "#jacob_keyes")
     ),
     "halo" : Place("Halo",
         "Popis místa",
-        ("kontrolní_místnost_prstence", "Kartograf",
-        "The_Pillar_of_Autumn"),
+        ("kontrolní_místnost_prstence", "kartograf",
+        "the_pillar_of_autumn"),
         ("_needler", "_plasma_Pistol", "#[Grunt]")
     ),
     "kontrolní_místnost_prstence" : Place("kontrolní_místnost_prstence",
         "Popis místa",
-        ("Halo", "Laboratoř"),
+        ("halo", "laboratoř"),
         ("_needler", "#[flood]")
     ),
     "laboratoř" : Place("Laboratoř",
@@ -87,12 +87,12 @@ _NAME_2_PLACE = {
         ("kontrolní_místnost_prstence",),
         ("_plasma_pistol", "_klíč_ke_knihovně", "#[elite]")
     ),
-    "kartograf" : Place("Kartograf",
+    "kartograf" : Place("kartograf",
         "Popis místa",
-        ("Knihovna", "Halo"),
+        ("knihovna", "Halo"),
         ("_carbine", "#[forerunner]")
     ),
-    "knihovna" : Place("Knihovna",
+    "knihovna" : Place("knihovna",
         "Popis místa",
         ("TRC", "Kartograf"),
         ("_pistole", "_index"),
@@ -100,7 +100,7 @@ _NAME_2_PLACE = {
     ),
     "trc" : Place("TRC",
         "Popis místa",
-        ("the_maw", "Knihovna"),
+        ("the_maw", "knihovna"),
         ("#[grunt]", "#[covenant]")
     ),
     "the_maw" : Place("the_maw",
