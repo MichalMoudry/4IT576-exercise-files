@@ -13,7 +13,7 @@ dbg.start_mod(0, __name__)
 #from abc import ABC, abstractmethod
 
 from .world import current_place
-from .classes.bag import BAG
+from .classes.bag import BAG, BAG_MAX_CAPACITY
 from . import world
 from .classes.action import Action
 
@@ -78,6 +78,8 @@ def _initialize():
 def goto(arguments:tuple[str]) -> str:
     """Přesune hráče do zadaného sousedního prostoru.
     """
+    if len(arguments) < 2:
+        return COMMAND_MISSING_PARAMS
     dest_name = arguments[1].lower()
     dest_place = world._current_place.name2neighbor.get(dest_name.lower())
     if dest_place:
@@ -95,37 +97,55 @@ def goto(arguments:tuple[str]) -> str:
 def take(arguments:tuple[str]) -> str:
     """Přesune zadaný objekt z aktuálního prostoru do batohu.
     """
+    if len(arguments) < 2:
+        return COMMAND_MISSING_PARAMS
     curr_place = current_place()
     item_name = arguments[1]
     item = curr_place.item(item_name)
     if item:
+        if item.weight >= BAG_MAX_CAPACITY:
+            return UNMOVABLE_ITEM
         curr_place.remove_item(item_name)
-        BAG.add_item(item)
-        return f"{ITEM_TAKE_TEXT} ({item_name})"
+        if BAG.add_item(item):
+            return f"{ITEM_TAKE_TEXT} ({item_name})"
+        else:
+            return BAG_FULL
     else:
         return OBJECT_NOT_PRESENT
 
 
-def put(self, arguments:tuple[str]) -> str:
+def put(arguments:tuple[str]) -> str:
     """Přesune zadaný objekt z batohu do aktuálního prostoru.
     """
-    raise Exception(f'Ještě není plně implementováno')
+    if len(arguments) != 2:
+        return COMMAND_MISSING_PARAMS
+    item_name = arguments[1]
+    item = BAG.item(item_name)
+    if item:
+        BAG.remove_item(item.name)
+        current_place().add_item(item)
+        return f"Věc ({item.name}) byla položena"
+    else:
+        return ITEM_NOT_IN_BAG
 
 
 def help(arguments:tuple[str]) -> str:
     """Vrátí text jednoduché nápovědy popisující
     všechny dostupné příkazy.
     """
-    result = "Příkazy, které lze zadat:\n"
-    for action in _NAME_2_ACTION:
-        result += f"- {action}{_ACTION_ARGUMENTS[action]}\n"
-    result = result.strip()
-    return result
+    res = [WELCOME_MESSAGE, "\n\n"]
+    res.append("Příkazy, které lze zadat:\n")
+    for action in _NAME_2_ACTION.values():
+        res.append(f"- {action.name}{_ACTION_ARGUMENTS[action.name]}\n")
+        #res.append(f"    • {action.description}\n")
+    return "".join(res)
 
 def end(arguments:tuple[str]) -> str:
-    """Ukončí hru a poděkuje hráči za htu.
+    """Ukončí hru a poděkuje hráči za hru.
     """
-    raise Exception(f'Ještě není plně implementováno')
+    global _is_alive
+    _is_alive = False
+    return GAME_END
 
 
 ############################################################################
@@ -147,7 +167,6 @@ def ns1(arguments:tuple[str]) -> str:
     # Kontrola, jestli je potřebný klíč v batohu
     required_key_name = _ROOM_KEY_PAIRING[place_name]
     required_key = BAG.item(required_key_name)
-    print(required_key_name, required_key, BAG.items, sep=",")
     if required_key == None:
         return MISSING_KEY
     # Získání prostoru a pokus o jeho otevření
@@ -164,7 +183,12 @@ def ns1(arguments:tuple[str]) -> str:
 def ns2(arguments:tuple[str]) -> str:
     """Nestandardní akce číslo 1.
     """
-    raise Exception(f'Ještě není plně implementováno')
+    # TODO: Dokončit akci
+    if len(arguments) != 3:
+        return COMMAND_MISSING_PARAMS
+    item_name = arguments[1]
+    target = arguments[2]
+    return f"Předmět ({item_name}) byl použit na {target}"
 
 
 def ns3(arguments:tuple[str]) -> str:
@@ -182,17 +206,18 @@ def ns4(arguments:tuple[str]) -> str:
 
 ############################################################################
 _is_alive = False
+
 _NAME_2_ACTION = {
-    MOVE : Action(MOVE, "", goto),
-    PICK_UP : Action(PICK_UP, "", take),
-    OVERVIEW : Action(OVERVIEW, "", ns0),
-    OPEN : Action(OPEN, "", ns1),
-    PUT_DOWN : Action(PUT_DOWN, "", put),
-    USE : Action(USE, "", ns2),
-    HELP : Action(HELP, "", help),
-    TALK : Action(TALK, "", ns3),
-    END_TALK : Action(END_TALK, "", ns4),
-    END : Action(END, "", end),
+    MOVE : Action(MOVE, "Popis akce MOVE", goto),
+    PICK_UP : Action(PICK_UP, "Popis akce PICK_UP", take),
+    OVERVIEW : Action(OVERVIEW, "Popis akce OVERVIEW", ns0),
+    OPEN : Action(OPEN, "Popis akce OPEN", ns1),
+    PUT_DOWN : Action(PUT_DOWN, "Popis akce PUT_DOWN", put),
+    USE : Action(USE, "Popis akce USE", ns2),
+    HELP : Action(HELP, "Popis akce HELP", help),
+    TALK : Action(TALK, "Popis akce TALK", ns3),
+    END_TALK : Action(END_TALK, "Popis akce END_TALK", ns4),
+    END : Action(END, "Popis akce END", end),
 }
 
 _ACTION_ARGUMENTS = {
@@ -209,7 +234,7 @@ _ACTION_ARGUMENTS = {
 }
 
 _ROOM_KEY_PAIRING = {
-    "knihovna" : "Klíč_ke_knihovně"
+    "knihovna" : "klíč_ke_knihovně"
 }
 
 
