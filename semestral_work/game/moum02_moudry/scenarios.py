@@ -21,154 +21,152 @@ HAPPY = Scenario('', stHAPPY, (
     START_STEP := ScenarioStep(tsSTART, '', # Zadaný příkaz
         WELCOME_MESSAGE,
         THE_PILLAR_OF_AUTUMN, # Aktuální prostor
-        ('Halo',), # Aktuální sousedé
-        (AR[1:], JACOB_KEYES[1:], ), # H-objekty v prostoru
-        (PISTOL, SHIELD_GENERATOR, ), # H-Objekty v batohu
+        (HALO,), # Aktuální sousedé
+        (AR_2, JACOB_KEYES_2, ), # H-objekty v prostoru
+        (PISTOL_2, SHIELD_GENERATOR_2, ), # H-Objekty v batohu
     ),
-    ScenarioStep(tsNS_1, f"{TALK} jacob_keyes",
-        "Pokoušíte se zeptat objektu Jacob_Keyes. Jaký je váš dotaz?",
+    ScenarioStep(tsNS_1, f"{TALK} {JACOB_KEYES_2}",
+        f"Pokoušíte se zeptat objektu {JACOB_KEYES_2}."
+        " Jaký je váš dotaz?",
         THE_PILLAR_OF_AUTUMN,
-        ('Halo',),
-        ('Assault_Rifle', 'Jacob_Keyes',),
-        ('pistole', 'generátor_štítu',),
+        (HALO,),
+        (AR_2, JACOB_KEYES_2,),
+        (PISTOL_2, SHIELD_GENERATOR_2,),
     ),
     ScenarioStep(tsNS_0, END_TALK, END_TALK_TEXT,
         THE_PILLAR_OF_AUTUMN,
-        ('Halo',),
-        ('Assault_Rifle', 'Jacob_Keyes',),
-        ('pistole', 'generátor_štítu',),
+        (HALO,),
+        (AR_2, JACOB_KEYES_2,),
+        (PISTOL_2, SHIELD_GENERATOR_2,),
     ),
-    ScenarioStep(tsGOTO, f"{MOVE} Halo",
-        f"{ROOM_MOVE} Halo\n\n"
+    ScenarioStep(tsGOTO, f"{MOVE} {HALO}",
+        f"{ROOM_MOVE} {HALO}\n\n"
         f"{NEIGHBOURING_ROOMS_TEXT}\n"
-        f"(kontrolní_místnost_prstence, kartograf, {THE_PILLAR_OF_AUTUMN})",
-        "Halo",
-        ("kontrolní_místnost_prstence", "kartograf",
-        THE_PILLAR_OF_AUTUMN),
-        ("needler", "plasma_pistole", "[grunt]"),
-        ("pistole", "generátor_štítu",)
+        f"({CONTROL_ROOM}, {KARTOGRAF}, {THE_PILLAR_OF_AUTUMN})",
+        HALO,
+        (CONTROL_ROOM, KARTOGRAF, THE_PILLAR_OF_AUTUMN),
+        (NEEDLER_2, PLASMA_PISTOL_2, GRUNT_2),
+        (PISTOL_2, SHIELD_GENERATOR_2,)
     ),
-    ScenarioStep(tsGOTO, f"{MOVE} kontrolní_místnost_prstence",
-        f"{ROOM_MOVE} kontrolní_místnost_prstence\n\n"
+    ScenarioStep(tsGOTO, f"{MOVE} {CONTROL_ROOM}",
+        f"{ROOM_MOVE} {CONTROL_ROOM}\n\n"
         f"{NEIGHBOURING_ROOMS_TEXT}\n"
-        "(Halo, laboratoř)",
-        "kontrolní_místnost_prstence",
-        ("Halo", "laboratoř"),
-        ("needler", "[flood]"),
-        ("pistole", "generátor_štítu",)
+        f"({HALO}, {LAB})",
+        CONTROL_ROOM,
+        (HALO, LAB),
+        (NEEDLER_2, FLOOD_2),
+        (PISTOL_2, SHIELD_GENERATOR_2,)
     ),
-    ScenarioStep(tsGOTO, f"{MOVE} laboratoř",
-        f"{ROOM_MOVE} laboratoř\n\n"
+    ScenarioStep(tsGOTO, f"{MOVE} {LAB}",
+        f"{ROOM_MOVE} {LAB}\n\n"
         f"{NEIGHBOURING_ROOMS_TEXT}\n"
-        "(kontrolní_místnost_prstence,)",
-        "laboratoř",
-        ("kontrolní_místnost_prstence",),
-        ("plasma_pistole", "klíč_ke_knihovně", "[elite]"),
-        ("pistole", "generátor_štítu",)
+        f"({CONTROL_ROOM},)",
+        LAB,
+        (CONTROL_ROOM,),
+        (PLASMA_PISTOL_2, LIBRARY_KEY_2, ELITE_2),
+        (PISTOL_2, SHIELD_GENERATOR_2,)
     ),
-    ScenarioStep(tsTAKE, f"{PICK_UP} klíč_ke_knihovně",
+    ScenarioStep(tsTAKE, f"{PICK_UP} {LIBRARY_KEY_2}",
         ITEM_TAKE_TEXT,
-        "laboratoř",
-        ("kontrolní_místnost_prstence",),
-        ("plasma_pistole", "[elite]"),
-        ("pistole", "generátor_štítu", "klíč_ke_knihovně")
+        LAB,
+        (CONTROL_ROOM,),
+        (PLASMA_PISTOL_2, ELITE_2),
+        (PISTOL_2, SHIELD_GENERATOR_2, LIBRARY_KEY_2)
     ),
-    ScenarioStep(tsGOTO, f"{MOVE} kontrolní_místnost_prstence",
-        f"{ROOM_MOVE} kontrolní_místnost_prstence\n\n"
+    ScenarioStep(tsGOTO, f"{MOVE} {CONTROL_ROOM}",
+        f"{ROOM_MOVE} {CONTROL_ROOM}\n\n"
         f"{NEIGHBOURING_ROOMS_TEXT}\n"
-        "(Halo, laboratoř)",
-        "kontrolní_místnost_prstence",
-        ("Halo", "laboratoř"),
-        ("needler", "[flood]"),
-        ("pistole", "generátor_štítu", "klíč_ke_knihovně")
+        f"({HALO}, {LAB})",
+        CONTROL_ROOM,
+        (HALO, LAB),
+        (NEEDLER_2, FLOOD_2),
+        (PISTOL_2, SHIELD_GENERATOR_2, LIBRARY_KEY_2)
     ),
-    ScenarioStep(tsGOTO, f"{MOVE} Halo",
-        f"{ROOM_MOVE}: Halo\n\n"
+    ScenarioStep(tsGOTO, f"{MOVE} {HALO}",
+        f"{ROOM_MOVE}: {HALO}\n\n"
         f"{NEIGHBOURING_ROOMS_TEXT}\n"
-        f"(kontrolní_místnost_prstence, kartograf, {THE_PILLAR_OF_AUTUMN})",
-        "Halo",
-        ("kontrolní_místnost_prstence", "kartograf",
-        THE_PILLAR_OF_AUTUMN),
-        ("needler", "plasma_pistole", "[grunt]"),
-        ("pistole", "generátor_štítu", "klíč_ke_knihovně")
+        f"({CONTROL_ROOM}, {KARTOGRAF}, {THE_PILLAR_OF_AUTUMN})",
+        HALO,
+        (CONTROL_ROOM, KARTOGRAF, THE_PILLAR_OF_AUTUMN),
+        (NEEDLER_2, PLASMA_PISTOL_2, GRUNT_2),
+        (PISTOL_2, SHIELD_GENERATOR_2, LIBRARY_KEY_2)
     ),
     ScenarioStep(tsNS_0, OVERVIEW,
-        "---------- Přehled ----------\n"
-        "- Obsah batohu: ('pistole', 'klíč_ke_knihovně')\n"
+        f"---------- {OVERVIEW} ----------\n"
+        f"- Obsah batohu: ('{PISTOL_2}', '{LIBRARY_KEY_2}')\n"
         "- Počet životů: 100\n"
         "- Velikost štítu: 150\n\n"
         "----- Postup -----\n"
         "- Máte klíč ke knihovně? Ano\n"
         "- Odemkli jste knihovnu? Ne\n",
-        "Halo",
-        ("kontrolní_místnost_prstence", "kartograf",
-        THE_PILLAR_OF_AUTUMN),
-        ("needler", "plasma_pistole", "[grunt]"),
-        ("pistole", "generátor_štítu", "klíč_ke_knihovně")
+        HALO,
+        (CONTROL_ROOM, KARTOGRAF, THE_PILLAR_OF_AUTUMN),
+        (NEEDLER_2, PLASMA_PISTOL_2, GRUNT_2),
+        (PISTOL_2, SHIELD_GENERATOR_2, LIBRARY_KEY_2)
     ),
-    ScenarioStep(tsGOTO, f"{MOVE} kartograf",
-        f"{ROOM_MOVE} kartograf\n\n"
+    ScenarioStep(tsGOTO, f"{MOVE} {KARTOGRAF}",
+        f"{ROOM_MOVE} {KARTOGRAF}\n\n"
         f"{NEIGHBOURING_ROOMS_TEXT}\n"
-        "(Knihovna, Halo)",
-        "kartograf",
-        ("Knihovna", "Halo"),
-        ("carbine", "[forerunner]"),
-        ("pistole", "generátor_štítu", "klíč_ke_knihovně")
+        f"({LIBRARY}, {HALO})",
+        KARTOGRAF,
+        (LIBRARY, HALO),
+        (CARBINE_2, FORERUNNER_2),
+        (PISTOL_2, SHIELD_GENERATOR_2, LIBRARY_KEY_2)
     ),
-    ScenarioStep(tsNS_1, f"{OPEN} knihovna",
-        "Místnost (knihovna) byla otevřena",
-        "kartograf",
-        ("Knihovna", "Halo"),
-        ("carbine", "[forerunner]"),
-        ("pistole", "generátor_štítu", "klíč_ke_knihovně")
+    ScenarioStep(tsNS_1, f"{OPEN} {LIBRARY}",
+        f"Místnost ({LIBRARY}) byla otevřena",
+        KARTOGRAF,
+        (LIBRARY, HALO),
+        (CARBINE_2, FORERUNNER_2),
+        (PISTOL_2, SHIELD_GENERATOR_2, LIBRARY_KEY_2)
     ),
-    ScenarioStep(tsPUT_DOWN, f"{PUT_DOWN} klíč_ke_knihovně",
-        "Věc (klíč_ke_knihovně) byla položena",
-        "kartograf",
-        ("Knihovna", "Halo"),
-        ("carbine", "[forerunner]", "klíč_ke_knihovně"),
-        ("pistole", "generátor_štítu")
+    ScenarioStep(tsPUT_DOWN, f"{PUT_DOWN} {LIBRARY_KEY_2}",
+        f"Věc ({LIBRARY_KEY_2}) byla položena",
+        KARTOGRAF,
+        (LIBRARY, HALO),
+        (CARBINE_2, FORERUNNER_2, LIBRARY_KEY_2),
+        (PISTOL_2, SHIELD_GENERATOR_2)
     ),
-    ScenarioStep(tsGOTO, f"{MOVE} Knihovna",
-        f"{ROOM_MOVE} Knihovna\n\n"
+    ScenarioStep(tsGOTO, f"{MOVE} {LIBRARY}",
+        f"{ROOM_MOVE} {LIBRARY}\n\n"
         f"{NEIGHBOURING_ROOMS_TEXT}\n"
-        "(trc, kartograf)",
-        "Knihovna",
-        ("trc", "kartograf"),
-        ("pistole", "Index"),
-        ("pistole", "generátor_štítu")
+        f"({TRC}, {KARTOGRAF})",
+        LIBRARY,
+        (TRC, KARTOGRAF),
+        (PISTOL_2, INDEX_2),
+        (PISTOL_2, SHIELD_GENERATOR_2)
     ),
-    ScenarioStep(tsTAKE, f"{PICK_UP} Index",
-        "Předmět (Index) byl zvednut",
-        "Knihovna",
-        ("trc", "kartograf"),
-        ("pistole",),
-        ("pistole", "generátor_štítu", "Index")
+    ScenarioStep(tsTAKE, f"{PICK_UP} {INDEX_2}",
+        f"Předmět ({INDEX_2}) byl zvednut",
+        LIBRARY,
+        (TRC, KARTOGRAF),
+        (PISTOL_2,),
+        (PISTOL_2, SHIELD_GENERATOR_2, INDEX_2)
     ),
-    ScenarioStep(tsGOTO, f"{MOVE} trc",
-        f"{ROOM_MOVE} trc\n\n"
+    ScenarioStep(tsGOTO, f"{MOVE} {TRC}",
+        f"{ROOM_MOVE} {TRC}\n\n"
         f"{NEIGHBOURING_ROOMS_TEXT}\n"
-        "(the_maw, Knihovna)",
-        "trc",
-        ("the_maw", "Knihovna"),
-        ("[grunt]", "[Covenant]"),
-        ("pistole", "generátor_štítu", "Index")
+        f"({THE_MAW}, {LIBRARY})",
+        TRC,
+        (THE_MAW, LIBRARY),
+        (GRUNT_2, COVENANT_2),
+        (PISTOL_2, SHIELD_GENERATOR_2, INDEX_2)
     ),
-    ScenarioStep(tsGOTO, f"{MOVE} the_maw",
-        f"{ROOM_MOVE} the_maw\n\n"
+    ScenarioStep(tsGOTO, f"{MOVE} {THE_MAW}",
+        f"{ROOM_MOVE} {THE_MAW}\n\n"
         f"{NEIGHBOURING_ROOMS_TEXT}\n"
-        "(trc,)",
-        "the_maw",
-        ("trc",),
-        ("[Arbiter]",),
-        ("pistole", "generátor_štítu", "Index")
+        f"({TRC},)",
+        THE_MAW,
+        (TRC,),
+        (ARBITER_2,),
+        (PISTOL_2, SHIELD_GENERATOR_2, INDEX_2)
     ),
-    ScenarioStep(tsNS_2, f"{USE} Index [Arbiter]",
-        "Předmět (Index) byl použit na [Arbiter]",
-        "the_maw",
-        ("trc", "kartograf"),
+    ScenarioStep(tsNS_2, f"{USE} {INDEX_2} {ARBITER_2}",
+        f"Předmět ({INDEX_2}) byl použit na {ARBITER_2}",
+        THE_MAW,
+        (TRC, KARTOGRAF),
         (),
-        ("pistole", "generátor_štítu")
+        (PISTOL_2, SHIELD_GENERATOR_2)
     ),
 ))
 
@@ -197,97 +195,93 @@ MISTAKE = Scenario('', stMISTAKES, (
     ScenarioStep(tsHELP, HELP,
         f"{WELCOME_MESSAGE}\n\n{AVAILABLE_COMMANDS}",
         THE_PILLAR_OF_AUTUMN,
-        ("Halo",),
-        ("Assault_Rifle", "Jacob_Keyes", ),
-        ("pistole", "generátor_štítu", ),
+        (HALO,),
+        (AR_2, JACOB_KEYES_2, ),
+        (PISTOL_2, SHIELD_GENERATOR_2, ),
     ),
     ScenarioStep(tsEMPTY, "", EMPTY_COMMAND,
         THE_PILLAR_OF_AUTUMN,
-        ("Halo",),
-        ("Assault_Rifle", "Jacob_Keyes", ),
-        ("pistole", "generátor_štítu", ),
+        (HALO,),
+        (AR_2, JACOB_KEYES_2, ),
+        (PISTOL_2, SHIELD_GENERATOR_2, ),
     ),
     ScenarioStep(tsUNKNOWN, "přines", UNKNOWN_COMMAND,
         THE_PILLAR_OF_AUTUMN,
-        ("Halo",),
-        ("Assault_Rifle", "Jacob_Keyes", ),
-        ("pistole", "generátor_štítu", ),
+        (HALO,),
+        (AR_2, JACOB_KEYES_2, ),
+        (PISTOL_2, SHIELD_GENERATOR_2, ),
     ),
-    ScenarioStep(tsBAD_ITEM, f"{PICK_UP} Index",
+    ScenarioStep(tsBAD_ITEM, f"{PICK_UP} {INDEX_2}",
         OBJECT_NOT_PRESENT,
         THE_PILLAR_OF_AUTUMN,
-        ("Halo",),
-        ("Assault_Rifle", "Jacob_Keyes", ),
-        ("pistole", "generátor_štítu", ),
+        (HALO,),
+        (AR_2, JACOB_KEYES_2, ),
+        (PISTOL_2, SHIELD_GENERATOR_2, ),
     ),
-    ScenarioStep(tsBAD_NEIGHBOR, f"{MOVE} trc", WRONG_NEIGHBOUR,
+    ScenarioStep(tsBAD_NEIGHBOR, f"{MOVE} {TRC}", WRONG_NEIGHBOUR,
         THE_PILLAR_OF_AUTUMN,
-        ("Halo",),
-        ("Assault_Rifle", "Jacob_Keyes", ),
-        ("pistole", "generátor_štítu", ),
+        (HALO,),
+        (AR_2, JACOB_KEYES_2, ),
+        (PISTOL_2, SHIELD_GENERATOR_2, ),
     ),
-    ScenarioStep(tsUNMOVABLE, f"{PICK_UP} Jacob_Keyes",
-        "Předmět nelze zvednout",
+    ScenarioStep(tsUNMOVABLE, f"{PICK_UP} {JACOB_KEYES_2}",
+        UNMOVABLE_ITEM,
         THE_PILLAR_OF_AUTUMN,
-        ("Halo",),
-        ("Assault_Rifle", "Jacob_Keyes", ),
-        ("pistole", "generátor_štítu", ),
+        (HALO,),
+        (AR_2, JACOB_KEYES_2, ),
+        (PISTOL_2, SHIELD_GENERATOR_2, ),
     ),
     ScenarioStep(tsMOVE_WA, MOVE, COMMAND_MISSING_PARAMS,
         THE_PILLAR_OF_AUTUMN,
-        ("Halo",),
-        ("Assault_Rifle", "Jacob_Keyes", ),
-        ("pistole", "generátor_štítu", ),
+        (HALO,),
+        (AR_2, JACOB_KEYES_2, ),
+        (PISTOL_2, SHIELD_GENERATOR_2, ),
     ),
     ScenarioStep(tsPUT_DOWN_WA, PUT_DOWN,
         COMMAND_MISSING_PARAMS,
         THE_PILLAR_OF_AUTUMN,
-        ("Halo",),
-        ("Assault_Rifle", "Jacob_Keyes", ),
-        ("pistole", "generátor_štítu", ),
+        (HALO,),
+        (AR_2, JACOB_KEYES_2, ),
+        (PISTOL_2, SHIELD_GENERATOR_2, ),
     ),
     ScenarioStep(tsTAKE_WA, PICK_UP, COMMAND_MISSING_PARAMS,
         THE_PILLAR_OF_AUTUMN,
-        ("Halo",),
-        ("Assault_Rifle", "Jacob_Keyes", ),
-        ("pistole", "generátor_štítu", ),
+        (HALO,),
+        (AR_2, JACOB_KEYES_2, ),
+        (PISTOL_2, SHIELD_GENERATOR_2, ),
     ),
-    ScenarioStep(tsNOT_IN_BAG, f"{PUT_DOWN} Index", ITEM_NOT_IN_BAG,
+    ScenarioStep(tsNOT_IN_BAG, f"{PUT_DOWN} {INDEX_2}", ITEM_NOT_IN_BAG,
         THE_PILLAR_OF_AUTUMN,
-        ("Halo",),
-        ("Assault_Rifle", "Jacob_Keyes", ),
-        ("pistole", "generátor_štítu", ),
+        (HALO,),
+        (AR_2, JACOB_KEYES_2, ),
+        (PISTOL_2, SHIELD_GENERATOR_2, ),
     ),
-    ScenarioStep(tsGOTO, f"{MOVE} Halo",
-        f"{ROOM_MOVE} Halo\n\n"
+    ScenarioStep(tsGOTO, f"{MOVE} {HALO}",
+        f"{ROOM_MOVE} {HALO}\n\n"
         f"{NEIGHBOURING_ROOMS_TEXT}\n"
-        f"(kontrolní_místnost_prstence, kartograf, {THE_PILLAR_OF_AUTUMN})",
-        "Halo",
-        ("kontrolní_místnost_prstence", "kartograf",
-        THE_PILLAR_OF_AUTUMN),
-        ("needler", "plasma_pistole", "[grunt]"),
-        ("pistole", "generátor_štítu",)
+        f"({CONTROL_ROOM}, {KARTOGRAF}, {THE_PILLAR_OF_AUTUMN})",
+        HALO,
+        (CONTROL_ROOM, KARTOGRAF, THE_PILLAR_OF_AUTUMN),
+        (NEEDLER_2, PLASMA_PISTOL_2, GRUNT_2),
+        (PISTOL_2, SHIELD_GENERATOR_2,)
     ),
-    ScenarioStep(tsTAKE, f"{PICK_UP} needler", ITEM_TAKE_TEXT,
-        "Halo",
-        ("kontrolní_místnost_prstence", "kartograf",
-        THE_PILLAR_OF_AUTUMN),
-        ("plasma_pistole", "[grunt]"),
-        ("pistole", "generátor_štítu", "needler")
+    ScenarioStep(tsTAKE, f"{PICK_UP} {NEEDLER_2}", ITEM_TAKE_TEXT,
+        HALO,
+        (CONTROL_ROOM, KARTOGRAF, THE_PILLAR_OF_AUTUMN),
+        (PLASMA_PISTOL_2, GRUNT_2),
+        (PISTOL_2, SHIELD_GENERATOR_2, NEEDLER_2)
     ),
-    ScenarioStep(tsBAG_FULL, f"{PICK_UP} plasma_pistole", BAG_FULL,
-        "Halo",
-        ("kontrolní_místnost_prstence", "kartograf",
-        THE_PILLAR_OF_AUTUMN),
-        ("plasma_pistole", "[grunt]"),
-        ("pistole", "generátor_štítu", "needler")
+    ScenarioStep(tsBAG_FULL, f"{PICK_UP} {PLASMA_PISTOL_2}", BAG_FULL,
+        HALO,
+        (CONTROL_ROOM, KARTOGRAF, THE_PILLAR_OF_AUTUMN),
+        (PLASMA_PISTOL_2, GRUNT_2),
+        (PISTOL_2, SHIELD_GENERATOR_2, NEEDLER_2)
     ),
     ScenarioStep(tsEND, END, GAME_END,
-        "Halo",
-        ("kontrolní_místnost_prstence", "kartograf",
-        THE_PILLAR_OF_AUTUMN),
-        ("plasma_pistolee", "[grunt]"),
-        ("pistole", "generátor_štítu", "needler")
+        HALO,
+        (CONTROL_ROOM, KARTOGRAF, THE_PILLAR_OF_AUTUMN),
+        (PLASMA_PISTOL_2, GRUNT_2),
+        (PISTOL_2, SHIELD_GENERATOR_2, NEEDLER_2)
     )
 ),)
 
@@ -307,82 +301,86 @@ MISTAKE_NS = Scenario('', stMISTAKES_NS, (
         HAPPY.steps[6],
         HAPPY.steps[7],
         ScenarioStep(tsNS1_WRONG_ARG, f"{OPEN} R39OWTJR",
-            "Špatný argument parametru", "kontrolní_místnost_prstence",
-            ("Halo", "laboratoř"),
-            ("needler", "[flood]"),
-            ("pistole", "generátor_štítu", "klíč_ke_knihovně")
+            WRONG_ARGUMENT,
+            CONTROL_ROOM,
+            (HALO, LAB),
+            (NEEDLER_2, FLOOD_2),
+            (PISTOL_2, SHIELD_GENERATOR_2, LIBRARY_KEY_2)
         ),
         ScenarioStep(tsNS0_WrongCond, OVERVIEW,
             "V tuto chvíli nelze zobrazit přehled",
-            "kontrolní_místnost_prstence",
-            ("Halo", "laboratoř"),
-            ("needler", "[flood]"),
-            ("pistole", "generátor_štítu", "klíč_ke_knihovně")
+            CONTROL_ROOM,
+            (HALO, LAB),
+            (NEEDLER_2, FLOOD_2),
+            (PISTOL_2, SHIELD_GENERATOR_2, LIBRARY_KEY_2)
         ),
         ScenarioStep(tsNS0_WrongCond, END_TALK,
-            "V tuto chvíli neprobíhá rozhovor",
-            "kontrolní_místnost_prstence",
-            ("Halo", "laboratoř"),
-            ("needler", "[flood]"),
-            ("pistole", "generátor_štítu", "klíč_ke_knihovně")
+            END_TALK_WRONG_COND,
+            CONTROL_ROOM,
+            (HALO, LAB),
+            (NEEDLER_2, FLOOD_2),
+            (PISTOL_2, SHIELD_GENERATOR_2, LIBRARY_KEY_2)
         ),
         ScenarioStep(tsNS1_WRONG_ARG, f"{TALK} R39OWTJR",
-            WRONG_ARGUMENT, "kontrolní_místnost_prstence",
-            ("Halo", "laboratoř"),
-            ("needler", "[flood]"),
-            ("pistole", "generátor_štítu", "klíč_ke_knihovně")
+            WRONG_ARGUMENT,
+            CONTROL_ROOM,
+            (HALO, LAB),
+            (NEEDLER_2, FLOOD_2),
+            (PISTOL_2, SHIELD_GENERATOR_2, LIBRARY_KEY_2)
         ),
-        ScenarioStep(tsNS1_WrongCond, f"{TALK} [flood]",
+        ScenarioStep(tsNS1_WrongCond, f"{TALK} {FLOOD_2}",
             "Tuto věc/postavu nelze oslovit",
-            "kontrolní_místnost_prstence",
-            ("Halo", "laboratoř"),
-            ("needler", "[flood]"),
-            ("pistole", "generátor_štítu", "klíč_ke_knihovně")
+            CONTROL_ROOM,
+            (HALO, LAB),
+            (NEEDLER_2, FLOOD_2),
+            (PISTOL_2, SHIELD_GENERATOR_2, LIBRARY_KEY_2)
         ),
         ScenarioStep(tsNS1_0Args, TALK, MISSING_ARGUMENT,
-            "kontrolní_místnost_prstence",
-            ("Halo", "laboratoř"),
-            ("needler", "[flood]"),
-            ("pistole", "generátor_štítu", "klíč_ke_knihovně")
+            CONTROL_ROOM,
+            (HALO, LAB),
+            (NEEDLER_2, FLOOD_2),
+            (PISTOL_2, SHIELD_GENERATOR_2, LIBRARY_KEY_2)
         ),
-        ScenarioStep(tsNS1_WrongCond, f"{OPEN} Halo",
-            "kontrolní_místnost_prstence", OPEN_WRONG_COND,
-            ("Halo", "laboratoř"),
-            ("needler", "[flood]"),
-            ("pistole", "generátor_štítu", "klíč_ke_knihovně")
+        ScenarioStep(tsNS1_WrongCond, f"{OPEN} {HALO}",
+            OPEN_WRONG_COND,
+            CONTROL_ROOM,
+            (HALO, LAB),
+            (NEEDLER_2, FLOOD_2),
+            (PISTOL_2, SHIELD_GENERATOR_2, LIBRARY_KEY_2)
         ),
         ScenarioStep(tsNS1_0Args, OPEN, MISSING_ARGUMENT,
-            "kontrolní_místnost_prstence",
-            ("Halo", "laboratoř"),
-            ("needler", "[flood]"),
-            ("pistole", "generátor_štítu", "klíč_ke_knihovně")
+            CONTROL_ROOM,
+            (HALO, LAB),
+            (NEEDLER_2, FLOOD_2),
+            (PISTOL_2, SHIELD_GENERATOR_2, LIBRARY_KEY_2)
         ),
-        ScenarioStep(tsNS2_WrongCond, f"{USE} generátor_štítu needler",
-            WRONG_ITEM_TARGET, "kontrolní_místnost_prstence",
-            ("Halo", "laboratoř"),
-            ("needler", "[flood]"),
-            ("pistole", "generátor_štítu", "klíč_ke_knihovně")
+        ScenarioStep(tsNS2_WrongCond,
+            f"{USE} {SHIELD_GENERATOR_2} {NEEDLER_2}", WRONG_ITEM_TARGET,
+            CONTROL_ROOM,
+            (HALO, LAB),
+            (NEEDLER_2, FLOOD_2),
+            (PISTOL_2, SHIELD_GENERATOR_2, LIBRARY_KEY_2)
         ),
-        ScenarioStep(tsNS2_1Args, f"{USE} generátor_štítu",
+        ScenarioStep(tsNS2_1Args, f"{USE} {SHIELD_GENERATOR_2}",
             MISSING_ARGUMENT,
-            "kontrolní_místnost_prstence",
-            ("Halo", "laboratoř"),
-            ("needler", "[flood]"),
-            ("pistole", "generátor_štítu", "klíč_ke_knihovně")
+            CONTROL_ROOM,
+            (HALO, LAB),
+            (NEEDLER_2, FLOOD_2),
+            (PISTOL_2, SHIELD_GENERATOR_2, LIBRARY_KEY_2)
         ),
-        ScenarioStep(tsNS2_WRONG_2ndARG, f"{USE} generátor_štítu [flood]",
-            "Na tuto věc/osobu nelze věc použít",
-            "kontrolní_místnost_prstence",
-            ("Halo", "laboratoř"),
-            ("needler", "[flood]"),
-            ("pistole", "generátor_štítu", "klíč_ke_knihovně")
+        ScenarioStep(tsNS2_WRONG_2ndARG,
+            f"{USE} {SHIELD_GENERATOR_2} {FLOOD}", WRONG_ITEM_TARGET,
+            CONTROL_ROOM,
+            (HALO, LAB),
+            (NEEDLER_2, FLOOD_2),
+            (PISTOL_2, SHIELD_GENERATOR_2, LIBRARY_KEY_2)
         ),
-        ScenarioStep(tsNS2_WRONG_1stARG, f"{USE} [flood] já",
+        ScenarioStep(tsNS2_WRONG_1stARG, f"{USE} {FLOOD_2} já",
             UNUSEABLE_ITEM,
-            "kontrolní_místnost_prstence",
-            ("Halo", "laboratoř"),
-            ("needler", "[flood]"),
-            ("pistole", "generátor_štítu", "klíč_ke_knihovně")
+            CONTROL_ROOM,
+            (HALO, LAB),
+            (NEEDLER_2, FLOOD_2),
+            (PISTOL_2, SHIELD_GENERATOR_2, LIBRARY_KEY_2)
         ),
     ),
 )
@@ -398,78 +396,76 @@ REQUIRED = Scenario('REQUIRED', stREQUIRED, (
     ScenarioStep(tsHELP, HELP,
         f"{WELCOME_MESSAGE}\n\n{AVAILABLE_COMMANDS}",
         THE_PILLAR_OF_AUTUMN,
-        ("Halo",),
-        (AR[1:], JACOB_KEYES[1:], ),
-        (PISTOL[1:], SHIELD_GENERATOR[1:], ),
+        (HALO,),
+        (AR_2, JACOB_KEYES_2, ),
+        (PISTOL_2, SHIELD_GENERATOR_2, ),
     ),
-    ScenarioStep(tsGOTO, f"{MOVE} Halo",
-        f"{ROOM_MOVE} Halo\n\n"
+    ScenarioStep(tsGOTO, f"{MOVE} {HALO}",
+        f"{ROOM_MOVE} {HALO}\n\n"
         f"{NEIGHBOURING_ROOMS_TEXT}\n"
-        f"(kontrolní_místnost_prstence, kartograf, {THE_PILLAR_OF_AUTUMN})",
-        "Halo",
-        ("kontrolní_místnost_prstence", "kartograf",
-        THE_PILLAR_OF_AUTUMN),
-        ("needler", "plasma_pistole", "[grunt]"),
-        ("pistole", "generátor_štítu",)
+        f"({CONTROL_ROOM}, {KARTOGRAF}, {THE_PILLAR_OF_AUTUMN})",
+        HALO,
+        (CONTROL_ROOM, KARTOGRAF, THE_PILLAR_OF_AUTUMN),
+        (NEEDLER_2, PLASMA_PISTOL_2, GRUNT_2),
+        (PISTOL_2, SHIELD_GENERATOR_2,)
     ),
-    ScenarioStep(tsGOTO, f"{MOVE} kontrolní_místnost_prstence",
-        f"{ROOM_MOVE} kontrolní_místnost_prstence\n\n"
+    ScenarioStep(tsGOTO, f"{MOVE} {CONTROL_ROOM}",
+        f"{ROOM_MOVE} {CONTROL_ROOM}\n\n"
         f"{NEIGHBOURING_ROOMS_TEXT}\n"
-        "(Halo, laboratoř)",
-        "kontrolní_místnost_prstence",
-        ("Halo", "laboratoř"),
-        ("needler", "[flood]"),
-        ("pistole", "generátor_štítu",)
+        f"({HALO}, {LAB})",
+        CONTROL_ROOM,
+        (HALO, LAB),
+        (NEEDLER_2, FLOOD_2),
+        (PISTOL_2, SHIELD_GENERATOR_2,)
     ),
-    ScenarioStep(tsGOTO, f"{MOVE} laboratoř",
-        f"{ROOM_MOVE} laboratoř\n\n"
+    ScenarioStep(tsGOTO, f"{MOVE} {LAB}",
+        f"{ROOM_MOVE} {LAB}\n\n"
         f"{NEIGHBOURING_ROOMS_TEXT}\n"
-        "(kontrolní_místnost_prstence,)",
-        "laboratoř",
-        ("kontrolní_místnost_prstence",),
-        ("plasma_pistole", "klíč_ke_knihovně", "[elite]"),
-        ("pistole", "generátor_štítu",)
+        f"({CONTROL_ROOM},)",
+        LAB,
+        (CONTROL_ROOM,),
+        (PLASMA_PISTOL_2, LIBRARY_KEY_2, ELITE_2),
+        (PISTOL_2, SHIELD_GENERATOR_2,)
     ),
-    ScenarioStep(tsTAKE, f"{PICK_UP} klíč_ke_knihovně",
+    ScenarioStep(tsTAKE, f"{PICK_UP} {LIBRARY_KEY_2}",
         ITEM_TAKE_TEXT,
-        "laboratoř",
-        ("kontrolní_místnost_prstence",),
-        ("plasma_pistole", "[elite]"),
-        ("pistole", "generátor_štítu", "klíč_ke_knihovně")
+        LAB,
+        (CONTROL_ROOM,),
+        (PLASMA_PISTOL_2, ELITE_2),
+        (PISTOL_2, SHIELD_GENERATOR_2, LIBRARY_KEY_2)
     ),
-    ScenarioStep(tsGOTO, f"{MOVE} kontrolní_místnost_prstence",
-        f"{ROOM_MOVE} kontrolní_místnost_prstence\n\n"
+    ScenarioStep(tsGOTO, f"{MOVE} {CONTROL_ROOM}",
+        f"{ROOM_MOVE} {CONTROL_ROOM}\n\n"
         f"{NEIGHBOURING_ROOMS_TEXT}\n"
-        "(Halo, laboratoř)",
-        "kontrolní_místnost_prstence",
-        ("Halo", "laboratoř"),
-        ("needler", "[flood]"),
-        ("pistole", "generátor_štítu", "klíč_ke_knihovně")
+        f"({HALO}, {LAB})",
+        CONTROL_ROOM,
+        (HALO, LAB),
+        (NEEDLER_2, FLOOD_2),
+        (PISTOL_2, SHIELD_GENERATOR_2, LIBRARY_KEY_2)
     ),
-    ScenarioStep(tsGOTO, f"{MOVE} Halo",
-        f"{ROOM_MOVE} Halo\n\n"
+    ScenarioStep(tsGOTO, f"{MOVE} {HALO}",
+        f"{ROOM_MOVE} {HALO}\n\n"
         f"{NEIGHBOURING_ROOMS_TEXT}\n"
-        f"(kontrolní_místnost_prstence, kartograf, {THE_PILLAR_OF_AUTUMN})",
-        "Halo",
-        ("kontrolní_místnost_prstence", "kartograf",
-        THE_PILLAR_OF_AUTUMN),
-        ("needler", "plasma_pistole", "[grunt]"),
-        ("pistole", "generátor_štítu", "klíč_ke_knihovně")
+        f"({CONTROL_ROOM}, {KARTOGRAF}, {THE_PILLAR_OF_AUTUMN})",
+        HALO,
+        (CONTROL_ROOM, KARTOGRAF, THE_PILLAR_OF_AUTUMN),
+        (NEEDLER_2, PLASMA_PISTOL_2, GRUNT_2),
+        (PISTOL_2, SHIELD_GENERATOR_2, LIBRARY_KEY_2)
     ),
-    ScenarioStep(tsGOTO, f"{MOVE} kartograf",
-        f"{ROOM_MOVE} kartograf\n\n"
+    ScenarioStep(tsGOTO, f"{MOVE} {KARTOGRAF}",
+        f"{ROOM_MOVE} {KARTOGRAF}\n\n"
         f"{NEIGHBOURING_ROOMS_TEXT}\n"
-        "(Knihovna, Halo)",
-        "kartograf",
-        ("Knihovna", "Halo"),
-        ("carbine", "[forerunner]"),
-        ("pistole", "generátor_štítu", "klíč_ke_knihovně")
+        f"({LIBRARY}, {HALO})",
+        KARTOGRAF,
+        (LIBRARY, HALO),
+        (CARBINE_2, FORERUNNER_2),
+        (PISTOL_2, SHIELD_GENERATOR_2, LIBRARY_KEY_2)
     ),
     ScenarioStep(tsEND, END, GAME_END,
-        "kartograf",
-        ("Knihovna", "Halo"),
+        KARTOGRAF,
+        (LIBRARY, HALO),
         (),
-        ("pistole", "generátor_štítu", "carbine", "klíč_ke_knihovně")
+        (PISTOL_2, SHIELD_GENERATOR_2, CARBINE_2, LIBRARY_KEY_2)
     )
 ))
 
