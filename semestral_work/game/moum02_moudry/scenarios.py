@@ -1,6 +1,6 @@
 #Příliš žluťoučký kůň úpěl ďábelské ó - PŘÍLIŠ ŽLUŤOUČKÝ KŮŇ ÚPĚL ĎÁBELSKÉ Ó
 """
-Základní čtveřice scénářů pro hru inspirovanou pohádkou o Červené Karkulce.
+Základní čtveřice scénářů pro hru inspirovanou hrou Halo.
 """
 import dbg
 dbg.start_mod(0, __name__)
@@ -369,7 +369,7 @@ MISTAKE_NS = Scenario('', stMISTAKES_NS, (
             (PISTOL_2, SHIELD_GENERATOR_2, LIBRARY_KEY_2)
         ),
         ScenarioStep(tsNS2_WRONG_2ndARG,
-            f"{USE} {SHIELD_GENERATOR_2} {FLOOD}", WRONG_ITEM_TARGET,
+            f"{USE} {SHIELD_GENERATOR_2} {FLOOD_2}", WRONG_ITEM_TARGET,
             CONTROL_ROOM,
             (HALO, LAB),
             (NEEDLER_2, FLOOD_2),
