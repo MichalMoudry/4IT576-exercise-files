@@ -137,7 +137,7 @@ def help(arguments:tuple[str]) -> str:
     res.append("Příkazy, které lze zadat:\n")
     for action in _NAME_2_ACTION.values():
         res.append(f"- {action.name}{_ACTION_ARGUMENTS[action.name]}\n")
-        #res.append(f"    • {action.description}\n")
+        res.append(f"    • {action.description}\n")
     return "".join(res)
 
 def end(arguments:tuple[str]) -> str:
@@ -208,16 +208,24 @@ def ns4(arguments:tuple[str]) -> str:
 _is_alive = False
 
 _NAME_2_ACTION = {
-    MOVE : Action(MOVE, "Popis akce MOVE", goto),
-    PICK_UP : Action(PICK_UP, "Popis akce PICK_UP", take),
-    OVERVIEW : Action(OVERVIEW, "Popis akce OVERVIEW", ns0),
-    OPEN : Action(OPEN, "Popis akce OPEN", ns1),
-    PUT_DOWN : Action(PUT_DOWN, "Popis akce PUT_DOWN", put),
-    USE : Action(USE, "Popis akce USE", ns2),
-    HELP : Action(HELP, "Popis akce HELP", help),
-    TALK : Action(TALK, "Popis akce TALK", ns3),
-    END_TALK : Action(END_TALK, "Popis akce END_TALK", ns4),
-    END : Action(END, "Popis akce END", end),
+    MOVE : Action(MOVE, "Přesune hráče do specifikovaného prostoru", goto),
+    PICK_UP : Action(PICK_UP, "Přidá určený předmět do batohu", take),
+    OVERVIEW : Action(
+        OVERVIEW, "Zobrazí přehled hráče a jeho průběhu", ns0
+    ),
+    OPEN : Action(
+        OPEN,
+        "Tento příkaz se pokusí o otevření předmětu nebo místnosti",
+        ns1
+    ),
+    PUT_DOWN : Action(PUT_DOWN, "Položí předmět", put),
+    USE : Action(USE, "Použije zadanou věc na určený cíl", ns2),
+    HELP : Action(HELP, "Příkaz pro vyvolání nápovědy", help),
+    TALK : Action(TALK, "Pokusí se o oslovení objektu v místnosti", ns3),
+    END_TALK : Action(
+        END_TALK, "Příkaz pro ukončení rozhovoru, pokud nějaký probíhá", ns4
+    ),
+    END : Action(END, "Tento příkaz ukončí hru", end),
 }
 
 _ACTION_ARGUMENTS = {

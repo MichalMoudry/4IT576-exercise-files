@@ -94,8 +94,6 @@ HAPPY = Scenario('', stHAPPY, (
     ScenarioStep(tsNS_0, OVERVIEW,
         f"---------- {OVERVIEW} ----------\n"
         f"- Obsah batohu: ('{PISTOL_2}', '{LIBRARY_KEY_2}')\n"
-        "- Počet životů: 100\n"
-        "- Velikost štítu: 150\n\n"
         "----- Postup -----\n"
         "- Máte klíč ke knihovně? Ano\n"
         "- Odemkli jste knihovnu? Ne\n",
