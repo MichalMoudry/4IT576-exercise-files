@@ -8,9 +8,9 @@ dbg.start_mod(0, __name__)
 
 from ..api.scenario   import ScenarioStep, Scenario
 from ..api.scen_types import *  # Především typu kroků
-from .constants.actions_constants import *
-from .constants.text_constants import *
-from .constants.item_constants import *
+from .actions_constants import *
+from .text_constants import *
+from .item_constants import *
 
 ############################################################################
 
