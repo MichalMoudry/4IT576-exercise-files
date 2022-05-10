@@ -1,6 +1,7 @@
 from .anamed import ANamed
 from .aitemcontainer import AItemContainer
 from .bag import BAG
+from .item_constants import LIBRARY
 
 class Place(ANamed, AItemContainer):
     """Instance představují prostory, mezi nimiž hráč přechází.
@@ -31,6 +32,7 @@ class Place(ANamed, AItemContainer):
         """
         super().initialize()
         BAG.initialize()
+        _NAME_2_PLACE[LIBRARY].is_locked = True
         self.name2neighbor = { name: _NAME_2_PLACE[name]
                             for name in self.initial_neighbor_names }
 
@@ -108,4 +110,9 @@ _NAME_2_PLACE = {
         ("trc",),
         ("#[arbiter]",)
     ),
+}
+
+# SLovník místností a jejich klíčů
+ROOM_KEY_PAIRING = {
+    "knihovna" : "klíč_ke_knihovně"
 }

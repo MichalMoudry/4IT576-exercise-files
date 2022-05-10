@@ -53,7 +53,10 @@ class BagTests(unittest.TestCase):
         Metoda pro testování metody remove_item.
         """
         bag_items_before_remove = self.test_bag.items.copy()
+        initial_content = self.test_bag.content
         self.test_bag.remove_item("test item 1")
+        content_after_remove = self.test_bag.content
+        self.assertEqual(initial_content - 1, content_after_remove)
         self.assertNotEqual(bag_items_before_remove, self.test_bag.items)
         wrong_name_removal = self.test_bag.remove_item("test item 3")
         self.assertIsNone(wrong_name_removal)

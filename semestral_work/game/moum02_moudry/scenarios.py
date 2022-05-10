@@ -67,7 +67,7 @@ HAPPY = Scenario('', stHAPPY, (
         (PISTOL_2, SHIELD_GENERATOR_2,)
     ),
     ScenarioStep(tsTAKE, f"{PICK_UP} {LIBRARY_KEY_2}",
-        ITEM_TAKE_TEXT,
+        f"{ITEM_TAKE_TEXT} ({LIBRARY_KEY_2})",
         LAB,
         (CONTROL_ROOM,),
         (PLASMA_PISTOL_2, ELITE_2),
@@ -83,7 +83,7 @@ HAPPY = Scenario('', stHAPPY, (
         (PISTOL_2, SHIELD_GENERATOR_2, LIBRARY_KEY_2)
     ),
     ScenarioStep(tsGOTO, f"{MOVE} {HALO}",
-        f"{ROOM_MOVE}: {HALO}\n\n"
+        f"{ROOM_MOVE} {HALO}\n\n"
         f"{NEIGHBOURING_ROOMS_TEXT}\n"
         f"({CONTROL_ROOM}, {KARTOGRAF}, {THE_PILLAR_OF_AUTUMN})",
         HALO,
@@ -93,7 +93,8 @@ HAPPY = Scenario('', stHAPPY, (
     ),
     ScenarioStep(tsNS_0, OVERVIEW,
         f"---------- {OVERVIEW} ----------\n"
-        f"- Obsah batohu: ('{PISTOL_2}', '{LIBRARY_KEY_2}')\n"
+        f"- Obsah batohu: ('{PISTOL_2}', '{SHIELD_GENERATOR_2}',"
+        f" '{LIBRARY_KEY_2}')\n"
         "----- Postup -----\n"
         "- Máte klíč ke knihovně? Ano\n"
         "- Odemkli jste knihovnu? Ne\n",
@@ -135,7 +136,7 @@ HAPPY = Scenario('', stHAPPY, (
         (PISTOL_2, SHIELD_GENERATOR_2)
     ),
     ScenarioStep(tsTAKE, f"{PICK_UP} {INDEX_2}",
-        f"Předmět ({INDEX_2}) byl zvednut",
+        f"{ITEM_TAKE_TEXT} ({INDEX_2})",
         LIBRARY,
         (TRC, KARTOGRAF),
         (PISTOL_2,),
@@ -299,7 +300,7 @@ MISTAKE_NS = Scenario('', stMISTAKES_NS, (
         HAPPY.steps[6],
         HAPPY.steps[7],
         ScenarioStep(tsNS1_WRONG_ARG, f"{OPEN} R39OWTJR",
-            WRONG_ARGUMENT,
+            OPEN_WRONG_COND,
             CONTROL_ROOM,
             (HALO, LAB),
             (NEEDLER_2, FLOOD_2),
@@ -320,7 +321,7 @@ MISTAKE_NS = Scenario('', stMISTAKES_NS, (
             (PISTOL_2, SHIELD_GENERATOR_2, LIBRARY_KEY_2)
         ),
         ScenarioStep(tsNS1_WRONG_ARG, f"{TALK} R39OWTJR",
-            WRONG_ARGUMENT,
+            OPEN_WRONG_COND,
             CONTROL_ROOM,
             (HALO, LAB),
             (NEEDLER_2, FLOOD_2),
@@ -426,7 +427,7 @@ REQUIRED = Scenario('REQUIRED', stREQUIRED, (
         (PISTOL_2, SHIELD_GENERATOR_2,)
     ),
     ScenarioStep(tsTAKE, f"{PICK_UP} {LIBRARY_KEY_2}",
-        ITEM_TAKE_TEXT,
+        f"{ITEM_TAKE_TEXT} ({LIBRARY_KEY_2})",
         LAB,
         (CONTROL_ROOM,),
         (PLASMA_PISTOL_2, ELITE_2),

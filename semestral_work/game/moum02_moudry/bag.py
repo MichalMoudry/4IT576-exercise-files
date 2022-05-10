@@ -28,7 +28,7 @@ class Bag(AItemContainer):
         inicializuje i informaci o zbývající kapacitě.
         """
         super().initialize()
-        self.content = BAG_INITAL_CAPACITY
+        self._content = BAG_INITAL_CAPACITY
 
 
     @property
@@ -36,16 +36,38 @@ class Bag(AItemContainer):
         """Vrátí kapacitu batohu.
         """
         return BAG_MAX_CAPACITY
+
+    
+    @property
+    def content(self):
+        """
+        Vrátí momentální váhu batohu.
+        """
+        return self._content
     
 
     def add_item(self, item:Item) -> bool:
         """Přidá zadaný objekt do kontejneru a vrátí informaci o tom,
         jestli se to podařilo.
         """
-        if (new_content := item.weight + self.content) > BAG_MAX_CAPACITY:
+        if (new_content := item.weight + self._content) > BAG_MAX_CAPACITY:
             return False
-        self.content = new_content
+        self._content = new_content
         return super().add_item(item)
+    
+    def remove_item(self, item_name:str) -> Item:
+        """Pokusí se odebrat objekt se zadaným názvem z kontejneru.
+        Vrátí odkaz na zadaný objekt nebo None.
+        """
+        name = item_name.lower()
+        if name in self.item_names:
+            item = self.item(item_name)
+            self.item_names.remove(name)
+            self._items.remove(item)
+            self._content -= item.weight
+            return item
+        else:
+            return None
 
 # Jediná instance batohu
 # V této hře neobsahuje žádnou výchozí sadu h-objektů

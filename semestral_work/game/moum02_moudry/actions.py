@@ -16,6 +16,9 @@ from .world import current_place
 from .bag import BAG, BAG_MAX_CAPACITY
 from . import world
 from .action import Action
+from .place import ROOM_KEY_PAIRING
+from .item import TALKABLE
+from .player import progress
 
 from .actions_constants import *
 from .text_constants import *
@@ -31,6 +34,7 @@ def execute_command(command:str) -> str:
     command = command.strip()
     if command:
         if is_alive():
+            # TODO: Přidat handling rozhovoru
             command_parts = command.split()
             action_name = command_parts[0].lower()
             if action_name in _NAME_2_ACTION:
@@ -154,7 +158,17 @@ def ns0(arguments:tuple[str]) -> str:
     """
     Nestandardní akce č. 0.
     """
-    raise Exception(f'Ještě není plně implementováno')
+    result = [f"{10*'-'} {OVERVIEW} {10*'-'}", "\n"]
+    bag_contents = []
+    for item in BAG.items:
+        bag_contents.append(f"'{item.name}'")
+        bag_contents.append(", ")
+    bag_contents.pop()
+    result.append(f"- Obsah batohu: ({''.join(bag_contents)})\n")
+    result.append("----- Postup -----\n")
+    for key in progress:
+        result.append(f"- {key} {progress[key]}\n")
+    return "".join(result)
 
 def ns1(arguments:tuple[str]) -> str:
     """Nestandardní akce číslo 1.
@@ -164,15 +178,16 @@ def ns1(arguments:tuple[str]) -> str:
         return COMMAND_MISSING_PARAMS
     place_name = arguments[1]
     place_name = place_name.lower()
-    # Kontrola, jestli je potřebný klíč v batohu
-    required_key_name = _ROOM_KEY_PAIRING[place_name]
-    required_key = BAG.item(required_key_name)
-    if required_key == None:
-        return MISSING_KEY
-    # Získání prostoru a pokus o jeho otevření
+    # Získání prostoru
     place = world.place(place_name)
     if place == None:
         return OPEN_WRONG_COND
+    # Kontrola, jestli je potřebný klíč v batohu
+    required_key_name = ROOM_KEY_PAIRING[place_name]
+    required_key = BAG.item(required_key_name)
+    if required_key == None:
+        return MISSING_KEY
+    # Pokus o otevření prostoru
     if place.is_locked:
         place.is_locked = False
         return f"Místnost ({place_name}) byla otevřena"
@@ -188,24 +203,47 @@ def ns2(arguments:tuple[str]) -> str:
         return COMMAND_MISSING_PARAMS
     item_name = arguments[1]
     target = arguments[2]
+    # IF úspěch
+    test = current_place().item(item_name)
+    global _is_alive
+    _is_alive = False
     return f"Předmět ({item_name}) byl použit na {target}"
 
 
 def ns3(arguments:tuple[str]) -> str:
     """Nestandardní akce číslo 1.
     """
-    raise Exception(f'Ještě není plně implementováno')
+    if len(arguments) != 2:
+        return COMMAND_MISSING_PARAMS
+    target = arguments[1]
+    item = current_place().item(target)
+    global _is_conversation_happening
+    if _is_conversation_happening:
+        return "Už probíhá rozhovor"
+    if not item:
+        return "Tato osoba není v prostoru"
+    if target not in TALKABLE:
+        return "Tuto věc/postavu nelze oslovit"
+    _is_conversation_happening = True
+    return (
+        f"Pokoušíte se zeptat objektu {target}. Jaký je váš dotaz?"
+    )
 
 
 def ns4(arguments:tuple[str]) -> str:
     """Nestandardní akce číslo 1.
     """
-    raise Exception(f'Ještě není plně implementováno')
+    global _is_conversation_happening
+    if not _is_conversation_happening:
+        return "V tuto chvíli neprobíhá rozhovor"
+    _is_conversation_happening = False
+    return END_TALK_TEXT
 
 
 
 ############################################################################
 _is_alive = False
+_is_conversation_happening = False
 
 _NAME_2_ACTION = {
     MOVE : Action(MOVE, "Přesune hráče do specifikovaného prostoru", goto),
@@ -240,11 +278,6 @@ _ACTION_ARGUMENTS = {
     END_TALK : "",
     END : "",
 }
-
-_ROOM_KEY_PAIRING = {
-    "knihovna" : "klíč_ke_knihovně"
-}
-
 
 ############################################################################
 dbg.stop_mod(0, __name__)

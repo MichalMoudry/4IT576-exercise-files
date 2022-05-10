@@ -38,12 +38,12 @@ SOURCES = """\
 
 # Problémy, které se vyskytly při zpracování probrané látky a řešení DU
 PROBLEMS = """\
-???
+Žádné
 """
 
 # Poznámky a připomínky k výkladu
 COMMENTS = """\
-???
+Žádné
 """
 
 
@@ -76,7 +76,8 @@ def self_test():
     me = import_module(__package__)
     from ..tests    import test
     from ..tests    import Level
-    test(me, Level.MISTAKES)    # Testuje korespondenci s návrhem
+    #test(me, Level.MISTAKES)
+    test(me, Level.WHOLE)
         # architektury, tj. deklaraci navržených modulů a jejich atributů
 
 # Test spustíte zadáním příkazů

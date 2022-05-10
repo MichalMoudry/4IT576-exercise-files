@@ -4,5 +4,5 @@ from game.moum02_moudry.tests import *
 
 self_test()
 
-print(27*"-", f" Run unit tests", 26*"-")
+print(26*"-", f" Run unit tests ", 26*"-")
 unittest.main()
