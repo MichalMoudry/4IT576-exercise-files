@@ -2,7 +2,7 @@
 Modul obsahující definici třídy Action.
 """
 
-from .abstract.anamed import ANamed
+from .anamed import ANamed
 from typing import Callable
 
 class Action(ANamed):

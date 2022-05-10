@@ -1,4 +1,8 @@
-from ..item import Item
+"""
+Modul s definicí třídy AItemContainer.
+"""
+
+from .item import Item
 
 class AItemContainer():
     """Instance představují kontejnery objektů - prostory či batoh.

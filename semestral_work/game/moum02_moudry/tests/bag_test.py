@@ -3,8 +3,8 @@ Modul obsahující definici testovacích případů pro třídu Bag.
 """
 
 import unittest
-from classes.bag import Bag
-from classes.item import Item
+from ..bag import Bag
+from ..item import Item
 
 class BagTests(unittest.TestCase):
     """

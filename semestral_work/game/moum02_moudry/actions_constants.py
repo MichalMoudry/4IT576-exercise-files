@@ -1,3 +1,7 @@
+"""
+Modul s konstantami pro akce v rámci hry.
+"""
+
 # Pomocné konstanty akcí
 MOVE = "jdi"
 PICK_UP = "zvedni"

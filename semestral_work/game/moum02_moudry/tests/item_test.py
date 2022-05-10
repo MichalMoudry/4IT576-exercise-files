@@ -3,7 +3,7 @@ Modul obsahující definici testovacích případů pro třídu Item.
 """
 
 import unittest
-from classes.item import Item, UNMOVABLE_ITEM_WEIGHT
+from ..item import Item, UNMOVABLE_ITEM_WEIGHT
 
 class ItemTests(unittest.TestCase):
     """

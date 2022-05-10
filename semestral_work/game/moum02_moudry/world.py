@@ -11,7 +11,7 @@ dbg.start_mod(0, __name__)
 ############################################################################
 
 # Nemazat import BAG
-from .classes.place import Place, _NAME_2_PLACE, BAG
+from .place import Place, _NAME_2_PLACE, BAG
 
 ############################################################################
 

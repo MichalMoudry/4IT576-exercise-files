@@ -2,7 +2,7 @@
 Modul obsahující definici testovacích případů pro třídu ANamed.
 """
 import unittest
-from classes.abstract.anamed import ANamed
+from ..anamed import ANamed
 
 class ANamedTests(unittest.TestCase):
     """

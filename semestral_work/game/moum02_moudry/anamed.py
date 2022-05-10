@@ -1,3 +1,7 @@
+"""
+Modul s definicí ANamed třídy.
+"""
+
 class ANamed():
     """Instance představují objekty v prostorech či batohu.
     """

@@ -1,5 +1,5 @@
-from .abstract.anamed import ANamed
-from .abstract.aitemcontainer import AItemContainer
+from .anamed import ANamed
+from .aitemcontainer import AItemContainer
 from .bag import BAG
 
 class Place(ANamed, AItemContainer):

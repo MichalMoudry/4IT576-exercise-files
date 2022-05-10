@@ -13,12 +13,12 @@ dbg.start_mod(0, __name__)
 #from abc import ABC, abstractmethod
 
 from .world import current_place
-from .classes.bag import BAG, BAG_MAX_CAPACITY
+from .bag import BAG, BAG_MAX_CAPACITY
 from . import world
-from .classes.action import Action
+from .action import Action
 
-from .constants.actions_constants import *
-from .constants.text_constants import *
+from .actions_constants import *
+from .text_constants import *
 
 ############################################################################
 

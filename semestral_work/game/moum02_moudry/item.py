@@ -2,7 +2,7 @@
 Modul obsahující definici třídy Item.
 """
 
-from .abstract.anamed import ANamed
+from .anamed import ANamed
 
 HEAVY_PREFIX = '#'
 

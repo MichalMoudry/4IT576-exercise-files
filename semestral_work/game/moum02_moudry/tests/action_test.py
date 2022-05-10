@@ -4,7 +4,7 @@ Modul obsahující definici testovacích případů pro třídu Action.
 
 import unittest
 
-from classes.action import Action
+from ..action import Action
 
 class ActionTests(unittest.TestCase):
     """

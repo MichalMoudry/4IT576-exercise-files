@@ -3,7 +3,7 @@ Modul reprezentující uložiště, do nějž hráči ukládají
 objekty sebrané v jednotlivých prostorech.
 """
 
-from .abstract.aitemcontainer import AItemContainer
+from .aitemcontainer import AItemContainer
 from .item import Item
 
 BAG_MAX_CAPACITY = 3

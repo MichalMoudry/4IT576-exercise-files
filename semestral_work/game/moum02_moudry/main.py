@@ -10,8 +10,8 @@ dbg.start_mod(0, __name__)
 
 from ..api import BasicActions
 
-from .classes.bag import Bag
-from .actions import Action
+from .bag import Bag
+from .action import Action
 
 from . import world, actions
 

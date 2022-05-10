@@ -4,7 +4,7 @@ Modul obsahující definici testovacích případů pro třídu Place.
 
 import unittest
 
-from classes.place import Place
+from ..place import Place
 
 class PlaceTests(unittest.TestCase):
     """
