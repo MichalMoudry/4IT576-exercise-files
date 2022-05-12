@@ -293,6 +293,13 @@ ScenarioStep.next_index = 8 # Index prvního nestandardního kroku
 MISTAKE_NS = Scenario('', stMISTAKES_NS, (
         HAPPY.steps[0],
         HAPPY.steps[1],
+        ScenarioStep(tsNS0_WrongCond, OVERVIEW,
+            UNABLE_TO_DISPLAY_OVERVIEW,
+            THE_PILLAR_OF_AUTUMN,
+            (HALO,),
+            (AR_2, JACOB_KEYES_2,),
+            (PISTOL_2, SHIELD_GENERATOR_2,),
+        ),
         HAPPY.steps[2],
         HAPPY.steps[3],
         HAPPY.steps[4],
@@ -306,13 +313,6 @@ MISTAKE_NS = Scenario('', stMISTAKES_NS, (
             (NEEDLER_2, FLOOD_2),
             (PISTOL_2, SHIELD_GENERATOR_2, LIBRARY_KEY_2)
         ),
-        ScenarioStep(tsNS0_WrongCond, OVERVIEW,
-            "V tuto chvíli nelze zobrazit přehled",
-            CONTROL_ROOM,
-            (HALO, LAB),
-            (NEEDLER_2, FLOOD_2),
-            (PISTOL_2, SHIELD_GENERATOR_2, LIBRARY_KEY_2)
-        ),
         ScenarioStep(tsNS0_WrongCond, END_TALK,
             END_TALK_WRONG_COND,
             CONTROL_ROOM,
@@ -321,7 +321,7 @@ MISTAKE_NS = Scenario('', stMISTAKES_NS, (
             (PISTOL_2, SHIELD_GENERATOR_2, LIBRARY_KEY_2)
         ),
         ScenarioStep(tsNS1_WRONG_ARG, f"{TALK} R39OWTJR",
-            OPEN_WRONG_COND,
+            "Tato osoba není v prostoru",
             CONTROL_ROOM,
             (HALO, LAB),
             (NEEDLER_2, FLOOD_2),
@@ -334,7 +334,7 @@ MISTAKE_NS = Scenario('', stMISTAKES_NS, (
             (NEEDLER_2, FLOOD_2),
             (PISTOL_2, SHIELD_GENERATOR_2, LIBRARY_KEY_2)
         ),
-        ScenarioStep(tsNS1_0Args, TALK, MISSING_ARGUMENT,
+        ScenarioStep(tsNS1_0Args, TALK, COMMAND_MISSING_PARAMS,
             CONTROL_ROOM,
             (HALO, LAB),
             (NEEDLER_2, FLOOD_2),
@@ -347,7 +347,7 @@ MISTAKE_NS = Scenario('', stMISTAKES_NS, (
             (NEEDLER_2, FLOOD_2),
             (PISTOL_2, SHIELD_GENERATOR_2, LIBRARY_KEY_2)
         ),
-        ScenarioStep(tsNS1_0Args, OPEN, MISSING_ARGUMENT,
+        ScenarioStep(tsNS1_0Args, OPEN, COMMAND_MISSING_PARAMS,
             CONTROL_ROOM,
             (HALO, LAB),
             (NEEDLER_2, FLOOD_2),
@@ -361,7 +361,7 @@ MISTAKE_NS = Scenario('', stMISTAKES_NS, (
             (PISTOL_2, SHIELD_GENERATOR_2, LIBRARY_KEY_2)
         ),
         ScenarioStep(tsNS2_1Args, f"{USE} {SHIELD_GENERATOR_2}",
-            MISSING_ARGUMENT,
+            COMMAND_MISSING_PARAMS,
             CONTROL_ROOM,
             (HALO, LAB),
             (NEEDLER_2, FLOOD_2),

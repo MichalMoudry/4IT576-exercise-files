@@ -156,8 +156,11 @@ def end(arguments:tuple[str]) -> str:
 
 def ns0(arguments:tuple[str]) -> str:
     """
-    Nestandardní akce č. 0.
+    Nestandardní akce č. 0 - Přehled.
     """
+    global _is_conversation_happening
+    if _is_conversation_happening:
+        return UNABLE_TO_DISPLAY_OVERVIEW
     result = [f"{10*'-'} {OVERVIEW} {10*'-'}", "\n"]
     bag_contents = []
     for item in BAG.items:
@@ -171,7 +174,7 @@ def ns0(arguments:tuple[str]) -> str:
     return "".join(result)
 
 def ns1(arguments:tuple[str]) -> str:
-    """Nestandardní akce číslo 1.
+    """Nestandardní akce číslo 1 - Otevření.
     """
     # Chyba, když uživ nezadal druhý parametr
     if len(arguments) != 2:
@@ -183,7 +186,9 @@ def ns1(arguments:tuple[str]) -> str:
     if place == None:
         return OPEN_WRONG_COND
     # Kontrola, jestli je potřebný klíč v batohu
-    required_key_name = ROOM_KEY_PAIRING[place_name]
+    required_key_name = ROOM_KEY_PAIRING.get(place_name)
+    if not required_key_name:
+        return OPEN_WRONG_COND
     required_key = BAG.item(required_key_name)
     if required_key == None:
         return MISSING_KEY
@@ -196,7 +201,7 @@ def ns1(arguments:tuple[str]) -> str:
 
 
 def ns2(arguments:tuple[str]) -> str:
-    """Nestandardní akce číslo 1.
+    """Nestandardní akce číslo 1 - Použití.
     """
     # TODO: Dokončit akci
     if len(arguments) != 3:
@@ -211,7 +216,7 @@ def ns2(arguments:tuple[str]) -> str:
 
 
 def ns3(arguments:tuple[str]) -> str:
-    """Nestandardní akce číslo 1.
+    """Nestandardní akce číslo 1 - Oslovení.
     """
     if len(arguments) != 2:
         return COMMAND_MISSING_PARAMS
@@ -231,14 +236,13 @@ def ns3(arguments:tuple[str]) -> str:
 
 
 def ns4(arguments:tuple[str]) -> str:
-    """Nestandardní akce číslo 1.
+    """Nestandardní akce číslo 1 - Ukončení rozhovoru.
     """
     global _is_conversation_happening
     if not _is_conversation_happening:
         return "V tuto chvíli neprobíhá rozhovor"
     _is_conversation_happening = False
     return END_TALK_TEXT
-
 
 
 ############################################################################
