@@ -3,7 +3,7 @@ Modul obsahující definici třídy Item.
 """
 
 from .anamed import ANamed
-from .item_constants import JACOB_KEYES_2
+from .item_constants import *
 
 HEAVY_PREFIX = '#'
 
@@ -31,3 +31,6 @@ class Item(ANamed):
         return self._weight
 
 TALKABLE:tuple[str] = (JACOB_KEYES_2, )
+USEABLE:tuple[str] = (SHIELD_GENERATOR_2,)
+TARGETABLE:tuple[str] = (GRUNT_2, FLOOD_2, ELITE_2, FORERUNNER_2,
+COVENANT_2, ARBITER_2)

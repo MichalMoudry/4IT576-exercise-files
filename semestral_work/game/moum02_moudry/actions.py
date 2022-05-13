@@ -17,7 +17,7 @@ from .bag import BAG, BAG_MAX_CAPACITY
 from . import world
 from .action import Action
 from .place import ROOM_KEY_PAIRING
-from .item import TALKABLE
+from .item import TALKABLE, USEABLE, TARGETABLE
 from .player import progress
 
 from .actions_constants import *
@@ -207,12 +207,18 @@ def ns2(arguments:tuple[str]) -> str:
     if len(arguments) != 3:
         return COMMAND_MISSING_PARAMS
     item_name = arguments[1]
-    target = arguments[2]
+    target_name = arguments[2]
     # IF úspěch
-    test = current_place().item(item_name)
+    item = BAG.item(item_name)
+    target = current_place().item(target_name)
+    print(item, target, USEABLE)
+    if item_name not in USEABLE:
+        return f"Tento předmět ({item_name}) nelze použít"
+    elif target_name not in TARGETABLE:
+        return ""
     global _is_alive
     _is_alive = False
-    return f"Předmět ({item_name}) byl použit na {target}"
+    return f"Předmět ({item_name}) byl použit na {target_name}"
 
 
 def ns3(arguments:tuple[str]) -> str:
