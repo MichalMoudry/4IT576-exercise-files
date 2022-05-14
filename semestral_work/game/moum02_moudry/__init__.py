@@ -33,7 +33,7 @@ AUTHOR_ORIG_NAME = 'MOUDRÝ Michal'
 
 # Zdroje, z nichž autor(ka) čerpal(a) při řešení úkolu
 SOURCES = """\
-???
+-
 """
 
 # Problémy, které se vyskytly při zpracování probrané látky a řešení DU

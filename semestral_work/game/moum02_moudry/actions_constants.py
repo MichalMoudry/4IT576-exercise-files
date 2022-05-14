@@ -13,3 +13,5 @@ HELP = "?"
 TALK = "oslov"
 END_TALK = "ukončit_rozhovor"
 END = "konec"
+
+ME = "já"

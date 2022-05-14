@@ -31,6 +31,6 @@ class Item(ANamed):
         return self._weight
 
 TALKABLE:tuple[str] = (JACOB_KEYES_2, )
-USEABLE:tuple[str] = (SHIELD_GENERATOR_2,)
+USEABLE:tuple[str] = (SHIELD_GENERATOR_2, INDEX_2,)
 TARGETABLE:tuple[str] = (GRUNT_2, FLOOD_2, ELITE_2, FORERUNNER_2,
 COVENANT_2, ARBITER_2)

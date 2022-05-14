@@ -19,6 +19,7 @@ from .action import Action
 from .place import ROOM_KEY_PAIRING
 from .item import TALKABLE, USEABLE, TARGETABLE
 from .player import progress
+from .item_constants import ARBITER_2, FLOOD_2, INDEX_2, SHIELD_GENERATOR_2
 
 from .actions_constants import *
 from .text_constants import *
@@ -109,8 +110,8 @@ def take(arguments:tuple[str]) -> str:
     if item:
         if item.weight >= BAG_MAX_CAPACITY:
             return UNMOVABLE_ITEM
-        curr_place.remove_item(item_name)
         if BAG.add_item(item):
+            curr_place.remove_item(item_name)
             return f"{ITEM_TAKE_TEXT} ({item_name})"
         else:
             return BAG_FULL
@@ -208,16 +209,21 @@ def ns2(arguments:tuple[str]) -> str:
         return COMMAND_MISSING_PARAMS
     item_name = arguments[1]
     target_name = arguments[2]
-    # IF úspěch
+    global _is_alive
     item = BAG.item(item_name)
     target = current_place().item(target_name)
-    print(item, target, USEABLE)
     if item_name not in USEABLE:
-        return f"Tento předmět ({item_name}) nelze použít"
+        if handle_scenario_mistake(item_name, target_name):
+            _is_alive = False
+        return UNUSEABLE_ITEM
     elif target_name not in TARGETABLE:
-        return ""
-    global _is_alive
-    _is_alive = False
+        return WRONG_ITEM_TARGET
+    elif item == None or target == None:
+        return WRONG_ARGUMENT
+    elif item_name == SHIELD_GENERATOR_2 and target_name != ME:
+        return WRONG_ITEM_TARGET
+    if item_name == INDEX_2 and target_name == ARBITER_2:
+        _is_alive = False
     return f"Předmět ({item_name}) byl použit na {target_name}"
 
 
@@ -250,6 +256,14 @@ def ns4(arguments:tuple[str]) -> str:
     _is_conversation_happening = False
     return END_TALK_TEXT
 
+def handle_scenario_mistake(item_name: str, target_name: str) -> bool:
+    """
+    Funkce pro zachycení chyby ve scénáři MISTAKES_NS.
+    """
+    if item_name == FLOOD_2 and target_name == ME:
+        return True
+    else:
+        return False
 
 ############################################################################
 _is_alive = False

@@ -1,7 +1,11 @@
+"""
+Modul obsahující definici třídy Place.
+"""
+
 from .anamed import ANamed
 from .aitemcontainer import AItemContainer
 from .bag import BAG
-from .item_constants import LIBRARY
+from .item_constants import *
 
 class Place(ANamed, AItemContainer):
     """Instance představují prostory, mezi nimiž hráč přechází.
@@ -68,51 +72,51 @@ class Place(ANamed, AItemContainer):
 
 # Slovník všech dostupných prostorů
 _NAME_2_PLACE = {
-    "the_pillar_of_autumn" : Place("the_pillar_of_autumn",
+    THE_PILLAR_OF_AUTUMN : Place(THE_PILLAR_OF_AUTUMN,
         "Popis místa",
-        ("halo",),
-        ("_assault_Rifle", "#jacob_keyes")
+        (HALO,),
+        (AR, JACOB_KEYES)
     ),
-    "halo" : Place("Halo",
+    "halo" : Place(HALO,
         "Popis místa",
-        ("kontrolní_místnost_prstence", "kartograf",
-        "the_pillar_of_autumn"),
-        ("_needler", "_plasma_pistole", "#[grunt]")
+        (CONTROL_ROOM, KARTOGRAF,
+        THE_PILLAR_OF_AUTUMN),
+        (NEEDLER, PLASMA_PISTOL, GRUNT)
     ),
-    "kontrolní_místnost_prstence" : Place("kontrolní_místnost_prstence",
+    CONTROL_ROOM : Place(CONTROL_ROOM,
         "Popis místa",
-        ("halo", "laboratoř"),
-        ("_needler", "#[flood]")
+        (HALO, LAB),
+        (NEEDLER, FLOOD)
     ),
-    "laboratoř" : Place("laboratoř",
+    LAB : Place(LAB,
         "Popis místa",
-        ("kontrolní_místnost_prstence",),
-        ("_plasma_pistol", "_klíč_ke_knihovně", "#[elite]")
+        (CONTROL_ROOM,),
+        (PLASMA_PISTOL, LIBRARY_KEY, ELITE)
     ),
-    "kartograf" : Place("kartograf",
+    KARTOGRAF : Place(KARTOGRAF,
         "Popis místa",
-        ("knihovna", "Halo"),
-        ("_carbine", "#[forerunner]")
+        (LIBRARY, HALO),
+        (CARBINE, FORERUNNER)
     ),
-    "knihovna" : Place("knihovna",
+    LIBRARY : Place(LIBRARY,
         "Popis místa",
-        ("TRC", "Kartograf"),
-        ("_pistole", "_index"),
+        (TRC, KARTOGRAF),
+        (PISTOL, INDEX),
         True
     ),
-    "trc" : Place("trc",
+    TRC : Place(TRC,
         "Popis místa",
-        ("the_maw", "knihovna"),
-        ("#[grunt]", "#[covenant]")
+        (THE_MAW, LIBRARY),
+        (GRUNT, COVENANT)
     ),
-    "the_maw" : Place("the_maw",
+    THE_MAW : Place(THE_MAW,
         "Popis místa",
-        ("trc",),
-        ("#[arbiter]",)
+        (TRC,),
+        (ARBITER,)
     ),
 }
 
 # SLovník místností a jejich klíčů
 ROOM_KEY_PAIRING = {
-    "knihovna" : "klíč_ke_knihovně"
+    LIBRARY : LIBRARY_KEY_2
 }

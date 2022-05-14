@@ -12,6 +12,7 @@ from ..api import BasicActions
 
 from .bag import Bag
 from .action import Action
+from .actions_constants import *
 
 from . import world, actions
 
@@ -46,9 +47,8 @@ def all_actions() -> tuple[Action]:
 
 
 def basic_actions() -> BasicActions:
-    """Vrátí přepravku s názvy povinných akcí.
-    """
-    raise Exception(f'Ještě není plně implementováno')
+    result = BasicActions(MOVE, PUT_DOWN, PICK_UP, HELP, END)
+    return result
 
 
 def bag() -> Bag:
