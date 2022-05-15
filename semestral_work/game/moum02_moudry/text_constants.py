@@ -56,3 +56,7 @@ MISSING_KEY = "Nemáte potřebný klíč v batohu"
 UNMOVABLE_ITEM = "Předmět nelze zvednout"
 END_TALK_WRONG_COND = "V tuto chvíli neprobíhá rozhovor"
 UNABLE_TO_DISPLAY_OVERVIEW = "V tuto chvíli nelze zobrazit přehled"
+
+# Ostatní
+IS_LIBRARY_OPEN = "Odemkli jste knihovnu?"
+DO_YOU_HAVE_LIBRARY_KEY = "Máte klíč ke knihovně?"

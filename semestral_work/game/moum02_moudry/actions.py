@@ -19,7 +19,8 @@ from .action import Action
 from .place import ROOM_KEY_PAIRING
 from .item import TALKABLE, USEABLE, TARGETABLE
 from .player import progress
-from .item_constants import ARBITER_2, FLOOD_2, INDEX_2, SHIELD_GENERATOR_2
+from .item_constants import ARBITER_2, FLOOD_2, INDEX_2, LIBRARY, LIBRARY_KEY_2, SHIELD_GENERATOR_2
+from .conversation import answers, is_conversation_happening
 
 from .actions_constants import *
 from .text_constants import *
@@ -32,16 +33,21 @@ def execute_command(command:str) -> str:
     rozhodne, která akce dostane na starost jeho zpracování.
     Vrátí odpověď hry na zadaný příkaz.
    """
+    global is_conversation_happening
     command = command.strip()
     if command:
         if is_alive():
-            # TODO: Přidat handling rozhovoru
-            command_parts = command.split()
-            action_name = command_parts[0].lower()
-            if action_name in _NAME_2_ACTION:
-                return _NAME_2_ACTION[action_name]._execute(command_parts)
-            else:
-                return UNKNOWN_COMMAND
+            if not is_conversation_happening or (
+                command == END_TALK or command == OVERVIEW
+            ):
+                return execute_cmd(command)
+            elif is_conversation_happening and (
+                command != END_TALK or command != OVERVIEW
+            ):
+                answer = answers.get(command)
+                if answer == None:
+                    return "Na tento dotaz objekt nemá odpověď"
+                return answer
         else:
             # Hra neběží
             return ("Prvním příkazem není startovací příkaz.\n" 
@@ -60,6 +66,8 @@ def _start_game() -> None:
     """
     from . import world
     world.initialize()
+    from . import player
+    player.initialize()
 
     global _is_alive
     _is_alive = True
@@ -112,6 +120,8 @@ def take(arguments:tuple[str]) -> str:
             return UNMOVABLE_ITEM
         if BAG.add_item(item):
             curr_place.remove_item(item_name)
+            if item_name == LIBRARY_KEY_2:
+                progress[DO_YOU_HAVE_LIBRARY_KEY] = "Ano"
             return f"{ITEM_TAKE_TEXT} ({item_name})"
         else:
             return BAG_FULL
@@ -129,6 +139,8 @@ def put(arguments:tuple[str]) -> str:
     if item:
         BAG.remove_item(item.name)
         current_place().add_item(item)
+        if item_name == LIBRARY_KEY_2:
+            progress[DO_YOU_HAVE_LIBRARY_KEY] = "Ne"
         return f"Věc ({item.name}) byla položena"
     else:
         return ITEM_NOT_IN_BAG
@@ -159,8 +171,8 @@ def ns0(arguments:tuple[str]) -> str:
     """
     Nestandardní akce č. 0 - Přehled.
     """
-    global _is_conversation_happening
-    if _is_conversation_happening:
+    global is_conversation_happening
+    if is_conversation_happening:
         return UNABLE_TO_DISPLAY_OVERVIEW
     result = [f"{10*'-'} {OVERVIEW} {10*'-'}", "\n"]
     bag_contents = []
@@ -196,6 +208,9 @@ def ns1(arguments:tuple[str]) -> str:
     # Pokus o otevření prostoru
     if place.is_locked:
         place.is_locked = False
+        # Aktualizace stavu
+        if place_name == LIBRARY:
+            progress[IS_LIBRARY_OPEN] = "Ano"
         return f"Místnost ({place_name}) byla otevřena"
     else:
         return OPEN_WRONG_COND
@@ -204,7 +219,6 @@ def ns1(arguments:tuple[str]) -> str:
 def ns2(arguments:tuple[str]) -> str:
     """Nestandardní akce číslo 1 - Použití.
     """
-    # TODO: Dokončit akci
     if len(arguments) != 3:
         return COMMAND_MISSING_PARAMS
     item_name = arguments[1]
@@ -234,14 +248,14 @@ def ns3(arguments:tuple[str]) -> str:
         return COMMAND_MISSING_PARAMS
     target = arguments[1]
     item = current_place().item(target)
-    global _is_conversation_happening
-    if _is_conversation_happening:
+    global is_conversation_happening
+    if is_conversation_happening:
         return "Už probíhá rozhovor"
     if not item:
         return "Tato osoba není v prostoru"
     if target not in TALKABLE:
         return "Tuto věc/postavu nelze oslovit"
-    _is_conversation_happening = True
+    is_conversation_happening = True
     return (
         f"Pokoušíte se zeptat objektu {target}. Jaký je váš dotaz?"
     )
@@ -250,11 +264,13 @@ def ns3(arguments:tuple[str]) -> str:
 def ns4(arguments:tuple[str]) -> str:
     """Nestandardní akce číslo 1 - Ukončení rozhovoru.
     """
-    global _is_conversation_happening
-    if not _is_conversation_happening:
+    global is_conversation_happening
+    if not is_conversation_happening:
         return "V tuto chvíli neprobíhá rozhovor"
-    _is_conversation_happening = False
+    is_conversation_happening = False
     return END_TALK_TEXT
+############################################################################
+# Vlastní funkce
 
 def handle_scenario_mistake(item_name: str, target_name: str) -> bool:
     """
@@ -265,9 +281,19 @@ def handle_scenario_mistake(item_name: str, target_name: str) -> bool:
     else:
         return False
 
+def execute_cmd(command:str) -> str:
+    """
+    Funkce pro vykonání příkazu, přičemž vrací vhodnou odpověď.
+    """
+    command_parts = command.split()
+    action_name = command_parts[0].lower()
+    if action_name in _NAME_2_ACTION:
+        return _NAME_2_ACTION[action_name]._execute(command_parts)
+    else:
+        return UNKNOWN_COMMAND
+
 ############################################################################
 _is_alive = False
-_is_conversation_happening = False
 
 _NAME_2_ACTION = {
     MOVE : Action(MOVE, "Přesune hráče do specifikovaného prostoru", goto),
