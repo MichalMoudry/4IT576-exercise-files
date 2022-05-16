@@ -271,6 +271,7 @@ def ns4(arguments:tuple[str]) -> str:
         return "V tuto chvíli neprobíhá rozhovor"
     is_conversation_happening = False
     return END_TALK_TEXT
+
 ############################################################################
 # Vlastní funkce
 
