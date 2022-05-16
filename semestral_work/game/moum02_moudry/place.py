@@ -73,44 +73,44 @@ class Place(ANamed, AItemContainer):
 # Slovník všech dostupných prostorů
 _NAME_2_PLACE = {
     THE_PILLAR_OF_AUTUMN : Place(THE_PILLAR_OF_AUTUMN,
-        "Popis místa",
+        "UNSC loď.",
         (HALO,),
         (AR, JACOB_KEYES)
     ),
     "halo" : Place(HALO,
-        "Popis místa",
+        "Vesmírná stanice ve tvaru prstence.",
         (CONTROL_ROOM, KARTOGRAF,
         THE_PILLAR_OF_AUTUMN),
         (NEEDLER, PLASMA_PISTOL, GRUNT)
     ),
     CONTROL_ROOM : Place(CONTROL_ROOM,
-        "Popis místa",
+        "Kontrolní místnost prstence.",
         (HALO, LAB),
         (NEEDLER, FLOOD)
     ),
     LAB : Place(LAB,
-        "Popis místa",
+        "Laboratoř umístěná pod kontrolní místností prstence.",
         (CONTROL_ROOM,),
         (PLASMA_PISTOL, LIBRARY_KEY, ELITE)
     ),
     KARTOGRAF : Place(KARTOGRAF,
-        "Popis místa",
+        "Místnost s mapu prstence.",
         (LIBRARY, HALO),
         (CARBINE, FORERUNNER)
     ),
     LIBRARY : Place(LIBRARY,
-        "Popis místa",
+        "Knihovna na prstenci Halo, která obsahuje Index.",
         (TRC, KARTOGRAF),
         (PISTOL, INDEX),
         True
     ),
     TRC : Place(TRC,
-        "Popis místa",
+        "Vesmírná loď kovenantu.",
         (THE_MAW, LIBRARY),
         (GRUNT, COVENANT)
     ),
     THE_MAW : Place(THE_MAW,
-        "Popis místa",
+        "Trosky vesmírné UNSC lodi.",
         (TRC,),
         (ARBITER,)
     ),
