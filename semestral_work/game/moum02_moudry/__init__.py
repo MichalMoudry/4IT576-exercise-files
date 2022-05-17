@@ -77,7 +77,8 @@ def self_test():
     from ..tests    import test
     from ..tests    import Level
     #test(me, Level.MISTAKES)
-    test(me, Level.WHOLE)
+    #test(me, Level.WHOLE)
+    test(me, Level.z01)
         # architektury, tj. deklaraci navržených modulů a jejich atributů
 
 # Test spustíte zadáním příkazů

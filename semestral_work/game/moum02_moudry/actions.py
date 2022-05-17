@@ -42,7 +42,7 @@ def execute_command(command:str) -> str:
             if not is_conversation_happening or (
                 command == END_TALK or command == OVERVIEW
             ):
-                return execute_cmd(command)
+                return append_action_history(execute_cmd(command))
             elif is_conversation_happening and (
                 command != END_TALK or command != OVERVIEW
             ):
@@ -57,10 +57,10 @@ def execute_command(command:str) -> str:
                     "startovacím příkazem.\n")
     else:
         if is_alive():
-            return EMPTY_COMMAND
+            return append_action_history(EMPTY_COMMAND)
         else:
             _start_game()
-            return WELCOME_MESSAGE
+            return append_action_history(WELCOME_MESSAGE, True)
 
 def _start_game() -> None:
     """
@@ -70,6 +70,9 @@ def _start_game() -> None:
     world.initialize()
     from . import player
     player.initialize()
+
+    global used_actions
+    used_actions.clear()
 
     global _is_alive
     _is_alive = True
@@ -291,9 +294,41 @@ def execute_cmd(command:str) -> str:
     command_parts = command.split()
     action_name = command_parts[0].lower()
     if action_name in _NAME_2_ACTION:
+        add_action_to_history(action_name)
         return _NAME_2_ACTION[action_name]._execute(command_parts)
     else:
         return UNKNOWN_COMMAND
+
+def add_action_to_history(action:str) -> None:
+    """
+    Funkce, která přidá akci do seznamu historie akcí.
+    """
+    global used_actions
+    if not(action in used_actions):
+        used_actions.append(action)
+        used_actions.sort()
+
+def get_action_history_as_string(is_first_step:bool = False) -> str:
+    """
+    Funkce, která vrátí historii akcí jako vhodný string.
+    """
+    global used_actions
+    res = ["["]
+    for action in used_actions:
+        res.append(f"'{action}'")
+        res.append(", ")
+    if not is_first_step:
+        res.pop()
+    res.append("]")
+    return "".join(res)
+
+def append_action_history(string:str, is_first_step:bool = False) -> str:
+    """
+    Funkce, která vrátí původní vstup a k němu připnutou historii akcí.
+    """
+    res = [f"{string}\n\n", "§Doposud zadáno: "]
+    res.append(get_action_history_as_string(is_first_step))
+    return "".join(res)
 
 ############################################################################
 _is_alive = False
@@ -331,6 +366,8 @@ _ACTION_ARGUMENTS = {
     END_TALK : "",
     END : "",
 }
+
+used_actions:list[str] = []
 
 ############################################################################
 dbg.stop_mod(0, __name__)
